@@ -1,6 +1,10 @@
 {
     "index": "Introduction",
     "libraries": "Libraries",
+    "---": {
+        "type": "separator"
+    },
+    "contributing": "Contributing",
     "API": {
         "title": "API",
         "type": "menu",
