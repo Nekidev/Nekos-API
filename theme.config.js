@@ -15,7 +15,7 @@ export default {
     logo: (
       <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "1rem" }}>
         <Image src="/logo/black.png" alt="Nekos API" width={40} height={40} />
-        <span>Open-source free public catgirl images API.</span>
+        <span>Nekos API</span>
       </div>
     ),
     head: (
@@ -25,4 +25,5 @@ export default {
         <meta name="og:title" content="Nekos API" />
       </>
     ),
-  }
+    floatTOC: true
+}
