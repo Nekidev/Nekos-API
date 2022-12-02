@@ -50,9 +50,5 @@ export default {
                 MIT {new Date().getFullYear()} © <a href="https://nekidev.com" target="_blank">Nekidev</a>. Made with ❤ from Argentina.
             </span>
         )
-    },
-    i18n: [
-        { locale: 'en', text: 'English' },
-        { locale: 'es', text: 'Español' },
-    ]
+    }
 }

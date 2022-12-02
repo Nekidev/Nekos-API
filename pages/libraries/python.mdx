@@ -1,0 +1,51 @@
+import { Tab, Tabs } from 'nextra-theme-docs'
+
+import Link from 'next/link'
+
+# Python 3
+
+The [`anime-api`](https://github.com/AniBase-co/anime-api) library is an officially supported Python 3 wrapper for the Nekos API.
+
+## Installation
+
+The `anime-api` library can be installed on Python 3.7 and higher.
+
+<Tabs items={['PIP', 'Poetry']}>
+    <Tab>
+        ```bash
+        pip install anime-api
+        ```
+    </Tab>
+    <Tab>
+        ```bash
+        poetry add anime-api
+        ```
+    </Tab>
+</Tabs>
+
+## Usage
+
+The `anime-api` library contains lots of wrappers for different APIs, but we'll focus on the `NekosAPI(){:python}` class. You can import it from the `anime_api.apis` module.
+
+```python
+from anime_api.apis import NekosAPI
+
+nekos = NekosAPI()
+```
+
+### Get a random image
+
+The `NekosAPI` class has a `get_random_image()` method that returns a random image URL.
+
+```python
+from anime_api.apis import NekosAPI
+
+nekos = NekosAPI()
+image = nekos.get_random_image()
+
+print(image.url)
+```
+
+The `Image` object represents an image returned from the API. It has the following attributes:
+- `url: str{:python}`: The URL of the image.
+- `author: _Author{:python}`: The author of the image. It has a `name`, an `image` and a `url` attribute.

@@ -25,10 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/index.es": [
+    "/libraries/python": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/index.es.js"
+      "static/chunks/pages/libraries/python.js"
     ]
   },
   "ampFirstPages": []

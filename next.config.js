@@ -5,12 +5,8 @@ const withNextra = require("nextra")({
   // optional: add `unstable_staticImage: true` to enable Nextra's auto image import
 });
 module.exports = withNextra({
-  // images: {
-  //   loader: 'akamai',
-  //   path: '/',
-  // },
-  i18n: {
-    locales: ['en', 'es'],
-    defaultLocale: 'en',
-  }
+  images: {
+    loader: 'akamai',
+    path: '/',
+  },
 });
