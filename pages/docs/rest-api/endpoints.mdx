@@ -1,0 +1,56 @@
+import { Callout, Tab, Tabs } from 'nextra-theme-docs'
+
+# Endpoints
+
+Base url: `https://nekos.nekidev.com/api`
+
+## `GET /image`
+
+Returns a random image from the specified category.
+
+### Parameters
+
+| Name | Type | Description | Required |
+| :--- | :--- | :--- | :--- |
+| `category` | string | The category to get the image from. | No |
+
+### Response
+
+```js
+{
+    "images": [
+        {
+            "id": "5f7b9b0b-7b9b-0b7b-9b0b-7b9b0b7b9b0b",
+            "url": "https://nekos.nekidev.com/image/5f7b9b0b-7b9b-0b7b-9b0b-7b9b0b7b9b0b",
+            "categories": [
+                "neko"
+            ],
+            "nsfw": false,
+            "artist": {
+                "name": "Nekidev",
+                "url": "https://nekos.nekidev.com"
+            },
+            "createdAt": "2021-01-01T00:00:00.000Z",
+        }
+    ]
+}
+```
+
+### Example
+
+<Tabs items={["JavaScript", "Python 3"]}>
+    <Tab>
+        ```js
+        const res = await fetch('https://nekos.nekidev.com/api/image?category=neko')
+        const json = await res.json()
+        console.log(json.url)
+        ``` 
+    </Tab>
+    <Tab>
+        ```py
+        import requests
+        res = requests.get('https://nekos.nekidev.com/api/image?category=neko')
+        print(res.json()['url'])
+        ```
+    </Tab>
+</Tabs>

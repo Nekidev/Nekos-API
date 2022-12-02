@@ -1,18 +1,26 @@
 {
-    "index": "Introduction",
-    "libraries": "Libraries",
-    "contributing": "Contributing",
+    "index": {
+        "title": "Home",
+        "type": "page",
+        "theme": {
+            "layout": "raw"
+        }
+    },
+    "docs": {
+      "title": "Documentation",
+      "type": "page"
+    },
     "API": {
         "title": "API",
         "type": "menu",
         "items": [
             {
                 "title": "Rest API",
-                "href": "https://api.nekidev.com"
+                "href": "https://nekos.nekidev.com/api"
             },
             {
                 "title": "GraphQL API",
-                "href": "https://graph.nekidev.com"
+                "href": "https://nekos.nekidev.com/graphql"
             }
         ]
     }
