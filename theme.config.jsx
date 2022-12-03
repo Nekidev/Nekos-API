@@ -4,10 +4,15 @@ import { useConfig } from "nextra-theme-docs"
 import Link from "next/link"
 
 export default {
-    logo: <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "1rem" }}>
-        <img src="/logo/black.png" alt="Logo" width={32} height={32} />
-        <span>Nekos API Documentation</span>
-    </div>,
+    logo: () => {
+        const { asPath } = useRouter()
+        return (
+            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "1rem" }}>
+                <img src="/logo/black.png" alt="Logo" width={32} height={32} />
+                <span>Nekos API {asPath.startsWith('/docs') && "Documentation"}</span>
+            </div>
+        )
+    },
     project: {
         link: 'https://github.com/Nekidev/nekos-api',
     },

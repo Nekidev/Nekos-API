@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
+
+@tailwind components;
+
+.container {
+    @apply px-4 text-[var(--shiki-color-text)] !whitespace-pre-line;
+    font-family: 'Inconsolata', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+}
+
+.container span:global(.hljs-keyword) {
+    @apply text-[var(--shiki-token-keyword)];
+}
+.container span:global(.hljs-string) {
+    @apply text-[var(--shiki-token-string)];
+}

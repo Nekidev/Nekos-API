@@ -49,3 +49,6 @@ print(image.url)
 The `Image` object represents an image returned from the API. It has the following attributes:
 - `url: str{:python}`: The URL of the image.
 - `author: _Author{:python}`: The author of the image. It has a `name`, an `image` and a `url` attribute.
+- `categories: List[str]{:python}`: A list of tags associated with the image.
+- `nsfw: bool{:python}`: Whether the image is NSFW or not.
+- `created_at: datetime.datetime{:python}`: The date and time when the image was created.
