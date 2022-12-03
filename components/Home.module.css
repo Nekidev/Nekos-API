@@ -22,7 +22,7 @@
         @apply mt-8 text-2xl text-[hsl(var(--nextra-primary-hue),100%,50%)] hover:text-[hsl(var(--nextra-primary-hue),100%,70%)] transition flex flex-row items-center gap-4 w-fit;
     }
     .mainLink > svg {
-        @apply h-6 w-6 mt-2;
+        @apply h-6 w-6;
     }
 
     div.infoContainer {
