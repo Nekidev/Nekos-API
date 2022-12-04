@@ -10,18 +10,7 @@
       "title": "Documentation",
       "type": "page"
     },
-    "API": {
-        "title": "API",
-        "type": "menu",
-        "items": [
-            {
-                "title": "Rest API",
-                "href": "https://nekos.nekidev.com/api"
-            },
-            {
-                "title": "GraphQL API",
-                "href": "https://nekos.nekidev.com/graphql"
-            }
-        ]
+    "api": {
+        "display": "hidden"
     }
 }

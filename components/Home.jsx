@@ -7,6 +7,7 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 import { FaceSmileIcon, CurrencyDollarIcon, PhotoIcon, BoltIcon } from '@heroicons/react/24/outline'
 import CodePre from './CodePre';
+import Image from 'next/image';
 
 const features = [
     {
@@ -62,6 +63,9 @@ export default function Home() {
             <div className={`${styles.content} ${styles.infoContainer} ${styles.wrappersContainer}`}>
                 <div>
                     <h2 className={styles.infoTitle}>Officialy supported wrappers</h2>
+                    <p className={styles.infoSubtitle}>
+                        Easily integrate the API into your project with one of our officialy supported wrappers.
+                    </p>
                 </div>
                 <div style={{ marginTop: "-1rem" }}>
                     <Tabs items={['Python', 'JavaScript']}>
@@ -85,6 +89,15 @@ export default function Home() {
                         </Tab>
                     </Tabs>
                 </div>
+            </div>
+            <div className={`${styles.content} ${styles.infoContainer}`}>
+                <h2 className={styles.infoTitle}>Join our community</h2>
+                <p className={styles.infoSubtitle}>
+                    Join our community on Discord to get help, talk about the API, and more.
+                </p>
+                <Link className={styles.discordBanner} href="https://discord.gg/b9Fv3kEfXc">
+                    <img src="https://discordapp.com/api/guilds/1023471762723328010/widget.png?style=banner2" />
+                </Link>
             </div>
         </div>
     )

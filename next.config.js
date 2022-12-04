@@ -8,5 +8,6 @@ module.exports = withNextra({
   images: {
     loader: 'akamai',
     path: '/',
+    domains: ['discordapp.com'],
   },
 });

@@ -55,5 +55,14 @@ export default {
                 MIT {new Date().getFullYear()} © <a href="https://nekidev.com" target="_blank">Nekidev</a>. Made with ❤ from Argentina.
             </span>
         )
-    }
+    },
+    sidebar: {
+        titleComponent: ({ title, type }) => {
+            if (type === 'separator') {
+                return <span className="cursor-default">{title}</span>
+            }
+            return <>{title}</>
+        },
+        defaultMenuCollapseLevel: 0
+    },
 }

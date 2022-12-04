@@ -13,3 +13,12 @@
 .container span:global(.hljs-string) {
     @apply text-[var(--shiki-token-string)];
 }
+.container span:global(.hljs-number) {
+    @apply text-[var(--shiki-token-number)];
+}
+.container span:global(.hljs-title),
+.container span:global(.hljs-built_in), 
+.container span:global(.class_), 
+.container span:global(.function_) {
+    @apply text-[var(--shiki-token-function)];
+}

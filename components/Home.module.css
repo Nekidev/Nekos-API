@@ -34,17 +34,20 @@
     div.infoContainer:nth-child(even):last-of-type {
         @apply border-b border-neutral-200;
     }
+    html:global(.dark) div.infoContainer:nth-child(even):last-of-type {
+        @apply border-b border-neutral-800;
+    }
     html:global(.dark) div.infoContainer {
-        @apply bg-neutral-900;
+        @apply bg-transparent;
     }
     html:global(.dark) div.infoContainer:nth-child(even) {
         @apply bg-black;
     }
-    html:global(.dark) div.infoContainer:nth-child(odd):last-of-type {
-        @apply border-b border-neutral-800;
-    }
     h2.infoTitle {
         @apply text-4xl font-bold;
+    }
+    p.infoSubtitle {
+        @apply mt-4 text-xl;
     }
     div.infoCards {
         @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-8 gap-8 relative;
@@ -55,6 +58,10 @@
     }
     div.wrappersContainer > div {
         @apply w-full block;
+    }
+
+    .discordBanner {
+        @apply relative mt-8 rounded overflow-hidden w-fit block;
     }
 
     .cardContainer {

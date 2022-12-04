@@ -1,6 +1,15 @@
 {
     "index": "Introduction",
     "libraries": "Libraries",
+    "--- Reference ---": {
+        "type": "separator",
+        "title": "Reference"
+    },
     "rest-api": "Rest API",
+    "graphql": "GraphQL",
+    "--- More ---": {
+        "type": "separator",
+        "title": "More"
+    },
     "contributing": "Contributing"
 }
