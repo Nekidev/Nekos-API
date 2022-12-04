@@ -10,6 +10,18 @@
       "title": "Documentation",
       "type": "page"
     },
+    "about": {
+        "title": "About",
+        "type": "page",
+        "theme": {
+            "typesetting": "article",
+            "breadcrumb": false,
+            "footer": true,
+            "sidebar": false,
+            "toc": false,
+            "pagination": false
+        }
+    },
     "api": {
         "display": "hidden"
     }
