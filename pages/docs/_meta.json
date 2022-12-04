@@ -11,5 +11,10 @@
         "type": "separator",
         "title": "More"
     },
-    "contributing": "Contributing"
+    "contributing": "Contributing",
+    "about": {
+        "title": "About",
+        "href": "/about",
+        "newWindow": false
+    }
 }
