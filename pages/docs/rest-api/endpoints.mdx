@@ -12,25 +12,35 @@ Returns a random image from the specified category.
 
 | Name | Type | Description | Required |
 | :--- | :--- | :--- | :--- |
-| `category` | string | The category to get the image from. | No |
+| `categories` | array of strings | The category to get the image from. | No |
+| `count` | number | The amount of images to get. (max: 20) | No |
 
 ### Response
 
 ```js
-{
-    "images": [
+{ 
+    images: [
         {
-            "id": "5f7b9b0b-7b9b-0b7b-9b0b-7b9b0b7b9b0b",
-            "url": "https://nekos.nekidev.com/image/5f7b9b0b-7b9b-0b7b-9b0b-7b9b0b7b9b0b",
-            "categories": [
-                "neko"
-            ],
-            "nsfw": false,
-            "artist": {
-                "name": "Nekidev",
-                "url": "https://nekos.nekidev.com"
+            'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+            'url': 'https://example.com/assets/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.png',
+            'dimens': {
+                'width': 1024,
+                'height': 1024,
             },
-            "createdAt": "2021-01-01T00:00:00.000Z",
+            'artist': {
+                'name': 'xxxxxxx',
+                'url': 'https://example.com/xxxxxxx'
+            },
+            'source': {
+                'name': 'xxxxxxx',
+                'url': 'https://example.com/xxxxxxx'
+            },
+            'nsfw': false,
+            'categories': [
+                'xxxxxxx',
+                'xxxxxxx',
+            ],
+            'createdAt': '2021-01-01T00:00:00.000Z',
         }
     ]
 }
@@ -40,17 +50,95 @@ Returns a random image from the specified category.
 
 <Tabs items={["JavaScript", "Python 3"]}>
     <Tab>
+        Using the `fetch` API:
         ```js
         const res = await fetch('https://nekos.nekidev.com/api/image?category=neko')
         const json = await res.json()
-        console.log(json.url)
+        console.log(json.images.url)
         ``` 
     </Tab>
     <Tab>
+        Using the `requests` library:
         ```py
         import requests
         res = requests.get('https://nekos.nekidev.com/api/image?category=neko')
-        print(res.json()['url'])
+        print(res.json()['images']['url'])
+        ```
+
+        Using the `anime-api` library:
+        ```py
+        from anime_api.apis import NekosAPI
+        api = NekosAPI()
+        image = api.get_random_image(categories=['neko'])
+        print(image.url)
+        ```
+    </Tab>
+</Tabs>
+
+## GET `/image/{id}`
+
+Get an image by its ID.
+
+### Parameters
+
+| Name | Type | Description | Required |
+| :--- | :--- | :--- | :--- |
+| `id` | string | The ID of the image to get. | Yes |
+
+### Response
+
+```js
+{ 
+    image: {
+        'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+        'url': 'https://example.com/assets/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.png',
+        'dimens': {
+            'width': 1024,
+            'height': 1024,
+        },
+        'artist': {
+            'name': 'xxxxxxx',
+            'url': 'https://example.com/xxxxxxx'
+        },
+        'source': {
+            'name': 'xxxxxxx',
+            'url': 'https://example.com/xxxxxxx'
+        },
+        'nsfw': false,
+        'categories': [
+            'xxxxxxx',
+            'xxxxxxx',
+        ],
+        'createdAt': '2021-01-01T00:00:00.000Z',
+    }
+}
+```
+
+### Example
+
+<Tabs items={["JavaScript", "Python 3"]}>
+    <Tab>
+        Using the `fetch` API:
+        ```js
+        const res = await fetch('https://nekos.nekidev.com/api/image/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
+        const json = await res.json()
+        console.log(json.image.url)
+        ``` 
+    </Tab>
+    <Tab>
+        Using the `requests` library:
+        ```py
+        import requests
+        res = requests.get('https://nekos.nekidev.com/api/image/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
+        print(res.json()['image']['url'])
+        ```
+
+        Using the `anime-api` library:
+        ```py
+        from anime_api.apis import NekosAPI
+        api = NekosAPI()
+        image = api.get_image(id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
+        print(image.url)
         ```
     </Tab>
 </Tabs>
