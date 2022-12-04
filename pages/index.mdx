@@ -1,3 +1,110 @@
-import Home from '../components/Home';
+import React from 'react';
+
+import Link from 'next/link';
+import styles from '../styles/Home.module.css';
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+import { FaceSmileIcon, CurrencyDollarIcon, PhotoIcon, BoltIcon } from '@heroicons/react/24/outline'
+import CodePre from '../components/codepre/CodePre';
+
+export const features = [
+    {
+        title: "Begginer friendly",
+        description: "The API is very easy to use, and it's very easy to get started with it.",
+        icon: <FaceSmileIcon />
+    },
+    {
+        title: "Free forever",
+        description: "No need to pay for anything, the API is free forever. (we kindly accept donations though)",
+        icon: <CurrencyDollarIcon />
+    },
+    {
+        title: "Hundreds of images",
+        description: "The API has hundreds of images, and we're adding more every day.",
+        icon: <PhotoIcon />
+    },
+    {
+        title: "Fast",
+        description: "The API is very fast. We asked the creator of light and he said it's the fastest thing he has ever seen.",
+        icon: <BoltIcon />
+    }
+];
+
+export default function Home() {
+    return (
+        <div className={styles.main}>
+            <div className={styles.content}>
+                <div className={styles.heroContainer}>
+                    <h1 className={styles.mainTitle}>Nekos API</h1>
+                    <p className={styles.mainDescription}>An open-source free public catgirls API.</p>
+                    <Link href="/docs" className={styles.mainLink}>
+                        Documentation
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                        </svg>
+                    </Link>
+                </div>
+            </div>
+            <div className={`${styles.content} ${styles.infoContainer}`}>
+                <h2 className={styles.infoTitle}>Features</h2>
+                <div className={styles.infoCards}>
+                    {features.map((feature, i) => (
+                        <Card 
+                            key={i}
+                            title={feature.title}
+                            description={feature.description}
+                            icon={feature.icon} />
+                    ))}
+                </div>
+            </div>
+            <div className={`${styles.content} ${styles.infoContainer} ${styles.wrappersContainer}`}>
+                <div>
+                    <h2 className={styles.infoTitle}>Officialy supported wrappers</h2>
+                    <p className={styles.infoSubtitle}>
+                        Easily integrate the API into your project with one of our officialy supported wrappers.
+                    </p>
+                </div>
+                <div style={{ marginTop: "-1rem" }}>
+                    <Tabs items={['Python', 'JavaScript']}>
+                        <Tab>
+                            <CodePre language="python">
+                                {`from anime_api.apis import NekosAPI\n\napi = NekosAPI()\n\napi.get_random_image("neko")`}
+                            </CodePre>
+                        </Tab>
+                        <Tab>
+                            <CodePre language="javascript">
+                                {`const { NekosAPI } = require('nekos-api');\n\nconst api = new NekosAPI();\n\nawait api.get_random_image("neko")`}
+                            </CodePre>
+                        </Tab>
+                    </Tabs>
+                </div>
+            </div>
+            <div className={`${styles.content} ${styles.infoContainer}`}>
+                <h2 className={styles.infoTitle}>Join our community</h2>
+                <p className={styles.infoSubtitle}>
+                    Join our community on Discord to get help, talk about the API, and more.
+                </p>
+                <Link className={styles.discordBanner} href="https://discord.gg/b9Fv3kEfXc">
+                    <img src="https://discordapp.com/api/guilds/1023471762723328010/widget.png?style=banner2" />
+                </Link>
+            </div>
+        </div>
+    )
+}
+
+export function Card({ title, description, icon, key }) {
+    return (
+        <div className={styles.cardContainer} key={key}>
+            <div className={styles.iconContainer}>
+                {icon}
+            </div>
+            <div>
+                <div className={styles.title}>{title}</div>
+                <div className={styles.description}>{description}</div>
+            </div>
+        </div>
+    )
+}
 
 <Home />
