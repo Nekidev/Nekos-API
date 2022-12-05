@@ -1,3 +1,5 @@
+import { Callout } from 'nextra-theme-docs';
+
 # Reference
 
 This page will help you understand how to use the Rest API. We highly recommend reading this before starting to use the API.
@@ -10,6 +12,17 @@ The API has a rate limit of **2 requests per second**. If you exceed this limit,
 
 The API does not require any kind of authentication. You can go ahead and start using it right away.
 
+## Responses
+
+The API will always return a JSON object. The response will have the following structure:
+
+```js
+{
+    "success": Boolean,
+    "data": Object
+}
+```
+
 ## Pagination
 
 The API uses a limit/offset based pagination system. You can use the limit and offset query parameters to paginate through the results. For example:
@@ -20,6 +33,10 @@ GET /api/image?limit=10&offset=0 HTTP/1.1
 
 The default limit is 10 and the maximum limit is 25.
 
+<Callout type="info">
+    Currently, there is no endpoint that supports the `offset` parameter, since all endpoints return random objects and therefore cannot be paginated. You can still use the `limit` parameter to limit the number of objects returned.
+</Callout>
+
 ## Errors
 
 If an error occurs, the API will return a JSON object with the following structure:
@@ -27,6 +44,7 @@ If an error occurs, the API will return a JSON object with the following structu
 ```js
 {
     "code": Integer,
-    "message": String
+    "message": String,
+    "success": false
 }
 ```

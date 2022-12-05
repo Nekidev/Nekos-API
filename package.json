@@ -2,11 +2,14 @@
 	"dependencies": {
 		"@heroicons/react": "^2.0.13",
 		"@prisma/client": "^4.7.1",
+		"@supabase/supabase-js": "^2.1.1",
+		"got": "^12.5.3",
 		"highlight.js": "^11.7.0",
 		"next": "^13.0.6",
 		"nextra": "^2.0.0",
 		"nextra-theme-docs": "^2.0.0",
 		"nprogress": "^0.2.0",
+		"pg-escape": "^0.2.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0"
 	},

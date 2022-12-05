@@ -13,13 +13,13 @@ Returns a random image from the specified category.
 | Name | Type | Description | Required |
 | :--- | :--- | :--- | :--- |
 | `categories` | array of strings | The category to get the image from. | No |
-| `count` | number | The amount of images to get. (max: 20) | No |
+| `limit` | number | The amount of images to get. (max: 25) | No |
 
 ### Response
 
 ```js
 { 
-    images: [
+    'data': [
         {
             'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
             'url': 'https://example.com/assets/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.png',
@@ -28,6 +28,7 @@ Returns a random image from the specified category.
                 'height': 1024,
             },
             'artist': {
+                'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
                 'name': 'xxxxxxx',
                 'url': 'https://example.com/xxxxxxx'
             },
@@ -42,7 +43,8 @@ Returns a random image from the specified category.
             ],
             'createdAt': '2021-01-01T00:00:00.000Z',
         }
-    ]
+    ],
+    'success': true
 }
 ```
 
@@ -52,7 +54,7 @@ Returns a random image from the specified category.
     <Tab>
         Using the `fetch` API:
         ```js
-        const res = await fetch('https://nekos.nekidev.com/api/image?category=neko')
+        const res = await fetch('https://nekos.nekidev.com/api/image?categories=neko')
         const json = await res.json()
         console.log(json.images.url)
         ``` 
@@ -61,7 +63,7 @@ Returns a random image from the specified category.
         Using the `requests` library:
         ```py
         import requests
-        res = requests.get('https://nekos.nekidev.com/api/image?category=neko')
+        res = requests.get('https://nekos.nekidev.com/api/image?categories=neko')
         print(res.json()['images']['url'])
         ```
 
@@ -89,7 +91,7 @@ Get an image by its ID.
 
 ```js
 { 
-    image: {
+    'data': {
         'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
         'url': 'https://example.com/assets/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.png',
         'dimens': {
@@ -97,6 +99,7 @@ Get an image by its ID.
             'height': 1024,
         },
         'artist': {
+            'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
             'name': 'xxxxxxx',
             'url': 'https://example.com/xxxxxxx'
         },
@@ -110,7 +113,8 @@ Get an image by its ID.
             'xxxxxxx',
         ],
         'createdAt': '2021-01-01T00:00:00.000Z',
-    }
+    },
+    'success': true,
 }
 ```
 
