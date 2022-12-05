@@ -1,17 +1,14 @@
 {
 	"dependencies": {
 		"@heroicons/react": "^2.0.13",
+		"@prisma/client": "^4.7.1",
 		"highlight.js": "^11.7.0",
 		"next": "^13.0.6",
 		"nextra": "^2.0.0",
 		"nextra-theme-docs": "^2.0.0",
 		"nprogress": "^0.2.0",
-		"pg": "^8.8.0",
-		"pg-hstore": "^2.3.4",
 		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
-		"sequelize": "^6.26.0",
-		"shiki": "^0.11.1"
+		"react-dom": "^18.2.0"
 	},
 	"packageManager": "pnpm@7.17.1",
 	"scripts": {

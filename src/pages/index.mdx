@@ -93,9 +93,9 @@ export default function Home() {
     )
 }
 
-export function Card({ title, description, icon, key }) {
+export function Card({ title, description, icon }) {
     return (
-        <div className={styles.cardContainer} key={key}>
+        <div className={styles.cardContainer}>
             <div className={styles.iconContainer}>
                 {icon}
             </div>

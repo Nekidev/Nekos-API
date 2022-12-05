@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Categories {
+  id   Int      @default(autoincrement()) @db.SmallInt
+  name String   @unique
+  nsfw Boolean? @default(false)
+}
+
+model Images {
+  id          String   @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
+  url         String   @unique @db.VarChar
+  height      Int?     @default(0)
+  width       Int?     @default(0)
+  source_url  String?  @db.VarChar
+  source_name String?  @db.VarChar
+  nsfw        Boolean? @default(false)
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+  categories  String[]
+}
