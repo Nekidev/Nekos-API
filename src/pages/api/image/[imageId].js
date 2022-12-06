@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-
-import supabase from "../../../utils/supabase/client";
+import { getImageJson } from "../../../utils/db";
 
 export default async function handler(req, res) {
     const { imageId } = req.query;
@@ -20,36 +19,9 @@ export default async function handler(req, res) {
             id: imageId
         }
     });
-    const file = await prisma.objects.findUnique({
-        where: {
-            id: image.file
-        }
-    });
 
-    const signedUrl = await supabase.storage.from("nekos-api").createSignedUrl(file.name, 60 * 60);
-
-    res.status(200).json({ 
-        'data': {
-            'id': image.id,
-            'url': signedUrl.data.signedUrl,
-            'artist': image.artist,
-            'source': {
-                'name': image.source_name,
-                'url': image.source_url
-            },
-            'nsfw': image.nsfw,
-            'categories': image.categories,
-            'createdAt': image.created_at,
-            'meta': {
-                'eTag': file.metadata.eTag,
-                'size': file.metadata.size,
-                'mimetype': file.metadata.mimetype,
-                'dimens': {
-                    'height': image.height,
-                    'width': image.width,
-                },
-            }
-        },
+    res.status(200).json({
+        'data': await getImageJson(image, prisma),
         'success': true
     });
 

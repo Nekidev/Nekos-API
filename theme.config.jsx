@@ -26,7 +26,7 @@ export default {
         const { asPath } = useRouter()
         const { frontMatter } = useConfig()
         return <>
-            <meta property="og:url" content={`https://docs.nekidev.com${asPath}`} />
+            <meta property="og:url" content={`https://nekos.nekidev.com${asPath}`} />
             <meta property="og:title" content={frontMatter.title || 'Nekos API Documentation'} />
             <meta property="og:description" content={frontMatter.description || 'The open-source free public catgirls API.'} />
         </>

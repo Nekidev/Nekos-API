@@ -1,6 +1,5 @@
 import { Prisma, PrismaClient } from "@prisma/client";
-
-import supabase from "../../utils/supabase/client";
+import { getManyImagesJson } from "../../utils/db";
 
 export default async function handler(req, res) {
     var { limit = "1", categories = "" } = req.query;
@@ -21,7 +20,7 @@ export default async function handler(req, res) {
 
     const prisma = new PrismaClient();
 
-    categories = categories.split(",");
+    categories = categories.toLowerCase().split(",");
 
     var images;
 
@@ -30,49 +29,21 @@ export default async function handler(req, res) {
             limit
         )}`;
     } else {
-        images = await prisma.$queryRaw`SELECT * FROM "Images" WHERE categories @> ARRAY[${Prisma.join(
-            categories
-        )}] ORDER BY RANDOM() LIMIT ${parseInt(limit)}`;
-    }
-
-    var jsonImages = [];
-
-    for (const image of images) {
-        var file = await prisma.objects.findUnique({
-            where: {
-                id: image.file,
-            },
-        });
-
-        const { data, error } = await supabase.storage
-            .from("nekos-api")
-            .createSignedUrl(file.name, 60 * 60);
-
-        jsonImages.push({
-            id: image.id,
-            url: data.signedUrl,
-            artist: image.artist,
-            source: {
-                name: image.source_name,
-                url: image.source_url,
-            },
-            nsfw: image.nsfw,
-            categories: image.categories,
-            createdAt: image.created_at,
-            meta: {
-                eTag: file.metadata.eTag,
-                size: file.metadata.size,
-                mimetype: file.metadata.mimetype,
-                dimens: {
-                    height: image.height,
-                    width: image.width,
-                },
-            }
-        });
+        const matchingCategories = await prisma.$queryRaw`SELECT * FROM "Categories" WHERE name ILIKE ANY(ARRAY[${Prisma.join(categories)}])`
+        if (categories.length != Array.from(matchingCategories).length) {
+            var nonMatchingCategories = categories.filter(category => !matchingCategories.map(category => category.name.toLowerCase()).includes(category))
+            
+            res.status(400).json({
+                code: 400,
+                message: `Invalid value for \`categories\` parameter. The following categories do not exist: ${nonMatchingCategories.join(", ")}`,
+                success: false,
+            })
+        }
+        images = await prisma.$queryRaw`SELECT * FROM "Images" WHERE categories @> ARRAY(SELECT id FROM "Categories" WHERE name ILIKE ANY(ARRAY[${Prisma.join(categories)}])) ORDER BY RANDOM() LIMIT ${parseInt(limit)}`;
     }
 
     res.status(200).json({
-        data: jsonImages,
+        data: await getManyImagesJson(images, prisma),
         success: true,
     });
 

@@ -20,6 +20,7 @@ model Images {
   created_at  DateTime @default(now()) @db.Timestamptz(6)
   categories  String[]
   artist      String?  @db.Uuid
+  characters  String[] @db.Uuid
   Artists     Artists? @relation(fields: [artist], references: [id], onDelete: NoAction, onUpdate: NoAction)
   objects     objects  @relation(fields: [file], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
@@ -27,10 +28,11 @@ model Images {
 }
 
 model Artists {
-  name   String   @db.VarChar
-  url    String   @db.VarChar
-  id     String   @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
-  Images Images[]
+  name       String   @db.VarChar
+  url        String   @db.VarChar
+  id         String   @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
+  created_at DateTime @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
+  Images     Images[]
 
   @@schema("public")
 }
@@ -310,6 +312,24 @@ model objects {
   @@unique([bucket_id, name], map: "bucketid_objname")
   @@index([name], map: "name_prefix_search")
   @@schema("storage")
+}
+
+model Categories {
+  id          String    @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
+  created_at  DateTime? @default(now()) @db.Timestamptz(6)
+  name        String    @db.VarChar
+  description String?   @db.VarChar
+  nsfw        Boolean   @default(false)
+
+  @@schema("public")
+}
+
+model Characters {
+  id         String    @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
+  created_at DateTime? @default(now()) @db.Timestamptz(6)
+  name       String    @db.VarChar
+
+  @@schema("public")
 }
 
 enum aal_level {
