@@ -18,7 +18,7 @@ model Images {
   source_name String?  @db.VarChar
   nsfw        Boolean? @default(false)
   created_at  DateTime @default(now()) @db.Timestamptz(6)
-  categories  String[]
+  categories  String[] @db.Uuid
   artist      String?  @db.Uuid
   characters  String[] @db.Uuid
   Artists     Artists? @relation(fields: [artist], references: [id], onDelete: NoAction, onUpdate: NoAction)
