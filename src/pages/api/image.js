@@ -22,10 +22,18 @@ export default async function handler(req, res) {
     const prisma = new PrismaClient();
 
     categories = categories.split(",");
-    const images =
-        await prisma.$queryRaw`SELECT * FROM "Images" WHERE categories @> ARRAY[${Prisma.join(
+
+    var images;
+
+    if (categories.length == 1 && categories[0] == "") {
+        images = await prisma.$queryRaw`SELECT * FROM "Images" ORDER BY RANDOM() LIMIT ${parseInt(
+            limit
+        )}`;
+    } else {
+        images = await prisma.$queryRaw`SELECT * FROM "Images" WHERE categories @> ARRAY[${Prisma.join(
             categories
         )}] ORDER BY RANDOM() LIMIT ${parseInt(limit)}`;
+    }
 
     var jsonImages = [];
 
