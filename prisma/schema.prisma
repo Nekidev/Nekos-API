@@ -19,7 +19,7 @@ model Images {
   nsfw        Boolean? @default(false)
   created_at  DateTime @default(now()) @db.Timestamptz(6)
   categories  String[]
-  artist      BigInt?
+  artist      String?  @db.Uuid
   Artists     Artists? @relation(fields: [artist], references: [id], onDelete: NoAction, onUpdate: NoAction)
   objects     objects  @relation(fields: [file], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
@@ -27,11 +27,10 @@ model Images {
 }
 
 model Artists {
-  id         BigInt    @id @default(autoincrement())
-  created_at DateTime? @default(now()) @db.Timestamptz(6)
-  name       String    @db.VarChar
-  url        String    @db.VarChar
-  Images     Images[]
+  name   String   @db.VarChar
+  url    String   @db.VarChar
+  id     String   @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
+  Images Images[]
 
   @@schema("public")
 }

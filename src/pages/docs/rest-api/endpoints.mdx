@@ -23,15 +23,7 @@ Returns a random image from the specified category.
         {
             'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
             'url': 'https://example.com/assets/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.png',
-            'dimens': {
-                'width': 1024,
-                'height': 1024,
-            },
-            'artist': {
-                'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
-                'name': 'xxxxxxx',
-                'url': 'https://example.com/xxxxxxx'
-            },
+            'artist': "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
             'source': {
                 'name': 'xxxxxxx',
                 'url': 'https://example.com/xxxxxxx'
@@ -42,6 +34,15 @@ Returns a random image from the specified category.
                 'xxxxxxx',
             ],
             'createdAt': '2021-01-01T00:00:00.000Z',
+            'meta': {
+                'eTag': 'xxxxxxxxxxxxxxxxxxxxx',
+                'size': 6336807,
+                'mimetype': 'image/png',
+                'dimens': {
+                    'width': 1024,
+                    'height': 1024,
+                },
+            }
         }
     ],
     'success': true
@@ -94,15 +95,7 @@ Get an image by its ID.
     'data': {
         'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
         'url': 'https://example.com/assets/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.png',
-        'dimens': {
-            'width': 1024,
-            'height': 1024,
-        },
-        'artist': {
-            'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
-            'name': 'xxxxxxx',
-            'url': 'https://example.com/xxxxxxx'
-        },
+        'artist': "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
         'source': {
             'name': 'xxxxxxx',
             'url': 'https://example.com/xxxxxxx'
@@ -113,6 +106,15 @@ Get an image by its ID.
             'xxxxxxx',
         ],
         'createdAt': '2021-01-01T00:00:00.000Z',
+        'meta': {
+            'eTag': 'xxxxxxxxxxxxxxxxxxxxx',
+            'size': 6336807,
+            'mimetype': 'image/png',
+            'dimens': {
+                'width': 1024,
+                'height': 1024,
+            },
+        }
     },
     'success': true,
 }
@@ -143,6 +145,137 @@ Get an image by its ID.
         api = NekosAPI()
         image = api.get_image(id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
         print(image.url)
+        ```
+    </Tab>
+</Tabs>
+
+
+## `GET /artist/{id}`
+
+Get an artist by their ID.
+
+### Parameters
+
+| Name | Type | Description | Required |
+| :--- | :--- | :--- | :--- |
+| `id` | string | The ID of the artist to get. | Yes |
+
+### Response
+
+```js
+{ 
+    'data': {
+        'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+        'name': 'xxxxxxx',
+        'url': 'https://example.com/xxxxxxx',
+        'createdAt': '2021-01-01T00:00:00.000Z',
+        'images': 12
+    },
+    'success': true,
+}
+```
+
+### Example
+
+<Tabs items={["JavaScript", "Python 3"]}>
+    <Tab>
+        Using the `fetch` API:
+        ```js
+        const res = await fetch('https://nekos.nekidev.com/api/artist/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
+        const json = await res.json()
+        console.log(json.artist.name)
+        ``` 
+    </Tab>
+    <Tab>
+        Using the `requests` library:
+        ```py
+        import requests
+        res = requests.get('https://nekos.nekidev.com/api/artist/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
+        print(res.json()['artist']['name'])
+        ```
+
+        Using the `anime-api` library:
+        ```py
+        from anime_api.apis import NekosAPI
+        api = NekosAPI()
+        artist = api.get_artist(id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
+        print(artist.name)
+        ```
+    </Tab>
+</Tabs>
+
+
+## `GET /artist/{id}/images`
+
+Get all images by an artist.
+
+### Parameters
+
+| Name | Type | Description | Required |
+| :--- | :--- | :--- | :--- |
+| `id` | string | The ID of the artist to get images from. | Yes |
+| `limit` | integer | The maximum number of images to get. | No |
+| `offset` | integer | The number of images to skip. | No |
+
+### Response
+
+```js
+{ 
+    'data': [
+        {
+            'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+            'url': 'https://example.com/assets/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.png',
+            'artist': "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            'source': {
+                'name': 'xxxxxxx',
+                'url': 'https://example.com/xxxxxxx'
+            },
+            'nsfw': false,
+            'categories': [
+                'xxxxxxx',
+                'xxxxxxx',
+            ],
+            'createdAt': '2021-01-01T00:00:00.000Z',
+            'meta': {
+                'eTag': 'xxxxxxxxxxxxxxxxxxxxx',
+                'size': 6336807,
+                'mimetype': 'image/png',
+                'dimens': {
+                    'width': 1024,
+                    'height': 1024,
+                },
+            }
+        }
+    ],
+    'success': true,
+}
+```
+
+### Example
+
+<Tabs items={["JavaScript", "Python 3"]}>
+    <Tab>
+        Using the `fetch` API:
+        ```js
+        const res = await fetch('https://nekos.nekidev.com/api/artist/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images')
+        const json = await res.json()
+        console.log(json.images[0].url)
+        ``` 
+    </Tab>
+    <Tab>
+        Using the `requests` library:
+        ```py
+        import requests
+        res = requests.get('https://nekos.nekidev.com/api/artist/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images')
+        print(res.json()['images'][0]['url'])
+        ```
+
+        Using the `anime-api` library:
+        ```py
+        from anime_api.apis import NekosAPI
+        api = NekosAPI()
+        images = api.get_artist_images(id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
+        print(images[0].url)
         ```
     </Tab>
 </Tabs>

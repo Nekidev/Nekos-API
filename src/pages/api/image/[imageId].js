@@ -20,15 +20,18 @@ export default async function handler(req, res) {
             id: imageId
         }
     });
+    const file = await prisma.objects.findUnique({
+        where: {
+            id: image.file
+        }
+    });
+
+    const signedUrl = await supabase.storage.from("nekos-api").createSignedUrl(file.name, 60 * 60);
 
     res.status(200).json({ 
-        data: {
+        'data': {
             'id': image.id,
-            'url': image.url,
-            'dimens': {
-                'width': image.width,
-                'height': image.height,
-            },
+            'url': signedUrl.data.signedUrl,
             'artist': image.artist,
             'source': {
                 'name': image.source_name,
@@ -37,8 +40,17 @@ export default async function handler(req, res) {
             'nsfw': image.nsfw,
             'categories': image.categories,
             'createdAt': image.created_at,
+            'meta': {
+                'eTag': file.metadata.eTag,
+                'size': file.metadata.size,
+                'mimetype': file.metadata.mimetype,
+                'dimens': {
+                    'height': image.height,
+                    'width': image.width,
+                },
+            }
         },
-        success: true
+        'success': true
     });
 
     prisma.$disconnect();
