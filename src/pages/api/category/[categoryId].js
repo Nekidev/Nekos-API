@@ -1,4 +1,5 @@
 import { Prisma, PrismaClient } from "@prisma/client";
+import { parseCategory } from "../../../utils/db/parsers";
 
 export default async function handler(req, res) {
     const { categoryId } = req.query;
@@ -28,20 +29,9 @@ export default async function handler(req, res) {
     }
 
     res.status(200).json({
-        'data': {
-            'id': category.id,
-            'name': category.name,
-            'description': category.description,
-            'nsfw': category.nsfw,
-            'images': await prisma.images.count({
-                where: {
-                    categories: {
-                        has: category.id
-                    }
-                }
-            }),
-            'createdAt': category.createdAt,
-        },
+        'data': await parseCategory(category, prisma),
         'success': true
     });
+
+    prisma.$disconnect();
 }

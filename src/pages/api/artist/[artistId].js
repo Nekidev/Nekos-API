@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { parseArtist } from '../../../utils/db/parsers';
 
 export default async function handler(req, res) {
     const { artistId } = req.query;
@@ -19,22 +20,7 @@ export default async function handler(req, res) {
         }
     });
 
-    const imagesCount = await prisma.images.count({
-        where: {
-            artist: artistId
-        }
-    });
-
-    res.status(200).json({ 
-        'data': {
-            'id': artist.id,
-            'name': artist.name,
-            'url': artist.url,
-            'images': imagesCount,
-            'createdAt': artist.created_at,
-        },
-        'success': true
-    });
+    res.status(200).json(await parseArtist(artist, prisma));
 
     prisma.$disconnect();
 }

@@ -20,14 +20,14 @@ export default async function handler(req, res) {
 
     const prisma = new PrismaClient();
 
+    const bernoulliPercentage = 14;
+
     categories = categories.toLowerCase().split(",");
 
     var images;
 
     if (categories.length == 1 && categories[0] == "") {
-        images = await prisma.$queryRaw`SELECT * FROM "Images" ORDER BY RANDOM() LIMIT ${parseInt(
-            limit
-        )}`;
+        images = await prisma.$queryRaw`SELECT * FROM "Images" TABLESAMPLE BERNOULLI (${bernoulliPercentage}) LIMIT (${parseInt(limit)})`;
     } else {
         const matchingCategories = await prisma.$queryRaw`SELECT * FROM "Categories" WHERE name ILIKE ANY(ARRAY[${Prisma.join(categories)}])`
         if (categories.length != Array.from(matchingCategories).length) {
@@ -39,7 +39,7 @@ export default async function handler(req, res) {
                 success: false,
             })
         }
-        images = await prisma.$queryRaw`SELECT * FROM "Images" WHERE categories @> ARRAY(SELECT id FROM "Categories" WHERE name ILIKE ANY(ARRAY[${Prisma.join(categories)}])) ORDER BY RANDOM() LIMIT ${parseInt(limit)}`;
+        images = await prisma.$queryRaw`SELECT * FROM "Images" WHERE categories @> ARRAY(SELECT id FROM "Categories" WHERE name ILIKE ANY(ARRAY[${Prisma.join(categories)}])) TABLESAMPLE BERNOULLI (${bernoulliPercentage}) LIMIT (${parseInt(limit)})`;
     }
 
     res.status(200).json({

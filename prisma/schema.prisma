@@ -325,9 +325,10 @@ model Categories {
 }
 
 model Characters {
-  id         String    @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
-  created_at DateTime? @default(now()) @db.Timestamptz(6)
-  name       String    @db.VarChar
+  id          String    @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
+  created_at  DateTime? @default(now()) @db.Timestamptz(6)
+  name        String    @db.VarChar
+  description String?   @db.VarChar
 
   @@schema("public")
 }

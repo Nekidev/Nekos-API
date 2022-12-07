@@ -1,6 +1,7 @@
 import supabase from "../../utils/supabase/client";
 
 import probe from "probe-image-size";
+import parseImage from "./parsers";
 
 export async function getImageJson(image, prismaClient) {
     // Get the file object from the database
@@ -15,27 +16,15 @@ export async function getImageJson(image, prismaClient) {
         .from("nekos-api")
         .createSignedUrl(file.name, 60 * 60);
 
-    // The artist is null if the image is not associated with an artist
-    var artist = null;
-
-    if (image.artist) {
-        // The artist is not null so it is retreived from the database
-        let artistData = await prismaClient.artists.findUnique({
-            where: {
-                id: image.artist,
-            },
-        });
-
-        // Set the `artist` var to the artist data (this will be returned in the response)
-        artist = {
-            id: artistData.id,
-            name: artistData.name,
-            url: artistData.url,
-        };
-    }
+    // Get the artist for the image
+    var artist = image.artist ? await prismaClient.artists.findUnique({
+        where: {
+            id: image.artist,
+        },
+    }) : null;
 
     // Get the categories for the image
-    var categoriesData = await prismaClient.categories.findMany({
+    var categories = await prismaClient.categories.findMany({
         where: {
             id: {
                 in: image.categories,
@@ -43,18 +32,13 @@ export async function getImageJson(image, prismaClient) {
         },
     });
 
-    var categories = [];
-
-    for (const category of categoriesData) {
-        // Add the category to the array that will be returned.
-        categories.push({
-            id: category.id,
-            name: category.name,
-            description: category.description,
-            nsfw: category.nsfw,
-            createdAt: category.created_at,
-        });
-    }
+    const characters = await prismaClient.characters.findMany({
+        where: {
+            id: {
+                in: image.characters,
+            },
+        },
+    });
 
     if (image.height in [0, null] || image.width in [0, null]) {
         // If the image height or width is 0 or null, then the image dimensions need to be updated
@@ -79,27 +63,14 @@ export async function getImageJson(image, prismaClient) {
             });
     }
 
-    return {
-        id: image.id,
-        url: data.signedUrl,
-        artist: artist,
-        source: {
-            name: image.source_name,
-            url: image.source_url,
-        },
-        nsfw: image.nsfw,
-        categories: categories,
-        createdAt: image.created_at,
-        meta: {
-            eTag: file.metadata.eTag,
-            size: file.metadata.size,
-            mimetype: file.metadata.mimetype,
-            dimens: {
-                height: image.height,
-                width: image.width,
-            },
-        },
-    };
+    return await parseImage(
+        image,
+        file,
+        data.signedUrl,
+        artist,
+        categories,
+        characters,
+    )
 }
 
 export async function getManyImagesJson(images, prismaClient) {
@@ -205,6 +176,33 @@ export async function getManyImagesJson(images, prismaClient) {
         categoryMap[category.id] = category;
     });
 
+    var characterIds = [];
+
+    images.map((image) => {
+        image.characters.map((characterId) => {
+            // Add all character ids to the array. Avoid duplicates to reduce the expensiveness of the db query.
+            if (characterIds.indexOf(characterId) == -1) {
+                characterIds.push(characterId);
+            }
+        });
+    })
+
+    // Get all the characters
+    var characters = await prismaClient.characters.findMany({
+        where: {
+            id: {
+                in: characterIds,
+            },
+        },
+    });
+
+    // Create a map of the characters so they can be accessed by the character id
+    var characterMap = {};
+
+    characters.map((character) => {
+        characterMap[character.id] = character;
+    });
+
     // Add the images to the result array
     for (var image of images) {
         // Create an array with the categories for the image
@@ -215,24 +213,24 @@ export async function getManyImagesJson(images, prismaClient) {
             let category = categoryMap[categoryId];
 
             // Add the category to the array that will be returned.
-            imageCategories.push({
-                id: category.id,
-                name: category.name,
-                description: category.description,
-                nsfw: category.nsfw,
-                createdAt: category.created_at,
-            });
+            imageCategories.push(category);
+        });
+
+        var imageCharacters = [];
+
+        image.characters.map((characterId) => {
+            // Get the character from the map
+            let character = characterMap[characterId];
+
+            // Add the character to the array that will be returned.
+            imageCharacters.push(character);
         });
 
         // Create the artist var. This will be overriden if the image has an artist.
         let artist = null;
 
         if (image.artist) {
-            artist = {
-                id: artistMap[image.artist].id,
-                name: artistMap[image.artist].name,
-                url: artistMap[image.artist].url,
-            };
+            artist = artistMap[image.artist];
         }
 
         // Get the file from the map
@@ -262,27 +260,14 @@ export async function getManyImagesJson(images, prismaClient) {
         }
 
         // Add the image to the result array
-        result.push({
-            id: image.id,
-            url: signedUrls[file.name],
-            artist: artist,
-            source: {
-                name: image.source_name,
-                url: image.source_url,
-            },
-            nsfw: image.nsfw,
-            categories: imageCategories,
-            createdAt: image.created_at,
-            meta: {
-                eTag: file.metadata.eTag,
-                size: file.metadata.size,
-                mimetype: file.metadata.mimetype,
-                dimens: {
-                    height: image.height,
-                    width: image.width,
-                },
-            }
-        });
+        result.push(await parseImage(
+            image,
+            file,
+            signedUrls[file.name],
+            artist,
+            imageCategories,
+            imageCharacters,
+        ));
     }
 
     return result;
