@@ -26,6 +26,22 @@ export default async function handler(req, res) {
 
     const prisma = new PrismaClient();
 
+    const images = await prisma.images.findMany({
+        where: {
+            artist: artistId
+        },
+        take: parseInt(limit),
+        skip: parseInt(offset),
+    });
+
+    if (!images || images.length === 0) {
+        res.status(404).json({
+            code: 404,
+            message: "Artist not found.",
+            success: false,
+        });
+    }
+
     res.status(200).json({ 
         'data': await getManyImagesJson(images, prisma),
         'success': true

@@ -20,6 +20,14 @@ export default async function handler(req, res) {
         }
     });
 
+    if (!artist) {
+        res.status(404).json({
+            code: 404,
+            message: "Artist not found.",
+            success: false,
+        });
+    }
+
     res.status(200).json(await parseArtist(artist, prisma));
 
     prisma.$disconnect();
