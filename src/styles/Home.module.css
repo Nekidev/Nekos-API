@@ -61,7 +61,16 @@
     }
 
     .discordBanner {
-        @apply relative mt-8 rounded overflow-hidden w-fit block;
+        @apply relative mt-8 rounded overflow-hidden w-fit block h-16;
+    }
+    .discordBanner > img {
+        @apply h-16;
+    }
+    .patreonLink {
+        @apply relative mt-8 block h-10;
+    }
+    .patreonLink > img {
+        @apply h-10 rounded;
     }
 
     .cardContainer {

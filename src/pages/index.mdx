@@ -80,14 +80,25 @@ export default function Home() {
                     </Tabs>
                 </div>
             </div>
-            <div className={`${styles.content} ${styles.infoContainer}`}>
-                <h2 className={styles.infoTitle}>Join our community</h2>
-                <p className={styles.infoSubtitle}>
-                    Join our community on Discord to get help, talk about the API, and more.
-                </p>
-                <Link className={styles.discordBanner} href="https://discord.gg/b9Fv3kEfXc">
-                    <img src="https://discordapp.com/api/guilds/1023471762723328010/widget.png?style=banner2" />
-                </Link>
+            <div className={`${styles.content} ${styles.infoContainer} grid grid-cols-1 md:grid-cols-2 gap-16 relative`}>
+                <div>
+                    <h2 className={styles.infoTitle}>Join our community</h2>
+                    <p className={styles.infoSubtitle}>
+                        Join our community on Discord to get help, talk about the API, and more.
+                    </p>
+                    <Link className={styles.discordBanner} href="https://discord.gg/b9Fv3kEfXc">
+                        <img src="https://discordapp.com/api/guilds/1023471762723328010/widget.png?style=banner2" />
+                    </Link>
+                </div>
+                <div>
+                    <h2 className={styles.infoTitle}>Donate</h2>
+                    <p className={styles.infoSubtitle}>
+                        If you like the API, consider donating to help us keep it running.
+                    </p>
+                    <Link className={styles.patreonLink} href="https://patreon.com/nekidev">
+                        <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" />
+                    </Link>
+                </div>
             </div>
         </div>
     )
