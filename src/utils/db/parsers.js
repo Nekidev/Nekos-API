@@ -16,6 +16,8 @@ export default async function parseImage(
     categories,
     characters,
 ) {
+    const imageOrientation = image.width > image.height ? "landscape" : image.width < image.height ? "portrait" : "square";
+
     return {
         id: image.id,
         url: url,
@@ -35,6 +37,7 @@ export default async function parseImage(
             dimens: {
                 height: image.height,
                 width: image.width,
+                orientation: imageOrientation
             },
         }
     }
