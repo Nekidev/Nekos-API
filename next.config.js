@@ -10,4 +10,7 @@ module.exports = withNextra({
     path: '/',
     domains: ['discordapp.com'],
   },
+  experimental: {
+    allowMiddlewareResponseBody: true,
+  },
 });

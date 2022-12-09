@@ -3,7 +3,11 @@
 		"@heroicons/react": "^2.0.13",
 		"@prisma/client": "^4.7.1",
 		"@supabase/supabase-js": "^2.1.1",
+		"@upstash/ratelimit": "^0.1.5",
+		"@upstash/redis": "^1.18.1",
 		"dotenv": "^16.0.3",
+		"express-rate-limit": "^6.7.0",
+		"express-slow-down": "^1.5.0",
 		"highlight.js": "^11.7.0",
 		"next": "^13.0.6",
 		"nextra": "^2.0.0",
@@ -23,6 +27,7 @@
 	"devDependencies": {
 		"autoprefixer": "^10.4.13",
 		"color-thief-node": "^1.0.4",
+		"node-fetch": "^3.3.0",
 		"postcss": "^8.4.19",
 		"prompt-sync": "^4.2.0",
 		"tailwindcss": "^3.2.4"
