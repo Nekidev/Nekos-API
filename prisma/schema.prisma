@@ -16,7 +16,7 @@ model Images {
   width       Int?     @default(0)
   source_url  String?  @db.VarChar
   source_name String?  @db.VarChar
-  nsfw        Boolean? @default(false)
+  nsfw        String?
   created_at  DateTime @default(now()) @db.Timestamptz(6)
   categories  String[] @db.Uuid
   artist      String?  @db.Uuid

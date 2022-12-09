@@ -1,6 +1,6 @@
 # Nekos API
 
-Open-source free public catgirls API.
+Open-source free public anime images API.
 
 ## Installation
 

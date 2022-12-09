@@ -28,7 +28,7 @@ export default {
         return <>
             <meta property="og:url" content={`https://nekos.nekidev.com${asPath}`} />
             <meta property="og:title" content={frontMatter.title || 'Nekos API Documentation'} />
-            <meta property="og:description" content={frontMatter.description || 'The open-source free public catgirls API.'} />
+            <meta property="og:description" content={frontMatter.description || 'The open-source free public anime images API.'} />
         </>
     },
     primaryHue: {
