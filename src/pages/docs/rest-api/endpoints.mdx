@@ -12,7 +12,7 @@ Returns a random image from the specified category.
 
 | Name | Type | Description | Required |
 | :--- | :--- | :--- | :--- |
-| `categories` | array of strings | The category to get the image from. | No |
+| `categories` | array of strings | The category names that the image should have. | No |
 | `limit` | number | The amount of images to get. (max: 25) | No |
 
 ### Response
@@ -28,19 +28,35 @@ Returns a random image from the specified category.
                 'name': 'xxxxxxx',
                 'url': 'https://example.com/xxxxxxx'
             },
-            'nsfw': false,
+            'nsfw': 'sfw',
             'categories': [
-                'xxxxxxx',
-                'xxxxxxx',
+                {
+                    'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+                    'name': 'xxxxxxx',
+                    'description': 'xxxxxxxxxxxxxxxxxx',
+                    'nsfw': false,
+                    'createdAt': '2021-01-01T00:00:00.000Z',
+                }
+            ],
+            "characters": [
+                {
+                    'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+                    'name': 'xxxxxxx',
+                    'description': 'xxxxxxxxxxxxxxxxxx',
+                    'createdAt': '2021-01-01T00:00:00.000Z',
+                }
             ],
             'createdAt': '2021-01-01T00:00:00.000Z',
             'meta': {
                 'eTag': 'xxxxxxxxxxxxxxxxxxxxx',
                 'size': 6336807,
                 'mimetype': 'image/png',
+                'color': '#ffffff',
+                'expires': '2021-01-01T00:00:00.000Z',
                 'dimens': {
                     'width': 1024,
                     'height': 1024,
+                    'orientation': 'landscape',
                 },
             }
         }
@@ -100,19 +116,35 @@ Get an image by its ID.
             'name': 'xxxxxxx',
             'url': 'https://example.com/xxxxxxx'
         },
-        'nsfw': false,
+        'nsfw': 'sfw',
         'categories': [
-            'xxxxxxx',
-            'xxxxxxx',
+            {
+                'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+                'name': 'xxxxxxx',
+                'description': 'xxxxxxxxxxxxxxxxxx',
+                'nsfw': false,
+                'createdAt': '2021-01-01T00:00:00.000Z',
+            }
+        ],
+        "characters": [
+            {
+                'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+                'name': 'xxxxxxx',
+                'description': 'xxxxxxxxxxxxxxxxxx',
+                'createdAt': '2021-01-01T00:00:00.000Z',
+            }
         ],
         'createdAt': '2021-01-01T00:00:00.000Z',
         'meta': {
             'eTag': 'xxxxxxxxxxxxxxxxxxxxx',
             'size': 6336807,
             'mimetype': 'image/png',
+            'color': '#ffffff',
+            'expires': '2021-01-01T00:00:00.000Z',
             'dimens': {
                 'width': 1024,
                 'height': 1024,
+                'orientation': 'landscape',
             },
         }
     },
@@ -230,19 +262,35 @@ Get all images by an artist.
                 'name': 'xxxxxxx',
                 'url': 'https://example.com/xxxxxxx'
             },
-            'nsfw': false,
+            'nsfw': 'sfw',
             'categories': [
-                'xxxxxxx',
-                'xxxxxxx',
+                {
+                    'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+                    'name': 'xxxxxxx',
+                    'description': 'xxxxxxxxxxxxxxxxxx',
+                    'nsfw': false,
+                    'createdAt': '2021-01-01T00:00:00.000Z',
+                }
+            ],
+            "characters": [
+                {
+                    'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+                    'name': 'xxxxxxx',
+                    'description': 'xxxxxxxxxxxxxxxxxx',
+                    'createdAt': '2021-01-01T00:00:00.000Z',
+                }
             ],
             'createdAt': '2021-01-01T00:00:00.000Z',
             'meta': {
                 'eTag': 'xxxxxxxxxxxxxxxxxxxxx',
                 'size': 6336807,
                 'mimetype': 'image/png',
+                'color': '#ffffff',
+                'expires': '2021-01-01T00:00:00.000Z',
                 'dimens': {
                     'width': 1024,
                     'height': 1024,
+                    'orientation': 'landscape',
                 },
             }
         }
@@ -279,3 +327,116 @@ Get all images by an artist.
         ```
     </Tab>
 </Tabs>
+
+
+## `GET /character/{id}`
+
+Get a character by their ID.
+
+### Parameters
+
+| Name | Type | Description | Required |
+| :--- | :--- | :--- | :--- |
+| `id` | string | The ID of the character to get. | Yes |
+
+### Response
+
+```js
+{ 
+    'data': {
+        'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+        'name': 'xxxxxxx',
+        'description': 'xxxxxxxxxxxxxxxxxx',
+        'createdAt': '2021-01-01T00:00:00.000Z',
+        'images': 12
+    },
+    'success': true,
+}
+```
+
+### Example
+
+<Tabs items={["JavaScript", "Python 3"]}>
+    <Tab>
+        Using the `fetch` API:
+        ```js
+        const res = await fetch('https://nekos.nekidev.com/api/character/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
+        const json = await res.json()
+        console.log(json.character.name)
+        ``` 
+    </Tab>
+    <Tab>
+        Using the `requests` library:
+        ```py
+        import requests
+        res = requests.get('https://nekos.nekidev.com/api/character/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
+        print(res.json()['character']['name'])
+        ```
+
+        Using the `anime-api` library:
+        ```py
+        from anime_api.apis import NekosAPI
+        api = NekosAPI()
+        character = api.get_character(id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
+        print(character.name)
+        ```
+    </Tab>
+</Tabs>
+
+
+## `GET /category/{id}`
+
+Get a category by their ID.
+
+### Parameters
+
+| Name | Type | Description | Required |
+| :--- | :--- | :--- | :--- |
+| `id` | string | The ID of the category to get. | Yes |
+
+### Response
+
+```js
+{ 
+    'data': {
+        'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+        'name': 'xxxxxxx',
+        'description': 'xxxxxxxxxxxxxxxxxx',
+        'nsfw': false,
+        'createdAt': '2021-01-01T00:00:00.000Z',
+        'images': 12
+    },
+    'success': true,
+}
+```
+
+### Example
+
+<Tabs items={["JavaScript", "Python 3"]}>
+    <Tab>
+        Using the `fetch` API:
+        ```js
+        const res = await fetch('https://nekos.nekidev.com/api/category/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
+        const json = await res.json()
+        console.log(json.category.name)
+        ``` 
+    </Tab>
+    <Tab>
+        Using the `requests` library:
+        ```py
+        import requests
+        res = requests.get('https://nekos.nekidev.com/api/category/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
+        print(res.json()['category']['name'])
+        ```
+
+        Using the `anime-api` library:
+        ```py
+        from anime_api.apis import NekosAPI
+        api = NekosAPI()
+        category = api.get_category(id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
+        print(category.name)
+        ```
+    </Tab>
+</Tabs>
+
+
