@@ -1,7 +1,10 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { getManyImagesJson } from "../../utils/db";
+import checkRateLimit from "../../utils/api/rate-limit";
 
 export default async function handler(req, res) {
+    await checkRateLimit(req, res);
+
     var { limit = "1", categories = "" } = req.query;
 
     if (
