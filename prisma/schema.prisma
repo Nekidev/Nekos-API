@@ -21,6 +21,7 @@ model Images {
   categories  String[] @db.Uuid
   artist      String?  @db.Uuid
   characters  String[] @db.Uuid
+  color       String?  @db.VarChar
   Artists     Artists? @relation(fields: [artist], references: [id], onDelete: NoAction, onUpdate: NoAction)
   objects     objects  @relation(fields: [file], references: [id], onDelete: NoAction, onUpdate: NoAction)
 

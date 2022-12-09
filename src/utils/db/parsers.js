@@ -15,6 +15,7 @@ export default async function parseImage(
     artist,
     categories,
     characters,
+    expiresIn = 60 * 60
 ) {
     const imageOrientation = image.width > image.height ? "landscape" : image.width < image.height ? "portrait" : "square";
 
@@ -34,6 +35,8 @@ export default async function parseImage(
             eTag: file.metadata.eTag,
             size: file.metadata.size,
             mimetype: file.metadata.mimetype,
+            color: image.color,
+            expires: new Date(Date.now() + expiresIn * 1000),
             dimens: {
                 height: image.height,
                 width: image.width,
