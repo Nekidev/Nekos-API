@@ -1,7 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 import { getManyImagesJson } from "../../../../utils/db";
+import checkRateLimit from "../../../../utils/api/rate-limit";
 
 export default async function handler(req, res) {
+    if (!(await checkRateLimit(req, res))) {
+        // Rate limit exceeded
+        return;
+    }
+    
     const { artistId, limit = "1", offset = "0" } = req.query;
 
     if (!/^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi.test(artistId)) {

@@ -3,7 +3,10 @@ import { getManyImagesJson } from "../../utils/db";
 import checkRateLimit from "../../utils/api/rate-limit";
 
 export default async function handler(req, res) {
-    await checkRateLimit(req, res);
+    if (!(await checkRateLimit(req, res))) {
+        // Rate limit exceeded
+        return;
+    }
 
     var { limit = "1", categories = "" } = req.query;
 

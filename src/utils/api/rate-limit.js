@@ -12,7 +12,16 @@ export default async function checkRateLimit(req, res) {
     const limit = 1;
     const ttl = 1;
 
-    const current = await client.get(key);
+    const current = await client.get(key) || 0;
+
+    await client.set(
+        key,
+        current + 1,
+        {
+            ex: ttl,
+            nx: true,
+        }
+    )
 
     if (current >= limit) {
         res.setHeader("Retry-After", ttl);
@@ -21,15 +30,8 @@ export default async function checkRateLimit(req, res) {
             message: "You have exceeded the rate limit. Please try again later.",
             success: false,
         });
-        return;
+        return false;
     }
 
-    await client.set(
-        key,
-        current ? parseInt(current) + 1 : 1,
-        {
-            ex: ttl,
-            nx: true,
-        }
-    );
+    return true;
 }

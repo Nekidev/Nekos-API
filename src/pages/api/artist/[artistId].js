@@ -1,7 +1,13 @@
 import { PrismaClient } from '@prisma/client';
 import { parseArtist } from '../../../utils/db/parsers';
+import checkRateLimit from '../../../utils/api/rate-limit';
 
 export default async function handler(req, res) {
+    if (!(await checkRateLimit(req, res))) {
+        // Rate limit exceeded
+        return;
+    }
+    
     const { artistId } = req.query;
 
     if (!/^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi.test(artistId)) {
