@@ -27,6 +27,7 @@ export default async function parseImage(
             name: image.source_name,
             url: image.source_url,
         },
+        original: image.original,
         nsfw: image.nsfw,
         categories: await _parseMany(categories, parseCategory),
         characters: await _parseMany(characters, parseCharacter),

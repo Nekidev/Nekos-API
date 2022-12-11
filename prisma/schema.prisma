@@ -22,6 +22,7 @@ model Images {
   artist      String?  @db.Uuid
   characters  String[] @db.Uuid
   color       String?  @db.VarChar
+  original    Boolean?
   Artists     Artists? @relation(fields: [artist], references: [id], onDelete: NoAction, onUpdate: NoAction)
   objects     objects  @relation(fields: [file], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
@@ -321,6 +322,7 @@ model Categories {
   name        String    @db.VarChar
   description String?   @db.VarChar
   nsfw        Boolean   @default(false)
+  type        String?   @db.VarChar
 
   @@schema("public")
 }

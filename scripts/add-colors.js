@@ -35,6 +35,8 @@ async function main() {
         }
     });
 
+    console.log(`Found ${objects.length} objects to update.`)
+
     var i = 1;
 
     for (const object of objects) {
