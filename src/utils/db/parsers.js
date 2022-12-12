@@ -66,6 +66,7 @@ export async function parseCharacter(character, prismaClient = null) {
         id: character.id,
         name: character.name,
         description: character.description,
+        source: character.source,
         createdAt: character.created_at,
     }
 }
@@ -90,6 +91,7 @@ export async function parseCategory(category, prismaClient = null) {
         name: category.name,
         description: category.description,
         nsfw: category.nsfw,
+        type: category.type,
         images: imageCount,
         createdAt: category.created_at,
     }
