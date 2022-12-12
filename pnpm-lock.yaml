@@ -12,6 +12,7 @@ specifiers:
   express-slow-down: ^1.5.0
   highlight.js: ^11.7.0
   next: ^13.0.6
+  nextjs-cors: ^2.1.2
   nextra: ^2.0.0
   nextra-theme-docs: ^2.0.0
   node-fetch: ^3.3.0
@@ -35,6 +36,7 @@ dependencies:
   express-slow-down: 1.5.0
   highlight.js: 11.7.0
   next: 13.0.6_biqbaboplfbrettd7655fr4n2y
+  nextjs-cors: 2.1.2_next@13.0.6
   nextra: 2.0.0_6jx7hpii6hgsrmhxgqrmo3277u
   nextra-theme-docs: 2.0.0_6jx7hpii6hgsrmhxgqrmo3277u
   nprogress: 0.2.0
@@ -874,6 +876,14 @@ packages:
   /console-control-strings/1.1.0:
     resolution: {integrity: sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==}
     dev: true
+
+  /cors/2.8.5:
+    resolution: {integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==}
+    engines: {node: '>= 0.10'}
+    dependencies:
+      object-assign: 4.1.1
+      vary: 1.1.2
+    dev: false
 
   /cross-fetch/3.1.5:
     resolution: {integrity: sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==}
@@ -2247,6 +2257,15 @@ packages:
       - babel-plugin-macros
     dev: false
 
+  /nextjs-cors/2.1.2_next@13.0.6:
+    resolution: {integrity: sha512-2yOVivaaf2ILe4f/qY32hnj3oC77VCOsUQJQfhVMGsXE/YMEWUY2zy78sH9FKUCM7eG42/l3pDofIzMD781XGA==}
+    peerDependencies:
+      next: ^8.1.1-canary.54 || ^9.0.0 || ^10.0.0-0 || ^11.0.0 || ^12.0.0 || ^13.0.0
+    dependencies:
+      cors: 2.8.5
+      next: 13.0.6_biqbaboplfbrettd7655fr4n2y
+    dev: false
+
   /nextra-theme-docs/2.0.0_6jx7hpii6hgsrmhxgqrmo3277u:
     resolution: {integrity: sha512-Bkzbx4I/q4MlhGE9/wkI+xGKQFjwE/M3hcCZY1O6vOXkKWSOZ9L7BNq77iPBOzxqdrdN3fVPh0HYMKaR9O4xHA==}
     peerDependencies:
@@ -2375,7 +2394,6 @@ packages:
   /object-assign/4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
     engines: {node: '>=0.10.0'}
-    dev: true
 
   /object-hash/3.0.0:
     resolution: {integrity: sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==}
@@ -3160,6 +3178,11 @@ packages:
       diff: 5.1.0
       kleur: 4.1.5
       sade: 1.8.1
+    dev: false
+
+  /vary/1.1.2:
+    resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
+    engines: {node: '>= 0.8'}
     dev: false
 
   /vfile-location/4.0.1:
