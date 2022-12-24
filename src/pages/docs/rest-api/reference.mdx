@@ -2,9 +2,11 @@
 
 This page will help you understand how to use the Rest API. We highly recommend reading this before starting to use the API.
 
-## Ratelimits
+## Rate limits
 
-The API has a rate limit of **2 requests per second**. If you exceed this limit, you will receive a 429 response. You can use the Retry-After header to determine how long to wait before retrying.
+The API has a rate limit of **1 request per second**. If you exceed this limit, you will receive a 429 response. You can use the `Retry-After` and the `X-RateLimit-Reset` header to determine how long to wait before retrying.
+
+If you exceed the rate limit 10 times in the same hour, you'll get blocked for an hour.
 
 ## Authentication
 
