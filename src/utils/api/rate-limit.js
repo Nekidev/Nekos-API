@@ -39,6 +39,7 @@ export default async function checkRateLimit(req, res) {
         });
         await redis.set(timeout_key, timeout + 1, {
             ex: 3600,
+            nx: true
         })
         return false;
     } else if (current >= limit) {
@@ -50,8 +51,8 @@ export default async function checkRateLimit(req, res) {
                 "You have exceeded the rate limit. Please try again later.",
             success: false,
         });
-        await redis.set(`${key}-timeout`, timeout + 1, {
-            ex: 3600,
+        await redis.set(key, current + 1, {
+            ex: ttl
         })
         return false;
     }
