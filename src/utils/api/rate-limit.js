@@ -1,11 +1,6 @@
-import { Redis } from "@upstash/redis";
+import redis from './redis';
 import requestIp from "request-ip";
 import NextCors from "nextjs-cors";
-
-const client = new Redis({
-    url: process.env.UPSTASH_URL,
-    token: process.env.UPSTASH_TOKEN,
-});
 
 export default async function checkRateLimit(req, res) {
     const ip = requestIp.getClientIp(req);
@@ -13,9 +8,9 @@ export default async function checkRateLimit(req, res) {
     const limit = 1;
     const ttl = 1;
 
-    const current = (await client.get(key)) || 0;
+    const current = (await redis.get(key)) || 0;
 
-    await client.set(key, current + 1, {
+    await redis.set(key, current + 1, {
         ex: ttl,
         nx: true,
     });
