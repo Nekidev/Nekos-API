@@ -25,8 +25,12 @@ export default async function checkRateLimit(req, res) {
         optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
 
+    res.setHeader("X-RateLimit-Limit", ttl)
+    res.setHeader("X-RateLimit-Remaining", 0)
+
     if (timeout >= timeout_limit) {
         res.setHeader("Retry-After", await redis.ttl(timeout_key));
+        res.setHeader("X-RateLimit-Reset", await redis.ttl(timeout_key))
         res.status(429).json({
             code: 429,
             message:
@@ -39,6 +43,7 @@ export default async function checkRateLimit(req, res) {
         return false;
     } else if (current >= limit) {
         res.setHeader("Retry-After", ttl);
+        res.setHeader("X-RateLimit-Reset", ttl)
         res.status(429).json({
             code: 429,
             message:
