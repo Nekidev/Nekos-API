@@ -7,8 +7,11 @@ export default async function checkRateLimit(req, res) {
     const key = `ratelimit:${ip}`;
     const limit = 1;
     const ttl = 1;
+    const timeout_limit = 10;
+    const timeout_key = `${key}-timeout`
 
     const current = (await redis.get(key)) || 0;
+    const timeout = (await redis.get(timeout_key)) || 0;
 
     await redis.set(key, current + 1, {
         ex: ttl,
@@ -22,7 +25,19 @@ export default async function checkRateLimit(req, res) {
         optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
 
-    if (current >= limit) {
+    if (timeout >= timeout_limit) {
+        res.setHeader("Retry-After", await redis.ttl(timeout_key));
+        res.status(429).json({
+            code: 429,
+            message:
+                "You have exceeded the rate limit too many times. Retry in an hour.",
+            success: false,
+        });
+        await redis.set(timeout_key, timeout + 1, {
+            ex: 3600,
+        })
+        return false;
+    } else if (current >= limit) {
         res.setHeader("Retry-After", ttl);
         res.status(429).json({
             code: 429,
@@ -30,6 +45,9 @@ export default async function checkRateLimit(req, res) {
                 "You have exceeded the rate limit. Please try again later.",
             success: false,
         });
+        await redis.set(`${key}-timeout`, timeout + 1, {
+            ex: 3600,
+        })
         return false;
     }
 
