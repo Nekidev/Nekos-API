@@ -45,7 +45,7 @@ export default async function handler(req, res) {
                 success: false,
             })
         }
-        images = await prisma.$queryRaw`SELECT * FROM "Images" WHERE categories @> ARRAY(SELECT id FROM "Categories" WHERE name ILIKE ANY(ARRAY[${Prisma.join(categories)}])) TABLESAMPLE BERNOULLI (${bernoulliPercentage}) ORDER BY RANDOM() LIMIT (${parseInt(limit)})`;
+        images = await prisma.$queryRaw`SELECT * FROM "Images" TABLESAMPLE BERNOULLI (${bernoulliPercentage}) WHERE categories @> ARRAY(SELECT id FROM "Categories" WHERE name ILIKE ANY(ARRAY[${Prisma.join(categories)}])) ORDER BY RANDOM() LIMIT (${parseInt(limit)})`;
     }
 
     res.status(200).json({
