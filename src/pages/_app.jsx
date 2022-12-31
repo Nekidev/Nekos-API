@@ -12,5 +12,7 @@ Router.events.on("routeChangeError", () => NProgress.done());
 NProgress.configure({ showSpinner: false });
 
 export default function NekosAPI({ Component, pageProps }) {
-    return <Component {...pageProps} />
+    return (
+        <Component {...pageProps} />
+    )
 }
