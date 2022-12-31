@@ -41,6 +41,7 @@ export default async function parseImage(
             dimens: {
                 height: image.height,
                 width: image.width,
+                aspectRatio: image.aspect_ratio,
                 orientation: imageOrientation
             },
         }

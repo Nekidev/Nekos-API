@@ -10,21 +10,22 @@ datasource db {
 }
 
 model Images {
-  id          String   @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
-  file        String   @unique(map: "Images_url_key") @db.Uuid
-  height      Int?     @default(0)
-  width       Int?     @default(0)
-  source_url  String?  @db.VarChar
-  source_name String?  @db.VarChar
-  nsfw        String?
-  created_at  DateTime @default(now()) @db.Timestamptz(6)
-  categories  String[] @db.Uuid
-  artist      String?  @db.Uuid
-  characters  String[] @db.Uuid
-  color       String?  @db.VarChar
-  original    Boolean?
-  Artists     Artists? @relation(fields: [artist], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  objects     objects  @relation(fields: [file], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id           String   @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
+  file         String   @unique(map: "Images_url_key") @db.Uuid
+  height       Int?     @default(0)
+  width        Int?     @default(0)
+  source_url   String?  @db.VarChar
+  source_name  String?  @db.VarChar
+  nsfw         String?
+  created_at   DateTime @default(now()) @db.Timestamptz(6)
+  categories   String[] @db.Uuid
+  artist       String?  @db.Uuid
+  characters   String[] @db.Uuid
+  color        String?  @db.VarChar
+  original     Boolean?
+  aspect_ratio String?  @db.VarChar
+  Artists      Artists? @relation(fields: [artist], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  objects      objects  @relation(fields: [file], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@schema("public")
 }
@@ -332,6 +333,7 @@ model Characters {
   created_at  DateTime? @default(now()) @db.Timestamptz(6)
   name        String    @db.VarChar
   description String?   @db.VarChar
+  source      String?   @db.VarChar
 
   @@schema("public")
 }

@@ -11,22 +11,36 @@ const supabase = createClient(
 
 const prisma = new PrismaClient();
 
+function gcd(a, b) {
+    if (b == 0) {
+        return a;
+    }
+    return gcd(b, a % b);
+}
+
+function getAspectRatio(h, w) {
+    var r = gcd(h, w);
+    return `${w / r}:${h / r}`;
+}
+
 async function main() {
     const images = await prisma.images.findMany({
         where: {
-            OR: {
-                width: 0,
-                height: 0,
-            }
-        }
+            // OR: {
+            //     width: 0,
+            //     height: 0,
+            //     aspect_ratio: null
+            // },
+            aspect_ratio: null
+        },
     });
 
     const objects = await prisma.objects.findMany({
         where: {
             id: {
-                in: images.map((img) => img.file)
-            }
-        }
+                in: images.map((img) => img.file),
+            },
+        },
     });
 
     var i = 1;
@@ -34,11 +48,12 @@ async function main() {
     for (const object of objects) {
         const signedUrl = (
             await supabase.storage
-                .from('nekos-api')
+                .from("nekos-api")
                 .createSignedUrl(object.name, 60)
         ).data.signedUrl;
 
         const dimensions = await probe(signedUrl);
+        const aspect = getAspectRatio(dimensions.height, dimensions.width)
 
         await prisma.images.update({
             where: {
@@ -47,10 +62,15 @@ async function main() {
             data: {
                 width: dimensions.width,
                 height: dimensions.height,
+                aspect_ratio: aspect
             },
         });
 
-        console.log(`Updated ${object.id} - ${dimensions.width}x${dimensions.height} - (${i++}/${objects.length})`)
+        console.log(
+            `Updated ${object.id} - ${dimensions.width}x${
+                dimensions.height
+            } ${aspect} - (${i++}/${objects.length})`
+        );
     }
 
     console.log(`Updated ${objects.length} images`);
