@@ -34,7 +34,10 @@ export default async function handler(req, res) {
         });
     }
 
-    res.status(200).json(await parseArtist(artist, prisma));
+    res.status(200).json({
+        data: await parseArtist(artist, prisma),
+        success: true
+    );
 
     prisma.$disconnect();
 }
