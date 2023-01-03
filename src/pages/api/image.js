@@ -9,6 +9,7 @@ export default async function handler(req, res) {
     }
 
     var { limit = "1", categories = "" } = req.query;
+    categories = categories.toLowerCase();
 
     if (
         !/^[0-9]+$/.test(limit) ||
