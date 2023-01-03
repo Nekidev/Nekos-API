@@ -9,7 +9,6 @@ export default async function handler(req, res) {
     }
 
     var { limit = "1", categories = "" } = req.query;
-    categories = categories.toLowerCase();
 
     if (
         !/^[0-9]+$/.test(limit) ||
@@ -27,7 +26,7 @@ export default async function handler(req, res) {
 
     const prisma = new PrismaClient();
 
-    const bernoulliPercentage = 14;
+    const bernoulliPercentage = 20;
 
     categories = categories.toLowerCase().split(",");
 
@@ -47,6 +46,14 @@ export default async function handler(req, res) {
             })
         }
         images = await prisma.$queryRaw`SELECT * FROM "Images" TABLESAMPLE BERNOULLI (${bernoulliPercentage}) WHERE categories @> ARRAY(SELECT id FROM "Categories" WHERE name ILIKE ANY(ARRAY[${Prisma.join(categories)}])) ORDER BY RANDOM() LIMIT (${parseInt(limit)})`;
+    }
+
+    if (images.length == 0) {
+        res.status(404).json({
+            code: 404,
+            message: "Could not find images with the selected categories",
+            success: false
+        })
     }
 
     res.status(200).json({
