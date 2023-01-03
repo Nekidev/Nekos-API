@@ -26,12 +26,10 @@ function getAspectRatio(h, w) {
 async function main() {
     const images = await prisma.images.findMany({
         where: {
-            // OR: {
-            //     width: 0,
-            //     height: 0,
-            //     aspect_ratio: null
-            // },
-            aspect_ratio: null
+            OR: {
+                width: 0,
+                height: 0,
+            },
         },
     });
 
