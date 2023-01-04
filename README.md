@@ -1,6 +1,6 @@
 # Nekos API
 
-Open-source free public anime images API.
+Open-source free public anime images API. [Join our Discord server](https://discord.gg/PgQnuM3YnM).
 
 ## Installation
 
