@@ -26,7 +26,12 @@
         "title": "Partners",
         "type": "page",
         "theme": {
-            "layout": "raw"
+            "typesetting": "article",
+            "breadcrumb": false,
+            "footer": true,
+            "sidebar": false,
+            "toc": false,
+            "pagination": false
         }
     },
     "api": {
