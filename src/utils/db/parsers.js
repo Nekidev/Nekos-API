@@ -79,9 +79,7 @@ export async function parseCategory(category, prismaClient = null) {
         imageCount = await prismaClient.images.count({
             where: {
                 categories: {
-                    some: {
-                        id: category.id,
-                    },
+                    hasSome: [category.id],
                 },
             },
         });
