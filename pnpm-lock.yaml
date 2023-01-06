@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@heroicons/react': ^2.0.13
   '@next/font': ^13.1.1
-  '@prisma/client': ^4.8.0
+  '@prisma/client': ^4.8.1
   '@supabase/supabase-js': ^2.1.1
   '@upstash/redis': ^1.18.1
   autoprefixer: ^10.4.13
@@ -31,7 +31,7 @@ specifiers:
 dependencies:
   '@heroicons/react': 2.0.13_react@18.2.0
   '@next/font': 13.1.1
-  '@prisma/client': 4.8.0_prisma@4.8.0
+  '@prisma/client': 4.8.1_prisma@4.8.0
   '@supabase/supabase-js': 2.1.1
   '@upstash/redis': 1.18.1
   dotenv: 16.0.3
@@ -405,8 +405,8 @@ packages:
     resolution: {integrity: sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==}
     dev: false
 
-  /@prisma/client/4.8.0_prisma@4.8.0:
-    resolution: {integrity: sha512-Y1riB0p2W52kh3zgssP/YAhln3RjBFcJy3uwEiyjmU+TQYh6QTZDRFBo3JtBWuq2FyMOl1Rye8jxzUP+n0l5Cg==}
+  /@prisma/client/4.8.1_prisma@4.8.0:
+    resolution: {integrity: sha512-d4xhZhETmeXK/yZ7K0KcVOzEfI5YKGGEr4F5SBV04/MU4ncN/HcE28sy3e4Yt8UFW0ZuImKFQJE+9rWt9WbGSQ==}
     engines: {node: '>=14.17'}
     requiresBuild: true
     peerDependencies:

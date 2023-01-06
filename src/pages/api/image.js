@@ -1,6 +1,7 @@
-import { Prisma, PrismaClient } from "@prisma/client";
-import { getManyImagesJson } from "../../utils/db";
+import { PrismaClient } from "@prisma/client";
 import checkRateLimit from "../../utils/api/rate-limit";
+import { getScopesFromToken } from "../../utils/api/authorization";
+import { getManyImagesJson } from "../../utils/db";
 
 export default async function handler(req, res) {
     if (!(await checkRateLimit(req, res))) {
@@ -8,58 +9,58 @@ export default async function handler(req, res) {
         return;
     }
 
-    var { limit = "1", categories = "" } = req.query;
+    const scopes = await getScopesFromToken(req, res, true);
+
+    console.log(scopes)
+
+    if (!scopes) {
+        // Unauthorized
+        return;
+    }
+
+    if (!scopes.includes('image:list')) {
+        res.status(403).json({
+            code: 403,
+            message: "You don't have permission to access this resource.",
+            success: false
+        })
+        return;
+    }
+
+    const { limit = "10", offset = "0" } = req.query;
 
     if (
         !/^[0-9]+$/.test(limit) ||
         parseInt(limit) < 1 ||
-        parseInt(limit) > 25
+        parseInt(limit) > 50
     ) {
         res.status(400).json({
             code: 400,
             message:
-                "Invalid value for `limit` parameter. Expected a number between 1 and 25.",
+                "Invalid value for `limit` parameter. Expected a number between 1 and 50.",
             success: false,
         });
+        return;
+    } else if (!/^[0-9]+$/.test(offset) || parseInt(offset) < 0) {
+        res.status(400).json({
+            code: 400,
+            message: "Invalid value for `offset` parameter. Expected a number greater than 0.",
+            success: false
+        })
         return;
     }
 
     const prisma = new PrismaClient();
 
-    const bernoulliPercentage = 20;
-
-    categories = categories.toLowerCase().split(",");
-
-    var images;
-
-    if (categories.length == 1 && categories[0] == "") {
-        images = await prisma.$queryRaw`SELECT * FROM "Images" TABLESAMPLE BERNOULLI (${bernoulliPercentage}) ORDER BY RANDOM() LIMIT (${parseInt(limit)})`;
-    } else {
-        const matchingCategories = await prisma.$queryRaw`SELECT * FROM "Categories" WHERE name ILIKE ANY(ARRAY[${Prisma.join(categories)}])`
-        if (categories.length != Array.from(matchingCategories).length) {
-            var nonMatchingCategories = categories.filter(category => !matchingCategories.map(category => category.name.toLowerCase()).includes(category))
-            
-            res.status(400).json({
-                code: 400,
-                message: `Invalid value for \`categories\` parameter. The following categories do not exist: ${nonMatchingCategories.join(", ")}`,
-                success: false,
-            })
-        }
-        images = await prisma.$queryRaw`SELECT * FROM "Images" TABLESAMPLE BERNOULLI (${bernoulliPercentage}) WHERE categories @> ARRAY(SELECT id FROM "Categories" WHERE name ILIKE ANY(ARRAY[${Prisma.join(categories)}])) ORDER BY RANDOM() LIMIT (${parseInt(limit)})`;
-    }
-
-    if (images.length == 0) {
-        res.status(404).json({
-            code: 404,
-            message: "Could not find images with the selected categories",
-            success: false
-        })
-    }
+    const images = await prisma.images.findMany({
+        take: parseInt(limit),
+        skip: parseInt(offset)
+    })
 
     res.status(200).json({
         data: await getManyImagesJson(images, prisma),
-        success: true,
-    });
+        success: true
+    })
 
     prisma.$disconnect();
 }

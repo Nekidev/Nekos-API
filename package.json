@@ -2,7 +2,7 @@
 	"dependencies": {
 		"@heroicons/react": "^2.0.13",
 		"@next/font": "^13.1.1",
-		"@prisma/client": "^4.8.0",
+		"@prisma/client": "^4.8.1",
 		"@supabase/supabase-js": "^2.1.1",
 		"@upstash/redis": "^1.18.1",
 		"dotenv": "^16.0.3",

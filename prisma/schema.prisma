@@ -338,6 +338,16 @@ model Characters {
   @@schema("public")
 }
 
+model Tokens {
+  token      String   @id(map: "tokens_pkey") @default(dbgenerated("encode(extensions.gen_random_bytes(50), 'hex'::text)")) @db.VarChar
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  purpose    String?  @db.VarChar
+  scopes     String[] @default([]) @db.VarChar
+  owner      String?  @db.VarChar
+
+  @@schema("public")
+}
+
 enum aal_level {
   aal1
   aal2
