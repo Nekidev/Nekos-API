@@ -71,25 +71,31 @@ Returns a random image from the specified category.
     <Tab>
         Using the `fetch` API:
         ```js
-        const res = await fetch('https://nekos.nekidev.com/api/image/random?categories=neko')
+        const res = await fetch('https://nekos.nekidev.com/api/image/random?categories=catgirl')
         const json = await res.json()
-        console.log(json.images.url)
+        console.log(json.data[0].url)
         ``` 
     </Tab>
     <Tab>
         Using the `requests` library:
         ```py
         import requests
-        res = requests.get('https://nekos.nekidev.com/api/image/random?categories=neko')
-        print(res.json()['images']['url'])
+        res = requests.get('https://nekos.nekidev.com/api/image/random?categories=catgirl')
+        print(res.json()['data'][0]['url'])
         ```
 
         Using the `anime-api` library:
         ```py
         from anime_api.apis import NekosAPI
         api = NekosAPI()
-        image = api.get_random_image(categories=['neko'])
+        
+        # Get single image
+        image = api.get_random_image(categories=['catgirl'])
         print(image.url)
+
+        # Get multiple images
+        images = api.get_random_images(categories=['catgirl'])
+        print(images[0].url)
         ```
     </Tab>
 </Tabs>
@@ -160,7 +166,7 @@ Get an image by its ID.
         ```js
         const res = await fetch('https://nekos.nekidev.com/api/image/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
         const json = await res.json()
-        console.log(json.image.url)
+        console.log(json.data.url)
         ``` 
     </Tab>
     <Tab>
@@ -168,14 +174,14 @@ Get an image by its ID.
         ```py
         import requests
         res = requests.get('https://nekos.nekidev.com/api/image/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
-        print(res.json()['image']['url'])
+        print(res.json()['data']['url'])
         ```
 
         Using the `anime-api` library:
         ```py
         from anime_api.apis import NekosAPI
         api = NekosAPI()
-        image = api.get_image(id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
+        image = api.get_image_by_id(image_id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
         print(image.url)
         ```
     </Tab>
@@ -214,7 +220,7 @@ Get an artist by their ID.
         ```js
         const res = await fetch('https://nekos.nekidev.com/api/artist/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
         const json = await res.json()
-        console.log(json.artist.name)
+        console.log(json.data.name)
         ``` 
     </Tab>
     <Tab>
@@ -222,14 +228,14 @@ Get an artist by their ID.
         ```py
         import requests
         res = requests.get('https://nekos.nekidev.com/api/artist/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
-        print(res.json()['artist']['name'])
+        print(res.json()['data']['name'])
         ```
 
         Using the `anime-api` library:
         ```py
         from anime_api.apis import NekosAPI
         api = NekosAPI()
-        artist = api.get_artist(id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
+        artist = api.get_artist_by_id(artist_id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
         print(artist.name)
         ```
     </Tab>
@@ -306,7 +312,7 @@ Get all images by an artist.
         ```js
         const res = await fetch('https://nekos.nekidev.com/api/artist/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images')
         const json = await res.json()
-        console.log(json.images[0].url)
+        console.log(json.data[0].url)
         ``` 
     </Tab>
     <Tab>
@@ -314,14 +320,14 @@ Get all images by an artist.
         ```py
         import requests
         res = requests.get('https://nekos.nekidev.com/api/artist/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images')
-        print(res.json()['images'][0]['url'])
+        print(res.json()['data'][0]['url'])
         ```
 
         Using the `anime-api` library:
         ```py
         from anime_api.apis import NekosAPI
         api = NekosAPI()
-        images = api.get_artist_images(id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
+        images = api.get_images_by_artist_id(artist_id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
         print(images[0].url)
         ```
     </Tab>
@@ -361,7 +367,7 @@ Get a character by their ID.
         ```js
         const res = await fetch('https://nekos.nekidev.com/api/character/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
         const json = await res.json()
-        console.log(json.character.name)
+        console.log(json.data.name)
         ``` 
     </Tab>
     <Tab>
@@ -369,18 +375,79 @@ Get a character by their ID.
         ```py
         import requests
         res = requests.get('https://nekos.nekidev.com/api/character/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
-        print(res.json()['character']['name'])
+        print(res.json()['data']['name'])
         ```
 
         Using the `anime-api` library:
         ```py
         from anime_api.apis import NekosAPI
         api = NekosAPI()
-        character = api.get_character(id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
+        character = api.get_character_by_id(character_id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
         print(character.name)
         ```
     </Tab>
 </Tabs>
+
+
+## `GET /category`
+
+Get a category by their ID.
+
+### Parameters
+
+| Name | Type | Description | Required |
+| :--- | :--- | :--- | :--- |
+| `limit` | integer | The maximum number of categories to get. | No |
+| `offset` | integer | The number of categories to skip. | No |
+
+### Response
+
+```js
+{ 
+    'data': [
+        {
+            'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+            'name': 'xxxxxxx',
+            'description': 'xxxxxxxxxxxxxxxxxx',
+            'nsfw': false,
+            'createdAt': '2021-01-01T00:00:00.000Z',
+        },
+        ...
+    ],
+    'success': true,
+}
+```
+
+### Example
+
+<Tabs items={["JavaScript", "Python 3"]}>
+    <Tab>
+        Using the `fetch` API:
+        ```js
+        const res = await fetch('https://nekos.nekidev.com/api/category?limit=10&offset=0')
+        const json = await res.json()
+        console.log(json.data[0].name)
+        ``` 
+    </Tab>
+    <Tab>
+        Using the `requests` library:
+        ```py
+        import requests
+        res = requests.get('https://nekos.nekidev.com/api/category?limit=10&offset=0')
+        print(res.json()['data'][0]['name'])
+        ```
+
+        Using the `anime-api` library:
+        ```py
+        from anime_api.apis import NekosAPI
+        api = NekosAPI()
+        categories = api.get_categories(limit=10, offset=0)
+        print(categories[0].name)
+        ```
+    </Tab>
+</Tabs>
+
+
 
 
 ## `GET /category/{id}`
@@ -417,7 +484,7 @@ Get a category by their ID.
         ```js
         const res = await fetch('https://nekos.nekidev.com/api/category/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
         const json = await res.json()
-        console.log(json.category.name)
+        console.log(json.data.name)
         ``` 
     </Tab>
     <Tab>
@@ -425,14 +492,14 @@ Get a category by their ID.
         ```py
         import requests
         res = requests.get('https://nekos.nekidev.com/api/category/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
-        print(res.json()['category']['name'])
+        print(res.json()['data']['name'])
         ```
 
         Using the `anime-api` library:
         ```py
         from anime_api.apis import NekosAPI
         api = NekosAPI()
-        category = api.get_category(id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
+        category = api.get_category_by_id(category_id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
         print(category.name)
         ```
     </Tab>
