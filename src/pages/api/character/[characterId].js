@@ -20,9 +20,9 @@ export default async function handler(req, res) {
 
     const prisma = new PrismaClient();
 
-    const character = await prisma.character.findUnique({
+    const character = await prisma.characters.findUnique({
         where: {
-            id: parseInt(characterId),
+            id: characterId,
         }
     });
 
@@ -35,7 +35,7 @@ export default async function handler(req, res) {
     }
 
     res.status(200).json({
-        data: parseCharacter(character, prisma),
+        data: await parseCharacter(character, prisma),
         success: true,
     });
 }

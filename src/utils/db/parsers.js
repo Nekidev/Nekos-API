@@ -55,9 +55,7 @@ export async function parseCharacter(character, prismaClient = null) {
         imageCount = await prismaClient.images.count({
             where: {
                 characters: {
-                    some: {
-                        id: character.id,
-                    },
+                    hasSome: [character.id],
                 },
             },
         });
