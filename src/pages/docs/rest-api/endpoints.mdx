@@ -71,7 +71,7 @@ Returns a random image from the specified category.
     <Tab>
         Using the `fetch` API:
         ```js
-        const res = await fetch('https://nekos.nekidev.com/api/image?categories=neko')
+        const res = await fetch('https://nekos.nekidev.com/api/image/random?categories=neko')
         const json = await res.json()
         console.log(json.images.url)
         ``` 
@@ -80,7 +80,7 @@ Returns a random image from the specified category.
         Using the `requests` library:
         ```py
         import requests
-        res = requests.get('https://nekos.nekidev.com/api/image?categories=neko')
+        res = requests.get('https://nekos.nekidev.com/api/image/random?categories=neko')
         print(res.json()['images']['url'])
         ```
 
