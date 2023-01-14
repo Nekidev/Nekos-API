@@ -8,9 +8,12 @@ export default async function handler(req, res) {
 
     res.status(200).json({ 
         endpoints: [
+            '/stats',
             '/image',
             '/image/:id',
+            '/image/random',
             '/character/:id',
+            '/category',
             '/category/:id',
             '/artist/:id',
             '/artist/:id/images',
