@@ -69,12 +69,12 @@ export default function Home() {
                     <Tabs items={['Python', 'JavaScript']}>
                         <Tab>
                             <CodePre language="python">
-                                {`from anime_api.apis import NekosAPI\n\napi = NekosAPI()\n\napi.get_random_image("neko")`}
+                                {`from anime_api.apis import NekosAPI\n\nnekos = NekosAPI()\n\nnekos.get_random_image()`}
                             </CodePre>
                         </Tab>
                         <Tab>
                             <CodePre language="javascript">
-                                {`const { NekosAPI } = require('nekos-api');\n\nconst api = new NekosAPI();\n\nawait api.get_random_image("neko")`}
+                                {`const { NekosAPI } = require('nekosapi');\n\nconst nekos = new NekosAPI();\n\nnekos.getRandomImage().then(image => console.log(image));`}
                             </CodePre>
                         </Tab>
                     </Tabs>
