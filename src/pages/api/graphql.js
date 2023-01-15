@@ -16,7 +16,7 @@ const defaultQuery = `
 # Here is an example:
 
 query {
-  getRandomImages(amount: 5) {
+  getRandomImages(limit: 5) {
     id
     url
   }
