@@ -1,5 +1,6 @@
 export default `
-    scalar Date
+    # An ISO 8601 formatted datetime
+    scalar Datetime
 
     enum Nsfw {
         sfw
@@ -30,7 +31,7 @@ export default `
         size: Int!
         mimetype: String!
         color: String
-        expires: Date!
+        expires: Datetime!
         dimens: _ImageDimens!
     }
 
@@ -48,7 +49,7 @@ export default `
         nsfw: Boolean!
         type: String!
         images: Int
-        createdAt: Date!
+        createdAt: Datetime!
     }
 
     type Character {
@@ -56,7 +57,7 @@ export default `
         name: String!
         description: String
         source: String
-        createdAt: Date!
+        createdAt: Datetime!
     }
 
     type Image {
@@ -68,11 +69,12 @@ export default `
         nsfw: Nsfw
         categories: [Category!]
         characters: [Character!]
-        createdAt: Date!
+        createdAt: Datetime!
         meta: _ImageMeta!
     }
 
     type Query {
+        # Get up to 25 different random images.
         getRandomImages(limit: Int! = 1, categories: [String!]): [Image!]
     }
 `
