@@ -10,6 +10,11 @@
       "title": "Documentation",
       "type": "page"
     },
+    "graphiql": {
+        "title": "GraphiQL",
+        "type": "page",
+        "href": "/api/graphql"
+    },
     "about": {
         "title": "About",
         "type": "page",

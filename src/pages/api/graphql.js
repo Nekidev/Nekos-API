@@ -7,8 +7,7 @@ const schema = createSchema({
     resolvers,
 });
 
-const defaultQuery = `
-# Welcome to Nekos API GraphQL API!
+const defaultQuery = `# Welcome to Nekos API GraphQL API!
 #
 # You can use this editor to test your queries,
 # read the documentation and save code snippets.
