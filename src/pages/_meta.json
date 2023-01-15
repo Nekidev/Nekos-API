@@ -7,13 +7,31 @@
         }
     },
     "docs": {
-      "title": "Documentation",
-      "type": "page"
-    },
-    "graphiql": {
-        "title": "GraphiQL",
-        "type": "page",
-        "href": "/api/graphql"
+        "title": "Documentation",
+        "type": "menu",
+        "items": [
+            {
+                "title": "Introduction",
+                "href": "/docs"
+            },
+            {
+                "title": "Getting Started",
+                "href": "/docs/getting-started"
+            },
+            {
+                "title": "Libraries",
+                "href": "/docs/libraries"
+            },
+            {
+                "title": "Rest API",
+                "href": "/docs/rest-api/reference"
+            },
+            {
+                "title": "GraphQL",
+                "href": "/docs/graphql/reference"
+            }
+        ],
+        "href": "/docs"
     },
     "about": {
         "title": "About",

@@ -59,4 +59,5 @@ export default {
     sidebar: {
         defaultMenuCollapseLevel: 0
     },
+    defaultShowCopyCode: true
 }

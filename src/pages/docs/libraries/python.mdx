@@ -12,9 +12,9 @@ The [`anime-api`](https://github.com/Nekidev/anime-api) library is an officially
 
 ## Installation
 
-The `anime-api` library can be installed on Python 3.7 and higher using PIP, Poetry or Conda.
+The `anime-api` library can be installed on Python 3.7 and higher using pip, Poetry or Conda.
 
-<Tabs items={['PIP', 'Poetry', 'Conda']}>
+<Tabs items={['Pip', 'Poetry', 'Conda']}>
     <Tab>
         ```bash
         pip install anime-api
@@ -36,7 +36,7 @@ The `anime-api` library can be installed on Python 3.7 and higher using PIP, Poe
 
 The `anime-api` library contains lots of wrappers for different APIs, but we'll focus on the `NekosAPI(){:python}` class. You can import it from the `anime_api.apis` module.
 
-```python
+```python showLineNumbers
 from anime_api.apis import NekosAPI
 
 nekos = NekosAPI()
@@ -44,13 +44,38 @@ nekos = NekosAPI()
 
 ### Get a random image
 
-The `NekosAPI` class has a `get_random_image()` method that returns a random image.
+The `NekosAPI(){:python}` class has a `get_random_image(){:python}` method that returns a random image.
 
-```python
+```python showLineNumbers
 from anime_api.apis import NekosAPI
 
 nekos = NekosAPI()
-image = nekos.get_random_image()
+image = nekos.get_random_image(categories=["kemonomimi"])
+
+print(image.url)
+```
+
+You can also get many images (up to 25) at once using the `get_random_images(){:python}` method instead.
+
+```python showLineNumbers
+from anime_api.apis import NekosAPI
+
+nekos = NekosAPI()
+images = nekos.get_random_images(limit=10, categories=["kemonomimi"])
+
+for image in images:
+    print(image.url)
+```
+
+### Get an image by it's ID
+
+Every image in the API has it's own ID. You can fetch an image by it's ID to get a specific image's information.
+
+```python showLineNumbers
+from anime_api.apis import NekosAPI
+
+nekos = NekosAPI()
+image = nekos.get_image_by_id(image_id="some-uuid")
 
 print(image.url)
 ```
