@@ -69,7 +69,7 @@ for image in images:
 
 ### Get an image by it's ID
 
-Every image in the API has it's own ID. You can fetch an image by it's ID to get a specific image's information.
+Every image in the API has its own ID. You can fetch an image by its ID to get a specific image's information.
 
 ```python showLineNumbers
 from anime_api.apis import NekosAPI
@@ -78,6 +78,38 @@ nekos = NekosAPI()
 image = nekos.get_image_by_id(image_id="some-uuid")
 
 print(image.url)
+```
+
+### Get an artist by it's ID
+
+Each artist in the API has its ID. Although every image comes with (almost) all its artist information, fetching an artist by its ID has its advantages.
+
+```python showLineNumbers
+from anime_api.apis import NekosAPI
+
+nekos = NekosAPI()
+artist = nekos.get_artist_by_id(artist_id="some-uuid")
+
+print(artist.images)
+```
+
+As you can see, the `images` property is added to the `Artist` object when it's fetched by ID.
+
+### Get all artist's images
+
+If you want to fetch an artist's images, you can use the `get_images_by_artist_id(){:python}` method. This method returns up to 25 images and supports pagination.
+
+```python showLineNumbers
+from anime_api.apis import NekosAPI
+
+nekos = NekosAPI()
+
+# This will return up to 10 images from arist with "some-uuid" as ID and skip
+# the first 5. By default the limit is set to 10 and the offset is set to 0.
+images = nekos.get_images_by_artist_id(artist_id="some-uuid", limit=10, offset=5)
+
+for image in images:
+    print(image.artist.name)
 ```
 
 ## Reference
