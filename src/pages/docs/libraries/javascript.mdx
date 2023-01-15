@@ -6,7 +6,7 @@ import { Callout, Tab, Tabs } from 'nextra-theme-docs';
     This page is a work in progress.
 </Callout>
 
-The `nekosapi` Typescript library is a (community made) officially supported API warapper for Nekos API.
+The [`nekosapi`](https://www.npmjs.com/package/nekosapi) Typescript library is a officially supported API warapper for Nekos API, kindly made by [Cataclym](https://gitlab.com/cataclym).
 
 ## Installation
 
@@ -30,3 +30,13 @@ The library can be installed using Yarn, PNPM or NPM:
         ```
     </Tab>
 </Tabs>
+
+## Usage
+
+The `NekosAPI(){:javascript}` class can be imported from the `nekosapi` package.
+
+```javascript showLineNumbers
+const { NekosAPI } = require('nekosapi');
+
+const nekos = new NekosAPI();
+```
