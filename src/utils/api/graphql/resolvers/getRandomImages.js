@@ -1,12 +1,9 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { getManyImagesJson } from "../../../db";
-import checkRateLimit from "../../../api/rate-limit";
 import { GraphQLError } from 'graphql'
 
 export default async function getRandomImages(_, args, context) {
     const { limit = 1, categories = [] } = args;
-
-    await checkRateLimit(context.req)
 
     if (limit <= 0 || limit > 25) {
         throw new GraphQLError("Invalid value for `limit` parameter. Expected a number between 1 and 25.")

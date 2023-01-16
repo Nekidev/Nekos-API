@@ -112,3 +112,7 @@ export async function parseArtist(artist, prismaClient = null) {
         images: imageCount,
     } : null
 }
+
+export async function parseArtists(artists) {
+    return await _parseMany(artists, parseArtist)
+}

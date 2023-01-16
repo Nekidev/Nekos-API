@@ -1,9 +1,15 @@
-import getRandomImages from "./resolvers/getRandomImages";
 import getImage from "./resolvers/getImage";
+import getRandomImages from "./resolvers/getRandomImages";
+import getArtist from "./resolvers/getArtist";
+import getArtists from "./resolvers/getArtists";
+import getArtistImages from "./resolvers/getArtistImages";
 
 export default {
     Query: {
-        getRandomImages: getRandomImages,
-        getImage: getImage,
+        getImage,
+        getRandomImages,
+        getArtist,
+        getArtists,
+        getArtistImages
     },
 };

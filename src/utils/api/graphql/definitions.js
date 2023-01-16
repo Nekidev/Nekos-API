@@ -37,8 +37,8 @@ export default `
 
     type Artist {
         id: ID!
-        name: String!
-        url: String!
+        name: String
+        url: String
         images: Int
     }
 
@@ -74,8 +74,10 @@ export default `
     }
 
     type Query {
-        # Get up to 25 different random images.
-        getRandomImages(limit: Int! = 1, categories: [String!]): [Image!]!
         getImage(id: ID!): Image!
+        getRandomImages(limit: Int! = 1, categories: [String!]): [Image!]!
+        getArtist(id: ID!): Artist!
+        getArtists(limit: Int! = 10, offset: Int! = 0): [Artist!]!
+        getArtistImages(id: ID!, limit: Int! = 10, offset: Int! = 0): [Image!]!
     }
 `
