@@ -75,6 +75,7 @@ export default `
 
     type Query {
         # Get up to 25 different random images.
-        getRandomImages(limit: Int! = 1, categories: [String!]): [Image!]
+        getRandomImages(limit: Int! = 1, categories: [String!]): [Image!]!
+        getImage(id: ID!): Image!
     }
 `

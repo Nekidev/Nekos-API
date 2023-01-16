@@ -1,7 +1,9 @@
-import getRandomImages from './resolvers/getRandomImages';
+import getRandomImages from "./resolvers/getRandomImages";
+import getImage from "./resolvers/getImage";
 
 export default {
     Query: {
-        getRandomImages: getRandomImages
-    }
-}
+        getRandomImages: getRandomImages,
+        getImage: getImage,
+    },
+};
