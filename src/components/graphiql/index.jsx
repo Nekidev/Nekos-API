@@ -15,7 +15,7 @@ const defaultQuery = `# Welcome to Nekos API GraphQL API!
 # Here is an example:
 
 query ExampleQuery($limit: Int!) {
-  images: getRandomImages(limit: $lim) {
+  images: getRandomImages(limit: $limit) {
     id
     url
   }
