@@ -1,7 +1,9 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@graphiql/plugin-code-exporter': ^0.1.1
   '@graphiql/plugin-explorer': ^0.1.12
+  '@graphiql/react': ^0.15.0
   '@graphiql/toolkit': ^0.8.0
   '@heroicons/react': ^2.0.13
   '@next/font': ^13.1.1
@@ -37,7 +39,9 @@ specifiers:
   tailwindcss: ^3.2.4
 
 dependencies:
+  '@graphiql/plugin-code-exporter': 0.1.1_gdcq4dv6opitr3wbfwyjmanyra
   '@graphiql/plugin-explorer': 0.1.12_xe4twbeoqswbn2uas4ov5melbq
+  '@graphiql/react': 0.15.0_xe4twbeoqswbn2uas4ov5melbq
   '@graphiql/toolkit': 0.8.0_bjgwlwebsm7ulvpmjq4c2w36jm
   '@heroicons/react': 2.0.13_react@18.2.0
   '@next/font': 13.1.1
@@ -118,6 +122,21 @@ packages:
       graphql: 16.6.0
       lru-cache: 6.0.0
       tslib: 2.4.1
+    dev: false
+
+  /@graphiql/plugin-code-exporter/0.1.1_gdcq4dv6opitr3wbfwyjmanyra:
+    resolution: {integrity: sha512-vV7DTd60/P4n65Oj7SosQv4bjewxpxfpuBj3Z/3tV6XnDRwDZZpMgjdH1qUDA+3hlgB9icqOs0vpau2z6eQVhA==}
+    peerDependencies:
+      graphql: ^15.5.0 || ^16.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      graphiql-code-exporter: 3.0.3_gdcq4dv6opitr3wbfwyjmanyra
+      graphql: 16.6.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    transitivePeerDependencies:
+      - codemirror
     dev: false
 
   /@graphiql/plugin-explorer/0.1.12_xe4twbeoqswbn2uas4ov5melbq:
@@ -1897,6 +1916,20 @@ packages:
 
   /graceful-fs/4.2.10:
     resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
+    dev: false
+
+  /graphiql-code-exporter/3.0.3_gdcq4dv6opitr3wbfwyjmanyra:
+    resolution: {integrity: sha512-Ml3J/ojCQ56qrIgJPDCrWQ2cpI/6yio2P1tHPBuvhGJ2zVSUCH/D+v1DIwXIzsAMwqq0WkaknqH3iuA6LD5A5A==}
+    peerDependencies:
+      codemirror: ^5.26.0
+      graphql: ^14.1.1
+      react: ^15.6.0 || ^16.0.0
+      react-dom: ^16.2.0
+    dependencies:
+      copy-to-clipboard: 3.3.3
+      graphql: 16.6.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /graphiql-explorer/0.9.0_gdcq4dv6opitr3wbfwyjmanyra:

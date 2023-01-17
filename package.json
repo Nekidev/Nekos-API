@@ -1,6 +1,8 @@
 {
 	"dependencies": {
+		"@graphiql/plugin-code-exporter": "^0.1.1",
 		"@graphiql/plugin-explorer": "^0.1.12",
+		"@graphiql/react": "^0.15.0",
 		"@graphiql/toolkit": "^0.8.0",
 		"@heroicons/react": "^2.0.13",
 		"@next/font": "^13.1.1",

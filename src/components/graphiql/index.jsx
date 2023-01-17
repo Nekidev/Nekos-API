@@ -1,11 +1,13 @@
 import * as React from "react";
+import Link from "next/link";
 import GraphiQL from "graphiql";
 import { useExplorerPlugin } from '@graphiql/plugin-explorer';
+import { useExporterPlugin } from '@graphiql/plugin-code-exporter';
 
-import "graphiql/graphiql.css";
 import styles from "./index.module.css";
+import "graphiql/graphiql.css";
 import '@graphiql/plugin-explorer/dist/style.css';
-import Link from "next/link";
+import '@graphiql/plugin-code-exporter/dist/style.css';
 
 const defaultQuery = `# Welcome to Nekos API GraphQL API!
 #
@@ -25,11 +27,59 @@ query ExampleQuery($limit: Int!) {
 # - Ctrl/Cmd + Enter
 # - Click on the pink run button`;
 
+const removeQueryName = query =>
+    query.replace(
+        /^[^{(]+([{(])/,
+        (_match, openingCurlyBracketsOrParenthesis) =>
+            `query ${openingCurlyBracketsOrParenthesis}`,
+    );
+
+const getQuery = (arg, spaceCount) => {
+    const { operationDataList } = arg;
+    const { query } = operationDataList[0];
+    const anonymousQuery = removeQueryName(query);
+    return (
+        ` `.repeat(spaceCount) +
+        anonymousQuery.replace(/\n/g, `\n` + ` `.repeat(spaceCount))
+    );
+};
+
+const exampleSnippetOne = {
+    name: `Example One`,
+    language: `JavaScript`,
+    codeMirrorMode: `jsx`,
+    options: [],
+    generate: arg => `export const query = graphql\`
+${getQuery(arg, 2)}
+\`
+`,
+};
+
+const exampleSnippetTwo = {
+    name: `Example Two`,
+    language: `JavaScript`,
+    codeMirrorMode: `jsx`,
+    options: [],
+    generate: arg => `import { graphql } from 'graphql'
+
+export const query = graphql\`
+${getQuery(arg, 2)}
+\`
+`,
+};
+
+const snippets = [exampleSnippetOne, exampleSnippetTwo];
+
 export default function IDE({ }) {
     const [query, setQuery] = React.useState(defaultQuery);
     const explorerPlugin = useExplorerPlugin({
         query,
         onEdit: setQuery,
+    });
+    const exporterPlugin = useExporterPlugin({
+        query,
+        snippets,
+        codeMirrorTheme: 'graphiql',
     });
     return (
         <div style={{
@@ -52,7 +102,7 @@ export default function IDE({ }) {
                 variables={`{\n  "limit": 5\n}`}
                 query={query}
                 onEditQuery={setQuery}
-                plugins={[explorerPlugin]}
+                plugins={[explorerPlugin, exporterPlugin]}
             >
                 <GraphiQL.Logo>
                     <Link href="/" className="hover:opacity-90 flex flex-row items-center gap-2 text-sm">
