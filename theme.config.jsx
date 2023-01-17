@@ -59,5 +59,8 @@ export default {
     sidebar: {
         defaultMenuCollapseLevel: 0
     },
-    defaultShowCopyCode: true
+    defaultShowCopyCode: true,
+    i18n: [
+        { locale: 'en', text: 'English' },
+    ]
 }

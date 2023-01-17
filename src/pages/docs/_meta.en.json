@@ -1,5 +1,5 @@
 {
-    "index": "Introduction",
+    "introduction": "Introduction",
     "getting-started": "Getting Started",
     "libraries": "Libraries",
     "--- Reference ---": {
@@ -19,5 +19,8 @@
         "title": "About",
         "href": "/about",
         "newWindow": false
+    },
+    "index": {
+        "display": "hidden"
     }
 }
