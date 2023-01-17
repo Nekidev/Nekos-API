@@ -8,7 +8,8 @@ import styles from "./index.module.css";
 import "graphiql/graphiql.css";
 import '@graphiql/plugin-explorer/dist/style.css';
 
-const defaultQuery = `# Welcome to Nekos API GraphQL API!
+const defaultQuery = /* GraphQL */ `
+# Welcome to Nekos API GraphQL API!
 #
 # You can use this editor to test your queries,
 # read the documentation and save code snippets.
@@ -24,7 +25,8 @@ query ExampleQuery($limit: Int!) {
 
 # To run this example either:
 # - Ctrl/Cmd + Enter
-# - Click on the pink run button`;
+# - Click on the pink run button
+`.trim();
 
 export default function IDE({ }) {
     const [query, setQuery] = React.useState(defaultQuery);
