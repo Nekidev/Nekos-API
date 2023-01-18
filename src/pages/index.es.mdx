@@ -59,6 +59,26 @@ export default function Home() {
                     ))}
                 </div>
             </div>
+            <div className={`${styles.content} ${styles.infoContainer} flex flex-col items-center relative`}>
+                <h2 className={styles.infoTitle}>Estadísticas</h2>
+                <p className={styles.infoSubtitle}>
+                    ¿Podría ser mejor? No lo creo.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-neutral-300 dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-700 rounded-xl overflow-hidden font-mono w-full lg:w-auto mt-8">
+                    <div className="bg-white dark:bg-neutral-900 px-12 py-4 flex flex-col items-center justify-center text-center">
+                        <div className="text-lg">Imagenes</div>
+                        <h4 className="text-3xl font-bold">+2800</h4>
+                    </div>
+                    <div className="bg-white dark:bg-neutral-900 px-12 py-4 flex flex-col items-center justify-center text-center">
+                        <div className="text-lg">Categorías</div>
+                        <h4 className="text-3xl font-bold">+25</h4>
+                    </div>
+                    <div className="bg-white dark:bg-neutral-900 px-12 py-4 flex flex-col items-center justify-center text-center md:col-span-2 lg:col-span-1">
+                        <div className="text-lg">Tiempo de respuesta promedio</div>
+                        <h4 className="text-3xl font-bold">&lt; 1 seg</h4>
+                    </div>
+                </div>
+            </div>
             <div className={`${styles.content} ${styles.infoContainer} ${styles.wrappersContainer}`}>
                 <div>
                     <h2 className={styles.infoTitle}>Librerias oficiales</h2>
