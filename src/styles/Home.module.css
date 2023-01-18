@@ -92,10 +92,10 @@
     }
 
     .cardContainer {
-        @apply p-4 rounded-xl bg-white flex flex-row gap-4 items-start;
+        @apply p-4 rounded-xl bg-white flex flex-row gap-4 items-start border border-neutral-200 drop-shadow-sm;
     }
     html:global(.dark) .cardContainer {
-        @apply bg-neutral-900 border border-neutral-800;
+        @apply bg-neutral-900 border-neutral-800;
     }
     .cardContainer .title {
         @apply text-xl font-bold;
