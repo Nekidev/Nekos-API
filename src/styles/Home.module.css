@@ -37,7 +37,7 @@
         @apply text-2xl font-light mt-4;
     }
     .mainLink {
-        @apply mt-8 text-2xl text-[hsl(var(--nextra-primary-hue),100%,50%)] hover:text-[hsl(var(--nextra-primary-hue),100%,70%)] transition flex flex-row items-center gap-4 w-fit;
+        @apply text-2xl text-[hsl(var(--nextra-primary-hue),100%,50%)] hover:text-[hsl(var(--nextra-primary-hue),100%,70%)] transition flex flex-row items-center gap-4 w-fit leading-none;
     }
     .mainLink > svg {
         @apply h-6 w-6;
@@ -95,7 +95,7 @@
         @apply p-4 rounded-xl bg-white flex flex-row gap-4 items-start;
     }
     html:global(.dark) .cardContainer {
-        @apply bg-neutral-800;
+        @apply bg-neutral-900 border border-neutral-800;
     }
     .cardContainer .title {
         @apply text-xl font-bold;

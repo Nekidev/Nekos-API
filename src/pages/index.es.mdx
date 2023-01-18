@@ -39,12 +39,14 @@ export default function Home() {
                 <div className={styles.heroContainer}>
                     <h1 className={styles.mainTitle}>Nekos API</h1>
                     <p className={styles.mainDescription}>Una API de imagenes de anime gratis, de codigo abierto, y publica.</p>
-                    <Link href="/docs" className={styles.mainLink}>
-                        Documentación
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                        </svg>
-                    </Link>
+                    <div className="flex flex-row items-center mt-8 gap-8">
+                        <Link href="/docs" className={styles.mainLink}>
+                            Documentación
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                            </svg>
+                        </Link>
+                    </div>
                 </div>
             </div>
             <div className={`${styles.content} ${styles.infoContainer}`}>
