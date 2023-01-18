@@ -1,4 +1,4 @@
-import checkRateLimit from "../../utils/api/rate-limit";
+import checkRateLimit from "../utils/api/rate-limit";
 
 export default async function handler(req, res) {
     if (!(await checkRateLimit(req, res))) {
@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     }
 
     res.status(200).json({ 
-        endpoints: [
+        data: [
             '/stats',
             '/image',
             '/image/:id',
@@ -15,9 +15,13 @@ export default async function handler(req, res) {
             '/character/:id',
             '/category',
             '/category/:id',
+            '/artist',
             '/artist/:id',
             '/artist/:id/images',
         ],
-        version: 'v1.0',
+        meta: {
+            version: 'v1.0',
+        },
+        success: true
     })
 }
