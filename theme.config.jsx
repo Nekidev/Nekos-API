@@ -60,8 +60,4 @@ export default {
         defaultMenuCollapseLevel: 0
     },
     defaultShowCopyCode: true,
-    i18n: [
-        { locale: 'en', text: 'English' },
-        { locale: 'es', text: 'Español' },
-    ]
 }

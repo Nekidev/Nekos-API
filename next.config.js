@@ -11,17 +11,4 @@ module.exports = withNextra({
     path: '/',
     domains: ['discordapp.com'],
   },
-  i18n: {
-    locales: ['en', 'es'],
-    defaultLocale: 'en'
-  },
-  async redirects() {
-    return [
-      {
-        source: '/docs',
-        destination: '/docs/introduction',
-        permanent: true,
-      },
-    ]
-  },
 });
