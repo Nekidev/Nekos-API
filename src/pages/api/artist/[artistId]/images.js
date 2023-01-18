@@ -1,25 +1,36 @@
 import { PrismaClient } from "@prisma/client";
 import { getManyImagesJson } from "../../../../utils/db";
-import checkRateLimit from "../../../../utils/api/rate-limit";
+import { middleware } from "../../../../utils/api";
 
 export default async function handler(req, res) {
-    if (!(await checkRateLimit(req, res))) {
-        // Rate limit exceeded
+    const scopes = await middleware(req, res);
+
+    if (scopes === false) {
+        // A response has been sent by the middleware.
         return;
     }
 
     const { artistId, limit = "1", offset = "0" } = req.query;
 
-    if (!/^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi.test(artistId)) {
+    if (
+        !/^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi.test(
+            artistId
+        )
+    ) {
         res.status(400).json({
             code: 400,
             message: "Invalid value for `artistId` parameter. Expected a UUID.",
             success: false,
         });
-    } else if (!/^[0-9]+$/gi.test(limit) || parseInt(limit) < 1 || parseInt(limit) > 25) {
+    } else if (
+        !/^[0-9]+$/gi.test(limit) ||
+        parseInt(limit) < 1 ||
+        parseInt(limit) > 25
+    ) {
         res.status(400).json({
             code: 400,
-            message: "Invalid value for `limit` parameter. Expected a number between 1 and 25.",
+            message:
+                "Invalid value for `limit` parameter. Expected a number between 1 and 25.",
             success: false,
         });
     } else if (!/^[0-9]+$/gi.test(offset)) {
@@ -34,7 +45,7 @@ export default async function handler(req, res) {
 
     const images = await prisma.images.findMany({
         where: {
-            artist: artistId
+            artist: artistId,
         },
         take: parseInt(limit),
         skip: parseInt(offset),
@@ -48,9 +59,9 @@ export default async function handler(req, res) {
         });
     }
 
-    res.status(200).json({ 
-        'data': await getManyImagesJson(images, prisma),
-        'success': true
+    res.status(200).json({
+        data: await getManyImagesJson(images, prisma),
+        success: true,
     });
 
     prisma.$disconnect();

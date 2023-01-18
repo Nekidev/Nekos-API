@@ -1,10 +1,12 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { getManyImagesJson } from "../../../utils/db";
-import checkRateLimit from "../../../utils/api/rate-limit";
+import { middleware } from "../../../utils/api";
 
 export default async function handler(req, res) {
-    if (!(await checkRateLimit(req, res))) {
-        // Rate limit exceeded
+    const scopes = await middleware(req, res);
+
+    if (scopes === false) {
+        // A response has been sent by the middleware.
         return;
     }
 

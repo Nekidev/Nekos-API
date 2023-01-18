@@ -1,20 +1,16 @@
 import { PrismaClient } from "@prisma/client";
-import checkRateLimit from "../../utils/api/rate-limit";
-import { getScopesFromToken } from "../../utils/api/authorization";
+import { middleware } from "../../utils/api";
 import { getManyImagesJson } from "../../utils/db";
 
 export default async function handler(req, res) {
-    if (!(await checkRateLimit(req, res))) {
-        // Rate limit exceeded
-        return;
-    }
+    const scopes = await middleware(req, res, {
+        authorization: {
+            required: true
+        }
+    });
 
-    const scopes = await getScopesFromToken(req, res, true);
-
-    console.log(scopes)
-
-    if (!scopes) {
-        // Unauthorized
+    if (scopes === false) {
+        // A response has been sent by the middleware.
         return;
     }
 
