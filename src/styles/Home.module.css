@@ -12,6 +12,24 @@
     div.heroContainer {
         @apply py-16;
     }
+    html:global(.dark) div.heroBg {
+        background-image: linear-gradient(
+            170deg,
+            hsl(var(--nextra-primary-hue), 100%, 10%),
+            transparent,
+            transparent
+        ) !important;
+    }
+    div.heroBg {
+        @apply absolute top-0 w-full h-60;
+        z-index: -1;
+        background-image: linear-gradient(
+            170deg,
+            hsl(var(--nextra-primary-hue), 100%, 90%),
+            transparent,
+            transparent
+        );
+    }
     h1.mainTitle {
         @apply text-7xl font-bold;
     }
@@ -28,19 +46,19 @@
     div.infoContainer {
         @apply py-16 bg-white;
     }
-    div.infoContainer:nth-child(even) {
+    div.infoContainer:nth-child(odd) {
         @apply bg-neutral-100;
     }
-    div.infoContainer:nth-child(even):last-of-type {
+    div.infoContainer:nth-child(odd):last-of-type {
         @apply border-b border-neutral-200;
     }
-    html:global(.dark) div.infoContainer:nth-child(even):last-of-type {
+    html:global(.dark) div.infoContainer:nth-child(odd):last-of-type {
         @apply border-b border-neutral-800;
     }
     html:global(.dark) div.infoContainer {
         @apply bg-transparent;
     }
-    html:global(.dark) div.infoContainer:nth-child(even) {
+    html:global(.dark) div.infoContainer:nth-child(odd) {
         @apply bg-black;
     }
     h2.infoTitle {
