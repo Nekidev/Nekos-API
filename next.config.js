@@ -12,7 +12,7 @@ module.exports = withNextra({
     domains: ['discordapp.com'],
   },
   i18n: {
-    locales: ['en'],
+    locales: ['en', 'es'],
     defaultLocale: 'en'
   },
   async redirects() {

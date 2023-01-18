@@ -1,0 +1,26 @@
+{
+    "introduction": "Introducción",
+    "getting-started": "Empezando",
+    "libraries": "Librerías",
+    "--- Reference ---": {
+        "type": "separator",
+        "title": "Referencia"
+    },
+    "rest-api": "Rest API",
+    "graphql": "GraphQL",
+    "--- More ---": {
+        "type": "separator",
+        "title": "Mas"
+    },
+    "contributing": "Contribuciones",
+    "branding": "Branding",
+    "terms-of-use": "Terminos de Uso",
+    "about": {
+        "title": "Sobre Nosotros",
+        "href": "/about",
+        "newWindow": false
+    },
+    "index": {
+        "display": "hidden"
+    }
+}

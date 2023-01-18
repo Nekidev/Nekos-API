@@ -1,0 +1,128 @@
+import { Callout, Tab, Tabs } from 'nextra-theme-docs'
+
+import Link from 'next/link'
+
+# Python 3
+
+<Callout type="info">
+    Esta pagina todavía no ha sido traducida al Español.
+</Callout>
+
+<Callout type="info">
+    This page is a work in progress.
+</Callout>
+
+The [`anime-api`](https://github.com/Nekidev/anime-api) library is an officially supported Python 3 wrapper for Nekos API.
+
+## Installation
+
+The `anime-api` library can be installed on Python 3.7 and higher using pip, Poetry or Conda.
+
+<Tabs items={['Pip', 'Poetry', 'Conda']}>
+    <Tab>
+        ```bash
+        pip install anime-api
+        ```
+    </Tab>
+    <Tab>
+        ```bash
+        poetry add anime-api
+        ```
+    </Tab>
+    <Tab>
+        ```bash
+        conda install anime-api
+        ```
+    </Tab>
+</Tabs>
+
+## Usage
+
+The `anime-api` library contains lots of wrappers for different APIs, but we'll focus on the `NekosAPI(){:python}` class. You can import it from the `anime_api.apis` module.
+
+```python showLineNumbers
+from anime_api.apis import NekosAPI
+
+nekos = NekosAPI()
+```
+
+### Get a random image
+
+The `NekosAPI(){:python}` class has a `get_random_image(){:python}` method that returns a random image.
+
+```python showLineNumbers
+from anime_api.apis import NekosAPI
+
+nekos = NekosAPI()
+image = nekos.get_random_image(categories=["kemonomimi"])
+
+print(image.url)
+```
+
+You can also get many images (up to 25) at once using the `get_random_images(){:python}` method instead.
+
+```python showLineNumbers
+from anime_api.apis import NekosAPI
+
+nekos = NekosAPI()
+images = nekos.get_random_images(limit=10, categories=["kemonomimi"])
+
+for image in images:
+    print(image.url)
+```
+
+### Get an image by it's ID
+
+Every image in the API has its own ID. You can fetch an image by its ID to get a specific image's information.
+
+```python showLineNumbers
+from anime_api.apis import NekosAPI
+
+nekos = NekosAPI()
+image = nekos.get_image_by_id(image_id="some-uuid")
+
+print(image.url)
+```
+
+### Get an artist by it's ID
+
+Each artist in the API has its ID. Although every image comes with (almost) all its artist information, fetching an artist by its ID has its advantages.
+
+```python showLineNumbers
+from anime_api.apis import NekosAPI
+
+nekos = NekosAPI()
+artist = nekos.get_artist_by_id(artist_id="some-uuid")
+
+print(artist.images)
+```
+
+As you can see, the `images` property is added to the `Artist` object when it's fetched by ID.
+
+### Get all artist's images
+
+If you want to fetch an artist's images, you can use the `get_images_by_artist_id(){:python}` method. This method returns up to 25 images and supports pagination.
+
+```python showLineNumbers
+from anime_api.apis import NekosAPI
+
+nekos = NekosAPI()
+
+# This will return up to 10 images from arist with "some-uuid" as ID and skip
+# the first 5. By default the limit is set to 10 and the offset is set to 0.
+images = nekos.get_images_by_artist_id(artist_id="some-uuid", limit=10, offset=5)
+
+for image in images:
+    print(image.artist.name)
+```
+
+## Reference
+
+### `class Image`
+
+The `Image` object represents an image returned from the API. It has the following attributes:
+- `url: str{:python}`: The URL of the image.
+- `author: _Author{:python}`: The author of the image. It has a `name`, an `image` and a `url` attribute.
+- `categories: List[str]{:python}`: A list of tags associated with the image.
+- `nsfw: bool{:python}`: Whether the image is NSFW or not.
+- `created_at: datetime.datetime{:python}`: The date and time when the image was created.

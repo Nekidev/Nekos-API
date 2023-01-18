@@ -62,5 +62,6 @@ export default {
     defaultShowCopyCode: true,
     i18n: [
         { locale: 'en', text: 'English' },
+        { locale: 'es', text: 'Español' },
     ]
 }

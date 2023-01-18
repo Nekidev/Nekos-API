@@ -1,0 +1,48 @@
+{
+    "index": {
+        "title": "Inicio",
+        "type": "page",
+        "theme": {
+            "layout": "raw"
+        }
+    },
+    "docs": {
+        "title": "Documentación",
+        "type": "page"
+    },
+    "about": {
+        "title": "Sobre nosotros",
+        "type": "page",
+        "theme": {
+            "typesetting": "article",
+            "breadcrumb": false,
+            "footer": true,
+            "sidebar": false,
+            "toc": false,
+            "pagination": false
+        }
+    },
+    "partners": {
+        "title": "Socios",
+        "type": "page",
+        "theme": {
+            "typesetting": "article",
+            "breadcrumb": false,
+            "footer": true,
+            "sidebar": false,
+            "toc": false,
+            "pagination": false
+        }
+    },
+    "graphiql": {
+        "title": "GraphiQL",
+        "type": "page",
+        "href": "/graphiql",
+        "theme": {
+            "layout": "raw"
+        }
+    },
+    "api": {
+        "display": "hidden"
+    }
+}

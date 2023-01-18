@@ -10,23 +10,23 @@ import CodePre from '../components/codepre/CodePre';
 
 export const features = [
     {
-        title: "Beginner friendly",
-        description: "The API is very easy to use, and it's very easy to get started with it.",
+        title: "Facil de usar",
+        description: "La API es muy facil de usar y de implementar en proyectos existentes.",
         icon: <FaceSmileIcon />
     },
     {
-        title: "Free forever",
-        description: "No need to pay for anything, the API is free forever. (we kindly accept donations though)",
+        title: "Gratis para siempre",
+        description: "No es necesario pagar nada, aqui es todo gratis. (aunque felizmente aceptaremos donaciones)",
         icon: <CurrencyDollarIcon />
     },
     {
-        title: "Thousands of images",
-        description: "The API has thousands of images, and we're adding more every day.",
+        title: "Miles de imagenes",
+        description: "Mas de 2000 imagenes y mas agregadas todos los dias.",
         icon: <PhotoIcon />
     },
     {
-        title: "Fast",
-        description: "The API is very fast. We asked the creator of light and he said it's the fastest thing he has ever seen.",
+        title: "Veloz",
+        description: "La API es muy rapida. Le preguntamos al creador de la luz y dijo que es la cosa mas rapida quee ha visto.",
         icon: <BoltIcon />
     }
 ];
@@ -37,9 +37,9 @@ export default function Home() {
             <div className={styles.content}>
                 <div className={styles.heroContainer}>
                     <h1 className={styles.mainTitle}>Nekos API</h1>
-                    <p className={styles.mainDescription}>An open-source free public anime images API.</p>
+                    <p className={styles.mainDescription}>Una API de imagenes de anime gratis, de codigo abierto, y publica.</p>
                     <Link href="/docs" className={styles.mainLink}>
-                        Documentation
+                        Documentación
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                         </svg>
@@ -47,7 +47,7 @@ export default function Home() {
                 </div>
             </div>
             <div className={`${styles.content} ${styles.infoContainer}`}>
-                <h2 className={styles.infoTitle}>Features</h2>
+                <h2 className={styles.infoTitle}>Características</h2>
                 <div className={styles.infoCards}>
                     {features.map((feature, i) => (
                         <Card 
@@ -60,9 +60,9 @@ export default function Home() {
             </div>
             <div className={`${styles.content} ${styles.infoContainer} ${styles.wrappersContainer}`}>
                 <div>
-                    <h2 className={styles.infoTitle}>Officialy supported wrappers</h2>
+                    <h2 className={styles.infoTitle}>Librerias oficiales</h2>
                     <p className={styles.infoSubtitle}>
-                        Easily integrate the API into your project with one of our officialy supported wrappers.
+                        Integra facilmente nuestra API a tus proyectos con una de nuestras librerias oficiales.
                     </p>
                 </div>
                 <div style={{ marginTop: "-1rem" }}>
@@ -82,18 +82,18 @@ export default function Home() {
             </div>
             <div className={`${styles.content} ${styles.infoContainer} grid grid-cols-1 md:grid-cols-2 gap-16 relative`}>
                 <div>
-                    <h2 className={styles.infoTitle}>Join our community</h2>
+                    <h2 className={styles.infoTitle}>Unete a nuestra comunidad</h2>
                     <p className={styles.infoSubtitle}>
-                        Join our community on Discord to get help, talk about the API, and more.
+                        Unete a nuestra comunidad en Discord para obtener soporte, hablar de la API, y mas.
                     </p>
                     <Link className={styles.discordBanner} href="https://discord.gg/b9Fv3kEfXc">
                         <img src="https://discordapp.com/api/guilds/1023471762723328010/widget.png?style=banner2" />
                     </Link>
                 </div>
                 <div>
-                    <h2 className={styles.infoTitle}>Donate</h2>
+                    <h2 className={styles.infoTitle}>Haz una donación</h2>
                     <p className={styles.infoSubtitle}>
-                        If you like the API, consider donating to help us keep it running.
+                        Si te gusta nuestra API, considera hacer una donacion para ayudarnos a mantenerla.
                     </p>
                     <Link className={styles.patreonLink} href="https://patreon.com/nekidev">
                         <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" />

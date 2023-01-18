@@ -1,0 +1,43 @@
+# Empezando
+
+Esto no es un tutorial de como usar la API, sino una guía para que te familiarizes con la estructura de la API, lo que puedes y no puedes hacer con esta, y otras cosas mas. Si buscas la documentacion para comenzar a utilizar la API, ve a la **seccion de Referencia** para la [Rest API](/docs/rest-api/reference) o para [GraphQl](/docs/graphql/reference).
+
+## Imagenes
+
+El proposito de la API es servir imagenes de anime con cierto estandar de calidad. Esto significa que hay ciertos requisitos que las imagenes tienen que cumplir para ser servidas. Estos son:
+
+  * La imagen debe tener una resolucion como mínimo HD (1280x720 o 720x1280)
+  * La imagen no ser explícita (desnudos, gore, etc). Expandimos este tema en la seccion de [NSFW](#nsfw).
+  * La imagen no debe ser un meme.
+  * La imagen debe ser original (sin recortar, sin filtros, o cualquier tipo de modificación).
+
+Todas las imagenes son manualmente revisadas antes de ser subidas. Si quieres contribuir a la API, ve a la pagina de [contribuciones](/docs/contributing).
+
+Intentamos proveer toda la informacion que podemos sobre las imagenes, asi como la fuente, el artista, las categorias, etc. Si notas que hay informacion faltante o incorrecta, haznos saber [abriendo un issue en GitHub](https://github.com/Nekidev/nekos-api/issues/new/choose) o creando un hilo en nuestro [servidor de Discord](https://discord.gg/b9Fv3kEfXc).
+
+### NSFW
+
+La API no sirve ningun tipo de contenido explicito. Esto significa que las imagenes nnunca tendran desnudos, gore, etc. Ten en cuenta que hay algunas imagenes que son altamente sugestivas. Estas estan marcadas como tales y debes tener cuidado con quienes las ven.
+
+#### Niveles de NSFW
+
+La API tiene 3 niveles de NSFW:
+
+  * `sfw` (apto para el trabajo): Estas imagenes son adecuadas para cualquier audiencia.
+  * `questionable` (cuestionable): Estas imagenes tienen contenido sugestivo, pero de una forma mas leve.
+  * `nsfw` (no apto para el trabajo): Estas imagenes tienen contenido altamente sugestivo.
+
+## Categorías
+
+Las categorías dan mas informacion acerca de las imagenes. Son una forma de agrupar imagenes con caracteristicas en comun. Por ejemplo, todas las imagenes que tienen al menos un personaje femenino estan dentro de la categoría `Girl` (chica).
+
+Las categorías pueden ser utilizadas de diferentes maneras:
+
+  * Para filtrar las imagenes.
+  * Para tener una descripcion de las imagenes.
+
+Las veras en cada respuesta de la API, junto a su descripcion y nivel de NSFW.
+
+## Artistas
+
+Intentamos proveer la mayor cantidad de informacion que podemos sobre la API. Esto incluye a los artistas que dibujaron las imagenes. Intentaremos siempre proveer el nombre del artista que ilustró la imagen, pero en algunos casos no somos capaces de encontrarlos. En estas ocasiones, proveeremos un link al post original de donde sacamos la imagen. Si encuentras una imagen (o mas) sin ningun tipo de fuente, haznos saber [abriendo un issue en GitHub](https://github.com/Nekidev/Nekos-API/issues/new) o por nuestro servidor de Discord.
