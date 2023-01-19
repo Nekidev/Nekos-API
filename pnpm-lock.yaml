@@ -10,6 +10,7 @@ specifiers:
   '@supabase/supabase-js': ^2.1.1
   '@upstash/redis': ^1.18.1
   autoprefixer: ^10.4.13
+  cobe: ^0.6.3
   color-thief-node: ^1.0.4
   dotenv: ^16.0.3
   express-rate-limit: ^6.7.0
@@ -46,6 +47,7 @@ dependencies:
   '@prisma/client': 4.8.1_prisma@4.8.1
   '@supabase/supabase-js': 2.1.1
   '@upstash/redis': 1.18.1
+  cobe: 0.6.3
   dotenv: 16.0.3
   express-rate-limit: 6.7.0
   express-slow-down: 1.5.0
@@ -1347,6 +1349,12 @@ packages:
   /clsx/1.2.1:
     resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
     engines: {node: '>=6'}
+    dev: false
+
+  /cobe/0.6.3:
+    resolution: {integrity: sha512-WHr7X4o1ym94GZ96h7b1pNemZJacbOzd02dZtnVwuC4oWBaLg96PBmp2rIS1SAhUDhhC/QyS9WEqkpZIs/ZBTg==}
+    dependencies:
+      phenomenon: 1.6.0
     dev: false
 
   /codemirror-graphql/2.0.2_jgf3zxlto355dl4ecdxtsqb5ja:
@@ -3343,6 +3351,10 @@ packages:
 
   /pg-escape/0.2.0:
     resolution: {integrity: sha512-QfXcpxyN9vT+kvexQpTeNyiwCxs4LPXLAV/C0EeLTJPCF61swhGdDlnHcuDgxJudgKGfQYiCkegg0GsSKSvvEg==}
+    dev: false
+
+  /phenomenon/1.6.0:
+    resolution: {integrity: sha512-7h9/fjPD3qNlgggzm88cY58l9sudZ6Ey+UmZsizfhtawO6E3srZQXywaNm2lBwT72TbpHYRPy7ytIHeBUD/G0A==}
     dev: false
 
   /picocolors/1.0.0:

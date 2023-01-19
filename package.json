@@ -8,6 +8,7 @@
 		"@prisma/client": "^4.8.1",
 		"@supabase/supabase-js": "^2.1.1",
 		"@upstash/redis": "^1.18.1",
+		"cobe": "^0.6.3",
 		"dotenv": "^16.0.3",
 		"express-rate-limit": "^6.7.0",
 		"express-slow-down": "^1.5.0",
