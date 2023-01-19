@@ -1,4 +1,4 @@
-import { Callout, Tab, Tabs } from 'nextra-theme-docs'
+import { Callout, Tab, Tabs } from "nextra-theme-docs";
 
 # Endpoints
 
@@ -10,15 +10,15 @@ Returns a random image from the specified category.
 
 ### Parameters
 
-| Name | Type | Description | Required |
-| :--- | :--- | :--- | :--- |
-| `categories` | array of strings | The category names that the image should have. | No |
-| `limit` | number | The amount of images to get. (max: 25) | No |
+| Name         | Type             | Description                                    | Required |
+| :----------- | :--------------- | :--------------------------------------------- | :------- |
+| `categories` | array of strings | The category names that the image should have. | No       |
+| `limit`      | number           | The amount of images to get. (max: 25)         | No       |
 
 ### Response
 
 ```js
-{ 
+{
     'data': [
         {
             'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
@@ -88,7 +88,7 @@ Returns a random image from the specified category.
         ```py
         from anime_api.apis import NekosAPI
         api = NekosAPI()
-        
+
         # Get single image
         image = api.get_random_image(categories=['catgirl'])
         print(image.url)
@@ -98,6 +98,7 @@ Returns a random image from the specified category.
         print(images[0].url)
         ```
     </Tab>
+
 </Tabs>
 
 ## `GET /image/{id}`
@@ -106,14 +107,14 @@ Get an image by its ID.
 
 ### Parameters
 
-| Name | Type | Description | Required |
-| :--- | :--- | :--- | :--- |
-| `id` | string | The ID of the image to get. | Yes |
+| Name | Type   | Description                 | Required |
+| :--- | :----- | :-------------------------- | :------- |
+| `id` | string | The ID of the image to get. | Yes      |
 
 ### Response
 
 ```js
-{ 
+{
     'data': {
         'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
         'url': 'https://example.com/assets/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.png',
@@ -129,7 +130,7 @@ Get an image by its ID.
                 'name': 'xxxxxxx',
                 'description': 'xxxxxxxxxxxxxxxxxx',
                 'nsfw': false,
-                'createdAt': '2021-01-01T00:00:00.000Z',
+                'createdAt': '2021-01-01T00:00:00.000Z'
             }
         ],
         "characters": [
@@ -137,7 +138,7 @@ Get an image by its ID.
                 'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
                 'name': 'xxxxxxx',
                 'description': 'xxxxxxxxxxxxxxxxxx',
-                'createdAt': '2021-01-01T00:00:00.000Z',
+                'createdAt': '2021-01-01T00:00:00.000Z'
             }
         ],
         'createdAt': '2021-01-01T00:00:00.000Z',
@@ -151,10 +152,11 @@ Get an image by its ID.
                 'width': 1024,
                 'height': 1024,
                 'orientation': 'landscape',
-            },
+                'aspectRatio': '1:1'
+            }
         }
-    },
-    'success': true,
+    }
+    'success': true
 }
 ```
 
@@ -185,8 +187,66 @@ Get an image by its ID.
         print(image.url)
         ```
     </Tab>
+
 </Tabs>
 
+## `GET /artist`
+
+Get all artists.
+
+### Parameters
+
+| Name     | Type    | Description                          | Required |
+| :------- | :------ | :----------------------------------- | :------- |
+| `limit`  | integer | The maximum number of images to get. | No       |
+| `offset` | integer | The number of images to skip.        | No       |
+
+### Response
+
+```js
+{
+    'data': [
+        {
+            'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+            'name': 'xxxxxxx',
+            'url': 'https://example.com/xxxxxxx',
+            'images': 12
+        },
+        ...
+    ],
+    'success': true
+}
+```
+
+### Example
+
+<Tabs items={["JavaScript", "Python 3"]}>
+    <Tab>
+        Using the `fetch` API:
+        ```js
+        const res = await fetch('https://nekos.nekidev.com/api/artist?limit=10&offset=0')
+        const json = await res.json()
+        console.log(json.data[0].name)
+        ``` 
+    </Tab>
+    <Tab>
+        Using the `requests` library:
+        ```py
+        import requests
+        res = requests.get('https://nekos.nekidev.com/api/artist', params={'limit': 10, 'offset': 0})
+        print(res.json()['data'][0]['name'])
+        ```
+
+        Using the `anime-api` library:
+        ```py
+        from anime_api.apis import NekosAPI
+        api = NekosAPI()
+        artist = api.get_artists(limit=10, offset=0)
+        print(artist[0].name)
+        ```
+    </Tab>
+
+</Tabs>
 
 ## `GET /artist/{id}`
 
@@ -194,21 +254,21 @@ Get an artist by their ID.
 
 ### Parameters
 
-| Name | Type | Description | Required |
-| :--- | :--- | :--- | :--- |
-| `id` | string | The ID of the artist to get. | Yes |
+| Name | Type   | Description                  | Required |
+| :--- | :----- | :--------------------------- | :------- |
+| `id` | string | The ID of the artist to get. | Yes      |
 
 ### Response
 
 ```js
-{ 
+{
     'data': {
         'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
         'name': 'xxxxxxx',
         'url': 'https://example.com/xxxxxxx',
         'images': 12
     },
-    'success': true,
+    'success': true
 }
 ```
 
@@ -239,8 +299,8 @@ Get an artist by their ID.
         print(artist.name)
         ```
     </Tab>
-</Tabs>
 
+</Tabs>
 
 ## `GET /artist/{id}/images`
 
@@ -248,16 +308,16 @@ Get all images by an artist.
 
 ### Parameters
 
-| Name | Type | Description | Required |
-| :--- | :--- | :--- | :--- |
-| `id` | string | The ID of the artist to get images from. | Yes |
-| `limit` | integer | The maximum number of images to get. | No |
-| `offset` | integer | The number of images to skip. | No |
+| Name     | Type    | Description                              | Required |
+| :------- | :------ | :--------------------------------------- | :------- |
+| `id`     | string  | The ID of the artist to get images from. | Yes      |
+| `limit`  | integer | The maximum number of images to get.     | No       |
+| `offset` | integer | The number of images to skip.            | No       |
 
 ### Response
 
 ```js
-{ 
+{
     'data': [
         {
             'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
@@ -331,8 +391,8 @@ Get all images by an artist.
         print(images[0].url)
         ```
     </Tab>
-</Tabs>
 
+</Tabs>
 
 ## `GET /character/{id}`
 
@@ -340,14 +400,14 @@ Get a character by their ID.
 
 ### Parameters
 
-| Name | Type | Description | Required |
-| :--- | :--- | :--- | :--- |
-| `id` | string | The ID of the character to get. | Yes |
+| Name | Type   | Description                     | Required |
+| :--- | :----- | :------------------------------ | :------- |
+| `id` | string | The ID of the character to get. | Yes      |
 
 ### Response
 
 ```js
-{ 
+{
     'data': {
         'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
         'name': 'xxxxxxx',
@@ -386,8 +446,8 @@ Get a character by their ID.
         print(character.name)
         ```
     </Tab>
-</Tabs>
 
+</Tabs>
 
 ## `GET /category`
 
@@ -395,15 +455,15 @@ Get a category by their ID.
 
 ### Parameters
 
-| Name | Type | Description | Required |
-| :--- | :--- | :--- | :--- |
-| `limit` | integer | The maximum number of categories to get. | No |
-| `offset` | integer | The number of categories to skip. | No |
+| Name     | Type    | Description                              | Required |
+| :------- | :------ | :--------------------------------------- | :------- |
+| `limit`  | integer | The maximum number of categories to get. | No       |
+| `offset` | integer | The number of categories to skip.        | No       |
 
 ### Response
 
 ```js
-{ 
+{
     'data': [
         {
             'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
@@ -445,10 +505,8 @@ Get a category by their ID.
         print(categories[0].name)
         ```
     </Tab>
+
 </Tabs>
-
-
-
 
 ## `GET /category/{id}`
 
@@ -456,14 +514,14 @@ Get a category by their ID.
 
 ### Parameters
 
-| Name | Type | Description | Required |
-| :--- | :--- | :--- | :--- |
-| `id` | string | The ID of the category to get. | Yes |
+| Name | Type   | Description                    | Required |
+| :--- | :----- | :----------------------------- | :------- |
+| `id` | string | The ID of the category to get. | Yes      |
 
 ### Response
 
 ```js
-{ 
+{
     'data': {
         'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
         'name': 'xxxxxxx',
@@ -503,6 +561,5 @@ Get a category by their ID.
         print(category.name)
         ```
     </Tab>
+
 </Tabs>
-
-
