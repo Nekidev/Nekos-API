@@ -23,7 +23,7 @@ export function Color({ name, color, dark }) {
     return (
         <div className="h-32 rounded-xl border-2 border-neutral-100 dark:border-neutral-800 flex flex-col p-4 items-end justify-end" style={{ backgroundColor: color, color: dark ? "white" : "black" }}>
             <div className="font-bold text-xl">{name}</div>
-            <div className={dark ? "text-neutral-400" : "text-neutral-600"}>{color}</div>
+            <div>{color}</div>
         </div>
     )
 }
