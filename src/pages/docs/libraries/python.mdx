@@ -1,12 +1,8 @@
-import { Callout, Tab, Tabs } from 'nextra-theme-docs'
+import { Tab, Tabs } from 'nextra-theme-docs'
 
 import Link from 'next/link'
 
 # Python 3
-
-<Callout type="info">
-    This page is a work in progress.
-</Callout>
 
 The [`anime-api`](https://github.com/Nekidev/anime-api) library is an officially supported Python 3 wrapper for Nekos API.
 
@@ -50,6 +46,8 @@ The `NekosAPI(){:python}` class has a `get_random_image(){:python}` method that 
 from anime_api.apis import NekosAPI
 
 nekos = NekosAPI()
+
+# This will return up to 10 images with the `kemonomimi` category
 image = nekos.get_random_image(categories=["kemonomimi"])
 
 print(image.url)
@@ -61,6 +59,9 @@ You can also get many images (up to 25) at once using the `get_random_images(){:
 from anime_api.apis import NekosAPI
 
 nekos = NekosAPI()
+
+# The categories argument is optional. If not specified, the images will be
+# completely random (no specific category)
 images = nekos.get_random_images(limit=10, categories=["kemonomimi"])
 
 for image in images:
@@ -75,9 +76,29 @@ Every image in the API has its own ID. You can fetch an image by its ID to get a
 from anime_api.apis import NekosAPI
 
 nekos = NekosAPI()
-image = nekos.get_image_by_id(image_id="some-uuid")
 
+image_id = "some-uuid"
+image = nekos.get_image_by_id(image_id=image_id)
+
+assert image.id == image_id
 print(image.url)
+```
+
+### Get all artists
+
+If you want to get all artists available, you can use the `get_artists(){:python}` method.
+
+```python showLineNumbers
+from anime_api.apis import NekosAPI
+
+nekos = NekosAPI()
+
+# This will return up to 10 artists and skip the first 5. By default the limit
+# is set to 10 and the offset is set to 0.
+artists = nekos.get_artists(limit=10, offset=0)
+
+for artist in artists:
+    print(artist.name)
 ```
 
 ### Get an artist by it's ID
@@ -88,8 +109,11 @@ Each artist in the API has its ID. Although every image comes with (almost) all 
 from anime_api.apis import NekosAPI
 
 nekos = NekosAPI()
-artist = nekos.get_artist_by_id(artist_id="some-uuid")
 
+artist_id = "some-uuid"
+artist = nekos.get_artist_by_id(artist_id=artist_id)
+
+assert artist.id == artist_id
 print(artist.images)
 ```
 
@@ -112,13 +136,69 @@ for image in images:
     print(image.artist.name)
 ```
 
+### Get all categories
+
+To get a list of all categories available, you can use the `get_categories(){:python}` method.
+
+```python showLineNumbers
+from anime_api.apis import NekosAPI
+
+nekos = NekosAPI()
+
+# This will return up to 10 categories and skip the first 5. By default the 
+# limit is set to 10 and the offset is set to 0.
+categories = nekos.get_categories(limit=10, offset=0)
+
+for category in categories:
+    print(category)
+```
+
+### Get a category by it's ID
+
+All categories have their unique ID, which is always returned together with the category. You can get a specific category using the `get_gategory_by_id(){:python}` method.
+
+```python showLineNumbers
+from anime_api.apis import NekosAPI
+
+nekos = NekosAPI()
+
+category_id = "some-uuid"
+category = nekos.get_category_by_id(category_id=category_id)
+
+assert category.id == category_id
+print(category.name)
+```
+
+### Get character by it's ID
+
+Every character has it's unique ID, which is returned together with the character in every API response. You can get a specific charcater's information using the `get_character_by_id(){:python}` method.
+
+```python showLineNumbers
+from anime_api.apis import NekosAPI
+
+nekos = NekosAPI()
+
+character_id = "some-uuid"
+character: Character = nekos.get_character_by_id(character_id=character_id)
+
+assert character.id == character_id
+print(character.name)
+```
+
 ## Reference
 
-### `class Image`
+### Wrapper Class
 
-The `Image` object represents an image returned from the API. It has the following attributes:
-- `url: str{:python}`: The URL of the image.
-- `author: _Author{:python}`: The author of the image. It has a `name`, an `image` and a `url` attribute.
-- `categories: List[str]{:python}`: A list of tags associated with the image.
-- `nsfw: bool{:python}`: Whether the image is NSFW or not.
-- `created_at: datetime.datetime{:python}`: The date and time when the image was created.
+- `NekosAPI`: [GitHub](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/__init__.py#L51)
+
+### Objects
+
+- `Image`: [GitHub](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/objects.py#L67)
+- `Artist`: [GitHub](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/objects.py#L13)
+- `Category`: [GitHub](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/objects.py#L31)
+- `Character`: [GitHub](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/objects.py#L46)
+
+### Types
+
+- `NsfwLevel`: [Github](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/types.py#L6)
+- `ImageOrientation`: [GitHub](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/types.py#L13)
