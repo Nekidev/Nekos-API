@@ -19,8 +19,5 @@
         "title": "About",
         "href": "/about",
         "newWindow": false
-    },
-    "index": {
-        "display": "hidden"
     }
 }
