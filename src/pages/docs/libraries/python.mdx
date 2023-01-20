@@ -1,16 +1,18 @@
-import { Tab, Tabs } from 'nextra-theme-docs'
+import { Tab, Tabs } from "nextra-theme-docs";
 
-import Link from 'next/link'
+import Link from "next/link";
 
 # Python 3
 
-The [`anime-api`](https://github.com/Nekidev/anime-api) library is an officially supported Python 3 wrapper for Nekos API.
+The [`anime-api`](https://pypi.org/project/anime-api) library is an officially supported Python 3 wrapper for Nekos API.
+
+Source code: [GitHub](https://github.com/Nekidev/anime-api)
 
 ## Installation
 
 The `anime-api` library can be installed on Python 3.7 and higher using pip, Poetry or Conda.
 
-<Tabs items={['Pip', 'Poetry', 'Conda']}>
+<Tabs items={["Pip", "Poetry", "Conda"]}>
     <Tab>
         ```bash
         pip install anime-api
@@ -117,7 +119,7 @@ assert artist.id == artist_id
 print(artist.images)
 ```
 
-As you can see, the `images` property is added to the `Artist` object when it's fetched by ID.
+As you can see, the `images` property is added to the `Artist` object when it's fetched by ID. This is not the case if the artist is fetched using a different method.
 
 ### Get all artist's images
 
@@ -145,7 +147,7 @@ from anime_api.apis import NekosAPI
 
 nekos = NekosAPI()
 
-# This will return up to 10 categories and skip the first 5. By default the 
+# This will return up to 10 categories and skip the first 5. By default the
 # limit is set to 10 and the offset is set to 0.
 categories = nekos.get_categories(limit=10, offset=0)
 
@@ -179,7 +181,7 @@ from anime_api.apis import NekosAPI
 nekos = NekosAPI()
 
 character_id = "some-uuid"
-character: Character = nekos.get_character_by_id(character_id=character_id)
+character = nekos.get_character_by_id(character_id=character_id)
 
 assert character.id == character_id
 print(character.name)
@@ -189,16 +191,16 @@ print(character.name)
 
 ### Wrapper Class
 
-- `NekosAPI`: [GitHub](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/__init__.py#L51)
+-   `NekosAPI`: [GitHub](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/__init__.py#L51)
 
 ### Objects
 
-- `Image`: [GitHub](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/objects.py#L67)
-- `Artist`: [GitHub](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/objects.py#L13)
-- `Category`: [GitHub](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/objects.py#L31)
-- `Character`: [GitHub](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/objects.py#L46)
+-   `Image`: [GitHub](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/objects.py#L67)
+-   `Artist`: [GitHub](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/objects.py#L13)
+-   `Category`: [GitHub](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/objects.py#L31)
+-   `Character`: [GitHub](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/objects.py#L46)
 
 ### Types
 
-- `NsfwLevel`: [Github](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/types.py#L6)
-- `ImageOrientation`: [GitHub](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/types.py#L13)
+-   `NsfwLevel`: [Github](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/types.py#L6)
+-   `ImageOrientation`: [GitHub](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/types.py#L13)
