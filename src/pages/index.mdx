@@ -8,6 +8,10 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 import { FaceSmileIcon, CurrencyDollarIcon, PhotoIcon, BoltIcon } from '@heroicons/react/24/outline'
 import CodePre from '../components/codepre/CodePre';
 
+import JSIcon from '../components/icons/JS';
+import { ColoredPythonIcon } from '../components/icons/Python';
+import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
+
 import createGlobe from "cobe";
 
 export const features = [
@@ -133,6 +137,21 @@ export default function Home() {
                     <p className={styles.infoSubtitle}>
                         Easily integrate the API into your project with one of our officialy supported wrappers.
                     </p>
+                    <div className='flex flex-row items-center gap-4 mt-8'>
+                        <Link href="/docs/libraries/javascript" className='rounded border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-neutral-400 dark:hover:border-neutral-700 dark:hover:bg-neutral-800 text-sm font-medium flex flex-row items-center leading-none p-2 gap-2 transition'>
+                            <div className='h-4 w-4 relative flex flex-col items-center'>
+                                <div className=' absolute block bg-black top-0.5 bottom-0.5 left-0.5 right-0.5'></div>
+                                <JSIcon className="h-4 w-4 fill-[#f0db4f] absolute" />
+                            </div>
+                            JavaScript
+                            <ArrowUpRightIcon className='h-4 w-4 stroke-black dark:stroke-white' />
+                        </Link>
+                        <Link href="/docs/libraries/python" className='rounded border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-neutral-400 dark:hover:border-neutral-700 dark:hover:bg-neutral-800 text-sm font-medium flex flex-row items-center leading-none p-2 gap-2 transition'>
+                            <img src="/imgs/logos/python.png" className="h-4 w-4 object-fit" />
+                            Python
+                            <ArrowUpRightIcon className='h-4 w-4 stroke-black dark:stroke-white' />
+                        </Link>
+                    </div>
                 </div>
                 <div style={{ marginTop: "-1rem" }}>
                     <Tabs items={['Python', 'JavaScript']}>
