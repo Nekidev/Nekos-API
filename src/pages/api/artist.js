@@ -10,7 +10,7 @@ export default async function handler(req, res) {
         return;
     }
 
-    const { limit = "10", offset = "0" } = req.query;
+    const { limit = "10", offset = "0", search = "" } = req.query;
 
     if (
         !/^[0-9]+$/.test(limit) ||
@@ -32,11 +32,23 @@ export default async function handler(req, res) {
             success: false,
         });
         return;
+    } else if (search.length > 20) {
+        req.status(400).json({
+            code: 400,
+            message: "The `search` parameter can be up to 20 characters long.",
+            success: false
+        })
+        return;
     }
 
     const prisma = new PrismaClient();
 
     const artists = await prisma.artists.findMany({
+        where: search.length > 0 ? {
+            name: {
+                search: search.split(" ").join(" <-> ")
+            }
+        } : undefined,
         take: parseInt(limit),
         skip: parseInt(offset)
     });
