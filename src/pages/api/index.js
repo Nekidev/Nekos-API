@@ -14,6 +14,7 @@ export default async function handler(req, res) {
             '/image',
             '/image/:id',
             '/image/random',
+            '/character',
             '/character/:id',
             '/category',
             '/category/:id',
@@ -22,7 +23,7 @@ export default async function handler(req, res) {
             '/artist/:id/images',
         ],
         meta: {
-            version: 'v1.0',
+            version: 'v1.1',
         },
         success: true
     })
