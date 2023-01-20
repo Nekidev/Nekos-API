@@ -227,6 +227,7 @@ Get all artists.
 | :------- | :------ | :----------------------------------- | :------- |
 | `limit`  | integer | The maximum number of images to get. | No       |
 | `offset` | integer | The number of images to skip.        | No       |
+| `search` | string  | A PostgreSQL FTS formatted query     | No       |
 
 ### Response
 
@@ -317,7 +318,7 @@ Get an artist by their ID.
         api.getArtistByID((id = "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")).then((artist) => {
             console.log(artist.name)
         })
-        ``` 
+        ```
     </Tab>
     <Tab>
         Using the `requests` library:
@@ -409,7 +410,7 @@ Get all images by an artist.
         const res = await fetch('https://nekos.nekidev.com/api/artist/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images')
         const json = await res.json()
         console.log(json.data[0].url)
-        ``` 
+        ```
 
         Using the `nekosapi` library:
         ```js showLineNumbers
@@ -449,6 +450,7 @@ Get all available characters.
 | :------- | :------ | :----------------------------------- | :------- |
 | `limit`  | integer | The maximum number of images to get. | No       |
 | `offset` | integer | The number of images to skip.        | No       |
+| `search` | string  | A PostgreSQL FTS formatted query     | No       |
 
 ### Response
 
@@ -524,7 +526,7 @@ Get a character by their ID.
         const res = await fetch('https://nekos.nekidev.com/api/character/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
         const json = await res.json()
         console.log(json.data.name)
-        ``` 
+        ```
 
         Using the `nekosapi` library:
         ```js showLineNumbers
@@ -564,6 +566,7 @@ Get a category by their ID.
 | :------- | :------ | :--------------------------------------- | :------- |
 | `limit`  | integer | The maximum number of categories to get. | No       |
 | `offset` | integer | The number of categories to skip.        | No       |
+| `search` | string  | A PostgreSQL FTS formatted query         | No       |
 
 ### Response
 
@@ -592,7 +595,7 @@ Get a category by their ID.
         const res = await fetch('https://nekos.nekidev.com/api/category?limit=10&offset=0')
         const json = await res.json()
         console.log(json.data[0].name)
-        ``` 
+        ```
 
         Using the `nekosapi` library:
         ```js showLineNumbers
@@ -659,7 +662,7 @@ Get a category by their ID.
         const res = await fetch('https://nekos.nekidev.com/api/category/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
         const json = await res.json()
         console.log(json.data.name)
-        ``` 
+        ```
 
         Using the `nekosapi` library:
         ```js showLineNumbers
