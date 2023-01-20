@@ -41,3 +41,37 @@ const { NekosAPI } = require('nekosapi');
 
 const nekos = new NekosAPI();
 ```
+
+### Get a random image
+
+The `NekosAPI(){:javascript}` class has a `getRandomImage(){:javascript}` method that returns a random image.
+
+```js showLineNumbers
+const { NekosAPI } = require('nekosapi');
+
+const nekos = new NekosAPI();
+
+// This will return an image with the `catgirl` category. If the `categories`
+// argument is not specified, the image will be completely random (no specific
+// categories).
+nekos.getRandomImage(categories = ["catgirl"]).then((image) => {
+    console.log(image.url)
+});
+```
+
+You can also get many images (up to 25) at once using the `getRandomImages(){:javascript}` method instead.
+
+```js showLineNumbers
+const { NekosAPI } = require('nekosapi');
+
+const nekos = new NekosAPI();
+
+// This will return up to 5 images with the `catgirl` category (it will be less
+// if there are less than the limit images with that category). The categories
+// argument is also optional.
+nekos.getRandomImages(categories = ["catgirl"], limit = 5).then((images) => {
+    for (const image of images) {
+        console.log(image.url);
+    }
+});
+```
