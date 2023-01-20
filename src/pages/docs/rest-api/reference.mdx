@@ -1,3 +1,5 @@
+import { Callout } from 'nextra-theme-docs'
+
 # Reference
 
 This page will help you understand how to use the Rest API. We highly recommend reading this before starting to use the API.
@@ -38,6 +40,22 @@ GET /api/image?limit=10&offset=0 HTTP/1.1
 ```
 
 The default limit is 10 and the maximum limit is 25.
+
+## Searching (beta)
+
+In some endpoints there is a `search` query parameter that you can use to filter the results. The queries can be done using PostgreSQL FTS operators, which are:
+
+| Operator    | Description                          | Example                                                                                                                                           |
+| :---------- | :----------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `&`         | Contains both terms                  | `dog & fox` matches `The dog and the fox` because it contains both `dog` and `fox`                                                                |
+| `!`         | Does not contain the term            | `!dog` matches `The cow and the fox` because it does not contain the term `dog`                                                                   |
+| `\|`        | Contains at least one of the terms   | `dog \| fox` matches `The cow and the fox` because it contains fox. It's not necessary to match both                                              |
+| `<->`       | Contains both in the specified order | `dog <-> fox` matches `The dog and the fox` because it contains both `dog` and `fox` and `fox` is after `dog`                                     |
+| `(` and `)` | Combine multiple operations          | `!cat & (dog \| fox)` matches `The dog is flying` because it does not contain `cat` and it contains `dog`. It is not necessary to match `fox` too |
+
+<Callout type="warning">
+    Since the database framework the API uses to connect to the database is having some problems with multi-word queries (i.e. `kaguya sama | dog` because the term "kaguya sama" has 2 words), these type of queries are being converted to `<->` queries, which is the current best replacement. You can override this behaviour by using your own operators (i.e. `(kaguya & sama) | dog`).
+</Callout>
 
 ## Errors
 
