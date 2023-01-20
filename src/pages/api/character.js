@@ -45,10 +45,10 @@ export default async function handler(req, res) {
     const characters = await prisma.characters.findMany({
         where: search.length > 0 ? {
             name: {
-                search: search.split(" ").filter(v, i => v !== "").join(" <-> ")
+                search: search.split(" ").filter((v, i) => v !== "").join(" <-> ")
             },
             description: {
-                search: search.split(" ").filter(v, i => v !== "").join(" <-> ")
+                search: search.split(" ").filter((v, i) => v !== "").join(" <-> ")
             }
         } : undefined,
         take: parseInt(limit),
