@@ -396,6 +396,65 @@ Get all images by an artist.
 
 ## `GET /character/{id}`
 
+Get all available characters.
+
+### Parameters
+
+| Name     | Type    | Description                          | Required |
+| :------- | :------ | :----------------------------------- | :------- |
+| `limit`  | integer | The maximum number of images to get. | No       |
+| `offset` | integer | The number of images to skip.        | No       |
+
+### Response
+
+```js
+{
+    'data': [
+        {
+            'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+            'name': 'xxxxxxx',
+            'description': 'xxxxxxxxxxxxxxxxxx',
+            'createdAt': '2021-01-01T00:00:00.000Z',
+            'images': 12
+        },
+        ...
+    ],
+    'success': true,
+}
+```
+
+### Example
+
+<Tabs items={["JavaScript", "Python 3"]}>
+    <Tab>
+        Using the `fetch` API:
+        ```js
+        const res = await fetch('https://nekos.nekidev.com/api/character')
+        const json = await res.json()
+        console.log(json.data[0].name)
+        ``` 
+    </Tab>
+    <Tab>
+        Using the `requests` library:
+        ```py
+        import requests
+        res = requests.get('https://nekos.nekidev.com/api/character')
+        print(res.json()['data'][0]['name'])
+        ```
+
+        Using the `anime-api` library:
+        ```py
+        from anime_api.apis import NekosAPI
+        api = NekosAPI()
+        characters = api.get_characters()
+        print(characters[0].url)
+        ```
+    </Tab>
+
+</Tabs>
+
+## `GET /character/{id}`
+
 Get a character by their ID.
 
 ### Parameters
