@@ -31,6 +31,18 @@ The API will always return a JSON object. The response will have the following s
 }
 ```
 
+## Errors
+
+If an error occurs, the API will return a JSON object with the following structure:
+
+```js
+{
+    "code": Integer,
+    "message": String,
+    "success": false
+}
+```
+
 ## Pagination
 
 The API uses a limit/offset based pagination system. You can use the limit and offset query parameters to paginate through the results. For example:
@@ -64,15 +76,3 @@ These operators can be combined to create more complex queries, such as `%?kaguy
 <Callout type="info">
     Search matches are always case-insenitive.
 </Callout>
-
-## Errors
-
-If an error occurs, the API will return a JSON object with the following structure:
-
-```js
-{
-    "code": Integer,
-    "message": String,
-    "success": false
-}
-```
