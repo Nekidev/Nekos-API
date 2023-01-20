@@ -70,22 +70,40 @@ Returns a random image from the specified category.
 <Tabs items={["JavaScript", "Python 3"]}>
     <Tab>
         Using the `fetch` API:
-        ```js
+        ```js showLineNumbers
         const res = await fetch('https://nekos.nekidev.com/api/image/random?categories=catgirl')
         const json = await res.json()
         console.log(json.data[0].url)
-        ``` 
+        ```
+
+        Using the `nekosapi` library:
+        ```js showLineNumbers
+        const { NekosAPI } = require('nekosapi')
+        const api = new NekosAPI()
+
+        // Get single image
+        api.getRandomImage((categories = ["catgirl"])).then((image) => {
+            console.log(image.url)
+        })
+
+        // Get multiple images
+        api.getRandomImages((categories = ["catgirl"]), (limit = 10)).then((images) => {
+            for (const image of images) {
+                console.log(image.url)
+            }
+        })
+        ```
     </Tab>
     <Tab>
         Using the `requests` library:
-        ```py
+        ```py showLineNumbers
         import requests
         res = requests.get('https://nekos.nekidev.com/api/image/random?categories=catgirl')
         print(res.json()['data'][0]['url'])
         ```
 
         Using the `anime-api` library:
-        ```py
+        ```py showLineNumbers
         from anime_api.apis import NekosAPI
         api = NekosAPI()
 
@@ -165,22 +183,31 @@ Get an image by its ID.
 <Tabs items={["JavaScript", "Python 3"]}>
     <Tab>
         Using the `fetch` API:
-        ```js
+        ```js showLineNumbers
         const res = await fetch('https://nekos.nekidev.com/api/image/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
         const json = await res.json()
         console.log(json.data.url)
-        ``` 
+        ```
+
+        Using the `nekosapi` library:
+        ```js showLineNumbers
+        const { NekosAPI } = require('nekosapi')
+        const api = new NekosAPI()
+        api.getImageByID((id = "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")).then((image) => {
+            console.log(image.url)
+        })
+        ```
     </Tab>
     <Tab>
         Using the `requests` library:
-        ```py
+        ```py showLineNumbers
         import requests
         res = requests.get('https://nekos.nekidev.com/api/image/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
         print(res.json()['data']['url'])
         ```
 
         Using the `anime-api` library:
-        ```py
+        ```py showLineNumbers
         from anime_api.apis import NekosAPI
         api = NekosAPI()
         image = api.get_image_by_id(image_id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
@@ -223,7 +250,7 @@ Get all artists.
 <Tabs items={["JavaScript", "Python 3"]}>
     <Tab>
         Using the `fetch` API:
-        ```js
+        ```js showLineNumbers
         const res = await fetch('https://nekos.nekidev.com/api/artist?limit=10&offset=0')
         const json = await res.json()
         console.log(json.data[0].name)
@@ -231,14 +258,14 @@ Get all artists.
     </Tab>
     <Tab>
         Using the `requests` library:
-        ```py
+        ```py showLineNumbers
         import requests
         res = requests.get('https://nekos.nekidev.com/api/artist', params={'limit': 10, 'offset': 0})
         print(res.json()['data'][0]['name'])
         ```
 
         Using the `anime-api` library:
-        ```py
+        ```py showLineNumbers
         from anime_api.apis import NekosAPI
         api = NekosAPI()
         artist = api.get_artists(limit=10, offset=0)
@@ -277,22 +304,31 @@ Get an artist by their ID.
 <Tabs items={["JavaScript", "Python 3"]}>
     <Tab>
         Using the `fetch` API:
-        ```js
+        ```js showLineNumbers
         const res = await fetch('https://nekos.nekidev.com/api/artist/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
         const json = await res.json()
         console.log(json.data.name)
+        ```
+
+        Using the `nekosapi` library:
+        ```js showLineNumbers
+        const { NekosAPI } = require('nekosapi')
+        const api = new NekosAPI()
+        api.getArtistByID((id = "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")).then((artist) => {
+            console.log(artist.name)
+        })
         ``` 
     </Tab>
     <Tab>
         Using the `requests` library:
-        ```py
+        ```py showLineNumbers
         import requests
         res = requests.get('https://nekos.nekidev.com/api/artist/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
         print(res.json()['data']['name'])
         ```
 
         Using the `anime-api` library:
-        ```py
+        ```py showLineNumbers
         from anime_api.apis import NekosAPI
         api = NekosAPI()
         artist = api.get_artist_by_id(artist_id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
@@ -374,6 +410,15 @@ Get all images by an artist.
         const json = await res.json()
         console.log(json.data[0].url)
         ``` 
+
+        Using the `nekosapi` library:
+        ```js showLineNumbers
+        const { NekosAPI } = require('nekosapi')
+        const api = new NekosAPI()
+        api.getImagesByArtistID((id = "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")).then((artist) => {
+            console.log(artist.name)
+        })
+        ```
     </Tab>
     <Tab>
         Using the `requests` library:
@@ -394,7 +439,7 @@ Get all images by an artist.
 
 </Tabs>
 
-## `GET /character/{id}`
+## `GET /character`
 
 Get all available characters.
 
@@ -441,14 +486,6 @@ Get all available characters.
         res = requests.get('https://nekos.nekidev.com/api/character')
         print(res.json()['data'][0]['name'])
         ```
-
-        Using the `anime-api` library:
-        ```py
-        from anime_api.apis import NekosAPI
-        api = NekosAPI()
-        characters = api.get_characters()
-        print(characters[0].url)
-        ```
     </Tab>
 
 </Tabs>
@@ -483,22 +520,31 @@ Get a character by their ID.
 <Tabs items={["JavaScript", "Python 3"]}>
     <Tab>
         Using the `fetch` API:
-        ```js
+        ```js showLineNumbers
         const res = await fetch('https://nekos.nekidev.com/api/character/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
         const json = await res.json()
         console.log(json.data.name)
         ``` 
+
+        Using the `nekosapi` library:
+        ```js showLineNumbers
+        const { NekosAPI } = require('nekosapi')
+        const api = new NekosAPI()
+        api.getCharacterByID((id = "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")).then((character) => {
+            console.log(character.name)
+        })
+        ```
     </Tab>
     <Tab>
         Using the `requests` library:
-        ```py
+        ```py showLineNumbers
         import requests
         res = requests.get('https://nekos.nekidev.com/api/character/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
         print(res.json()['data']['name'])
         ```
 
         Using the `anime-api` library:
-        ```py
+        ```py showLineNumbers
         from anime_api.apis import NekosAPI
         api = NekosAPI()
         character = api.get_character_by_id(character_id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
@@ -547,6 +593,17 @@ Get a category by their ID.
         const json = await res.json()
         console.log(json.data[0].name)
         ``` 
+
+        Using the `nekosapi` library:
+        ```js showLineNumbers
+        const { NekosAPI } = require('nekosapi')
+        const api = new NekosAPI()
+        api.getCategories((limit = 10), (offset = 0)).then((categories) => {
+            for (const category of categories) {
+                console.log(category.name)
+            }
+        })
+        ```
     </Tab>
     <Tab>
         Using the `requests` library:
@@ -603,6 +660,15 @@ Get a category by their ID.
         const json = await res.json()
         console.log(json.data.name)
         ``` 
+
+        Using the `nekosapi` library:
+        ```js showLineNumbers
+        const { NekosAPI } = require('nekosapi')
+        const api = new NekosAPI()
+        api.getCategoryByID((id = "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")).then((category) => {
+            console.log(category.name)
+        })
+        ```
     </Tab>
     <Tab>
         Using the `requests` library:
