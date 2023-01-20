@@ -46,7 +46,7 @@ export default async function handler(req, res) {
     const artists = await prisma.artists.findMany({
         where: search.length > 0 ? {
             name: {
-                search: search.split(" ").join(" <-> ")
+                search: search.split(" ").filter(v, i => v !== "").join(" <-> ")
             }
         } : undefined,
         take: parseInt(limit),
