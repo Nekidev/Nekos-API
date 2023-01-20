@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { parseCategory } from "../../../utils/db/parsers";
+import { parseSet } from "../../../utils/db/parsers";
 import { middleware } from "../../../utils/api";
 
 export default async function handler(req, res) {
@@ -9,35 +9,38 @@ export default async function handler(req, res) {
         // A response has been sent by the middleware.
         return;
     }
-    
-    const { categoryId } = req.query;
 
-    if (!/^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi.test(categoryId)) {
+    const { setId } = req.query;
+
+    if (!/^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi.test(setId)) {
         res.status(400).json({
             code: 400,
-            message: "Invalid value for `categoryId` parameter. Expected a UUID.",
+            message: "Invalid value for `setId` parameter. Expected a UUID.",
             success: false,
         });
+        return;
     }
 
     const prisma = new PrismaClient();
 
-    const category = await prisma.categories.findUnique({
+    const set = await prisma.sets.findUnique({
         where: {
-            id: categoryId
+            id: setId
         }
     });
 
-    if (!category) {
+    if (!set) {
         res.status(404).json({
             code: 404,
-            message: "Could not find category with ID: " + categoryId,
-            success: false,
-        });
+            message: 'Could not find set with ID: ' + setId,
+            success: false
+        })
+        prisma.$disconnect();
+        return
     }
 
     res.status(200).json({
-        'data': await parseCategory(category, prisma),
+        'data': await parseSet(set),
         'success': true
     });
 

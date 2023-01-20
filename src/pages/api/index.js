@@ -14,6 +14,8 @@ export default async function handler(req, res) {
             '/image',
             '/image/:id',
             '/image/random',
+            '/set',
+            '/set/:id',
             '/character',
             '/character/:id',
             '/category',

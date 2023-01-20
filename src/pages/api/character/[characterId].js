@@ -31,9 +31,11 @@ export default async function handler(req, res) {
     if (!character) {
         res.status(404).json({
             code: 404,
-            message: "Character not found.",
+            message: "Could not find character with ID: " + characterId,
             success: false,
         });
+        prisma.$disconnect();
+        return
     }
 
     res.status(200).json({

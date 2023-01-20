@@ -18,6 +18,7 @@ export default async function handler(req, res) {
             message: "Invalid value for `imageId` parameter. Expected a UUID.",
             success: false,
         });
+        return;
     }
 
     const prisma = new PrismaClient();
@@ -27,6 +28,16 @@ export default async function handler(req, res) {
             id: imageId
         }
     });
+
+    if (!image) {
+        res.status(404).json({
+            code: 404,
+            message: 'Could not find image with ID: ' + imageId,
+            success: false
+        })
+        prisma.$disconnect();
+        return
+    }
 
     res.status(200).json({
         'data': await getImageJson(image, prisma),

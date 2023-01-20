@@ -116,3 +116,15 @@ export async function parseArtist(artist, prismaClient = null) {
 export async function parseArtists(artists) {
     return await _parseMany(artists, parseArtist)
 }
+
+export async function parseSet(set) {
+    return {
+        id: set.id,
+        images: set.images,
+        createdAt: set.created_at
+    }
+}
+
+export async function parseSets(sets) {
+    return await _parseMany(sets, parseSet)
+}
