@@ -132,3 +132,6 @@ dist
 # Sequelize
 db/migrations/*
 db/config/config.*
+
+# Turborepo
+.turbo
