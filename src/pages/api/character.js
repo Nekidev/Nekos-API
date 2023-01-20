@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-import { parseCharacter } from '../../utils/db/parsers';
+import { Prisma, PrismaClient } from "@prisma/client";
+import { parseCharacter } from "../../utils/db/parsers";
 import { middleware } from "../../utils/api";
 
 export default async function handler(req, res) {
@@ -27,38 +27,32 @@ export default async function handler(req, res) {
     } else if (!/^[0-9]+$/.test(offset) || parseInt(offset) < 0) {
         res.status(400).json({
             code: 400,
-            message: "Invalid value for `offset` parameter. Expected a number greater than 0.",
-            success: false
-        })
+            message:
+                "Invalid value for `offset` parameter. Expected a number greater than 0.",
+            success: false,
+        });
         return;
     } else if (search.length > 20) {
         req.status(400).json({
             code: 400,
             message: "The `search` parameter can be up to 20 characters long.",
-            success: false
-        })
+            success: false,
+        });
         return;
     }
 
     const prisma = new PrismaClient();
 
-    const characters = await prisma.characters.findMany({
-        where: search.length > 0 ? {
-            name: {
-                search: search.split(" ").filter((v, i) => v !== "").join(" <-> ")
-            },
-            description: {
-                search: search.split(" ").filter((v, i) => v !== "").join(" <-> ")
-            }
-        } : undefined,
-        take: parseInt(limit),
-        skip: parseInt(offset)
-    })
+    const characters = await prisma.$queryRaw`SELECT * FROM "Characters" ${
+        search.length > 0
+            ? Prisma.sql`WHERE LOWER(name) SIMILAR TO LOWER(${search}) OR LOWER(description) SIMILAR TO LOWER(${search}) OR LOWER(source) SIMILAR TO LOWER(${search})`
+            : Prisma.empty
+    } LIMIT ${parseInt(limit)} OFFSET ${parseInt(offset)}`;
 
-    let data = []
+    let data = [];
 
     for (const row of characters) {
-        data.push(await parseCharacter(row))
+        data.push(await parseCharacter(row));
     }
 
     res.status(200).json({

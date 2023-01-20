@@ -1,5 +1,5 @@
 import { middleware } from "../../utils/api";
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { parseArtists } from "../../utils/db/parsers";
 
 export default async function handler(req, res) {
@@ -36,29 +36,26 @@ export default async function handler(req, res) {
         req.status(400).json({
             code: 400,
             message: "The `search` parameter can be up to 20 characters long.",
-            success: false
-        })
+            success: false,
+        });
         return;
     }
 
     const prisma = new PrismaClient();
 
-    const artists = await prisma.artists.findMany({
-        where: search.length > 0 ? {
-            name: {
-                search: search.split(" ").filter((v, i) => v !== "").join(" <-> ")
-            }
-        } : undefined,
-        take: parseInt(limit),
-        skip: parseInt(offset)
-    });
+    const artists =
+        await prisma.$queryRaw`SELECT * FROM "Artists" ${
+            search.length > 0 ? Prisma.sql`WHERE LOWER(name) SIMILAR TO LOWER(${search})` : Prisma.empty
+        } LIMIT ${parseInt(
+            limit
+        )} OFFSET ${parseInt(offset)}`;
 
     const artists_json = await parseArtists(artists);
-    
+
     prisma.$disconnect();
 
     res.status(200).json({
         data: artists_json,
-        success: true
-    })
+        success: true,
+    });
 }
