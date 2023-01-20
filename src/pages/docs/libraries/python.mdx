@@ -86,22 +86,26 @@ assert image.id == image_id
 print(image.url)
 ```
 
-### Get all artists
+### Search for an artist
 
-If you want to get all artists available, you can use the `get_artists(){:python}` method.
+If you want to search for an artist, you can use the `get_artists(){:python}` method.
 
-```python showLineNumbers {7}
+```python showLineNumbers {9}
 from anime_api.apis import NekosAPI
 
 nekos = NekosAPI()
 
 # This will return up to 10 artists and skip the first 5. By default the limit
-# is set to 10 and the offset is set to 0.
-artists = nekos.get_artists(limit=10, offset=0)
+# is set to 10 and the offset is set to 0. The search argument is optional. If
+# you don't specify it, a list of all artists available will be returned
+# instead. Search is case-insensitive.
+artists = nekos.get_artists(limit=10, offset=0, search="%?shiren%?")
 
 for artist in artists:
     print(artist.name)
 ```
+
+The search query format is explained [here](/docs/rest-api/reference#searching). You can also learn to escape queries [here](/docs/libraries/python#escape-a-search-query).
 
 ### Get an artist by it's ID
 
@@ -138,22 +142,26 @@ for image in images:
     print(image.artist.name)
 ```
 
-### Get all categories
+### Search for a category
 
-To get a list of all categories available, you can use the `get_categories(){:python}` method.
+To search for a category, you can use the `get_categories(){:python}` method.
 
-```python showLineNumbers {7}
+```python showLineNumbers {9}
 from anime_api.apis import NekosAPI
 
 nekos = NekosAPI()
 
 # This will return up to 10 categories and skip the first 5. By default the
-# limit is set to 10 and the offset is set to 0.
-categories = nekos.get_categories(limit=10, offset=0)
+# limit is set to 10 and the offset is set to 0. The search argument is optional. If
+# you don't specify it, a list of all artists available will be returned
+# instead. Search is case-insensitive.
+categories = nekos.get_categories(limit=10, offset=0, search="%?catgi%?")
 
 for category in categories:
     print(category)
 ```
+
+The search query format is explained [here](/docs/rest-api/reference#searching). You can also learn to escape queries [here](/docs/libraries/python#escape-a-search-query).
 
 ### Get a category by it's ID
 
@@ -171,6 +179,27 @@ assert category.id == category_id
 print(category.name)
 ```
 
+### Search for a character
+
+To search for a character, you can use the `get_characters(){:python}`.
+
+```python showLineNumbers {9}
+from anime_api.apis import NekosAPI
+
+nekos = NekosAPI()
+
+# This will return up to 10 characters and skip the first 5. By default the
+# limit is set to 10 and the offset is set to 0. The search argument is optional. If
+# you don't specify it, a list of all artists available will be returned
+# instead. Search is case-insensitive.
+characters = nekos.get_characters(limit=10, offset=0, search="%?kaguya%?")
+
+for character in characters:
+    print(character)
+```
+
+The search query format is explained [here](/docs/rest-api/reference#searching). You can also learn to escape queries [here](/docs/libraries/python#escape-a-search-query).
+
 ### Get character by it's ID
 
 Every character has it's unique ID, which is returned together with the character in every API response. You can get a specific charcater's information using the `get_character_by_id(){:python}` method.
@@ -186,6 +215,56 @@ character = nekos.get_character_by_id(character_id=character_id)
 assert character.id == character_id
 print(character.name)
 ```
+
+## Helpers
+
+### Escape a search query
+
+Sometimes you might want to make a query that contains special characters like `[` or `*`.
+
+```python showLineNumbers filename="escape_query.py" {5}
+from anime_api.apis.nekos_api import NekosAPI, EscapedQuery
+
+nekos = NekosAPI()
+
+escaped_query = EscapedQuery("`[` or `]` or maybe `*`?")
+
+characters = nekos.get_characters(search=escaped_query)
+
+for character in characters:
+    print(character.name)
+```
+
+Using the `EscapedQuery(){:python}` class, you can easily escape special characters to use them as literals.
+
+This is what actually happens undercover:
+
+```python
+>>> from anime_api.apis.nekos_api import EscapedQuery
+>>>
+>>> query = "`[` or `]` or maybe `*`?"
+>>> escaped = EscapedQuery(query)
+>>>
+>>> str(escaped)
+`\\[` or `\\]` or maybe `\\*`\\?
+```
+
+This way, you can search for special characters without any problems. If you wanted, you could also use `f-string`s to make even more complex queries. For example:
+
+```python showLineNumbers filename="complex_escaped_query.py" {5}
+from anime_api.apis.nekos_api import NekosAPI, EscapedQuery
+
+nekos = NekosAPI()
+
+query = f"({EscapedQuery('[ and ]')}) | ({EscapedQuery('{ and }')})"
+
+characters = nekos.get_characters(search=query)
+
+for character in characters:
+    print(character.name)
+```
+
+This way, you'd be matching characters that contain either `[ and ]` or `{ and }`.
 
 ## Reference
 
@@ -204,3 +283,7 @@ print(character.name)
 
 -   `NsfwLevel`: [Github](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/types.py#L6)
 -   `ImageOrientation`: [GitHub](https://github.com/Nekidev/anime-api/blob/f5267ccd2e6416c239e2ee1f0775878bb4a296e7/anime_api/apis/nekos_api/types.py#L13)
+
+### Helpers
+
+- `EscapedQuery`: [GitHub](https://github.com/Nekidev/anime-api/blob/af91b5ac085be33399f47285fe6e9ce209a593fa/anime_api/apis/nekos_api/utils.py#L6)
