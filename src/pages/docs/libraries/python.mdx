@@ -44,7 +44,7 @@ nekos = NekosAPI()
 
 The `NekosAPI(){:python}` class has a `get_random_image(){:python}` method that returns a random image.
 
-```python showLineNumbers
+```python showLineNumbers {6}
 from anime_api.apis import NekosAPI
 
 nekos = NekosAPI()
@@ -57,7 +57,7 @@ print(image.url)
 
 You can also get many images (up to 25) at once using the `get_random_images(){:python}` method instead.
 
-```python showLineNumbers
+```python showLineNumbers {7}
 from anime_api.apis import NekosAPI
 
 nekos = NekosAPI()
@@ -74,7 +74,7 @@ for image in images:
 
 Every image in the API has its own ID. You can fetch an image by its ID to get a specific image's information.
 
-```python showLineNumbers
+```python showLineNumbers {6}
 from anime_api.apis import NekosAPI
 
 nekos = NekosAPI()
@@ -90,7 +90,7 @@ print(image.url)
 
 If you want to get all artists available, you can use the `get_artists(){:python}` method.
 
-```python showLineNumbers
+```python showLineNumbers {7}
 from anime_api.apis import NekosAPI
 
 nekos = NekosAPI()
@@ -107,7 +107,7 @@ for artist in artists:
 
 Each artist in the API has its ID. Although every image comes with (almost) all its artist information, fetching an artist by its ID has its advantages.
 
-```python showLineNumbers
+```python showLineNumbers {6}
 from anime_api.apis import NekosAPI
 
 nekos = NekosAPI()
@@ -125,7 +125,7 @@ As you can see, the `images` property is added to the `Artist` object when it's 
 
 If you want to fetch an artist's images, you can use the `get_images_by_artist_id(){:python}` method. This method returns up to 25 images and supports pagination.
 
-```python showLineNumbers
+```python showLineNumbers {7}
 from anime_api.apis import NekosAPI
 
 nekos = NekosAPI()
@@ -142,7 +142,7 @@ for image in images:
 
 To get a list of all categories available, you can use the `get_categories(){:python}` method.
 
-```python showLineNumbers
+```python showLineNumbers {7}
 from anime_api.apis import NekosAPI
 
 nekos = NekosAPI()
@@ -159,7 +159,7 @@ for category in categories:
 
 All categories have their unique ID, which is always returned together with the category. You can get a specific category using the `get_gategory_by_id(){:python}` method.
 
-```python showLineNumbers
+```python showLineNumbers {6}
 from anime_api.apis import NekosAPI
 
 nekos = NekosAPI()
@@ -175,7 +175,7 @@ print(category.name)
 
 Every character has it's unique ID, which is returned together with the character in every API response. You can get a specific charcater's information using the `get_character_by_id(){:python}` method.
 
-```python showLineNumbers
+```python showLineNumbers {6}
 from anime_api.apis import NekosAPI
 
 nekos = NekosAPI()

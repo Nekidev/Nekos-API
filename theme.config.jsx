@@ -18,8 +18,15 @@ export default {
     },
     docsRepositoryBase: "https://github.com/Nekidev/Nekos-API",
     useNextSeoProps() {
-        return {
-            titleTemplate: '%s – Nekos API'
+        const { route } = useRouter()
+        if (route !== '/') {
+            return {
+                titleTemplate: '%s – Nekos API'
+            }
+        } else {
+            return {
+                titleTemplate: 'Nekos API'
+            }
         }
     },
     head: () => {
@@ -57,7 +64,8 @@ export default {
         )
     },
     sidebar: {
-        defaultMenuCollapseLevel: 0
+        defaultMenuCollapseLevel: 0,
+        toggleButton: true,
     },
     defaultShowCopyCode: true,
 }

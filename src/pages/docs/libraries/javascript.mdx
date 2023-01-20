@@ -42,7 +42,7 @@ const nekos = new NekosAPI();
 
 The `NekosAPI(){:javascript}` class has a `getRandomImage(){:javascript}` method that returns a random image.
 
-```js showLineNumbers
+```js showLineNumbers {8,9,10}
 const { NekosAPI } = require("nekosapi");
 
 const nekos = new NekosAPI();
@@ -57,7 +57,7 @@ nekos.getRandomImage((categories = ["catgirl"])).then((image) => {
 
 You can also get many images (up to 25) at once using the `getRandomImages(){:javascript}` method instead.
 
-```js showLineNumbers
+```js showLineNumbers {8,9,10,11,12,13,14}
 const { NekosAPI } = require("nekosapi");
 
 const nekos = new NekosAPI();
@@ -78,7 +78,7 @@ nekos
 
 Every image in the API has its own ID. You can fetch an image by its ID to get a specific image's information.
 
-```js showLineNumbers
+```js showLineNumbers {6,7,8}
 const { NekosAPI } = require("nekosapi");
 
 const nekos = new NekosAPI();
@@ -93,7 +93,7 @@ nekos.getImageByID((id = "some-uuid")).then((image) => {
 
 Each artist in the API has its ID. Although every image comes with (almost) all its artist information, fetching an artist by its ID has its advantages.
 
-```js showLineNumbers
+```js showLineNumbers {5,6,7,8}
 const { NekosAPI } = require("nekosapi");
 
 const nekos = new NekosAPI();
@@ -110,7 +110,7 @@ As you can see, the `images` property is added to the Artist object when it's fe
 
 If you want to fetch an artist's images, you can use the `getImagesByArtistID(){:javascript}` method. This method returns up to 25 images and supports pagination.
 
-```js showLineNumbers
+```js showLineNumbers {7,8,9,10,11,12,13}
 const { NekosAPI } = require("nekosapi");
 
 const nekos = new NekosAPI();
@@ -130,7 +130,7 @@ nekos
 
 To get a list of all categories available, you can use the `getCategories(){:javascript}` method.
 
-```js showLineNumbers
+```js showLineNumbers {7,8,9,10,11}
 const { NekosAPI } = require("nekosapi");
 
 const nekos = new NekosAPI();
@@ -148,7 +148,7 @@ nekos.getCategories((limit = 10), (offset = 5)).then((categories) => {
 
 All categories have their unique ID, which is always returned together with the category. You can get a specific category using the `getCategoryByID(){:javascript}` method.
 
-```js showLineNumbers
+```js showLineNumbers {5,6,7,8}
 const { NekosAPI } = require("nekosapi");
 
 const nekos = new NekosAPI();
@@ -165,7 +165,7 @@ The `images` property is only returned when using this method. Getting a categor
 
 Every character has it's unique ID, which is returned together with the character in every API response. You can get a specific charcater's information using the `getCharacterByID(){:javascript}` method.
 
-```js showLineNumbers
+```js showLineNumbers {5,6,7}
 const { NekosAPI } = require("nekosapi");
 
 const nekos = new NekosAPI();
