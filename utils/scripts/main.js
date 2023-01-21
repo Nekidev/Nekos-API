@@ -14,7 +14,7 @@ const commands = scripts.map((script, i) => "node " + script);
 
 var process = exec(commands.join(' && '));
 process.stdout.on("data", (data) => {
-    console.log(data + '\r');
+    process.stdout.write(data);
 });
 process.addListener("close", () => {
     console.log("All programs run successfully.")
