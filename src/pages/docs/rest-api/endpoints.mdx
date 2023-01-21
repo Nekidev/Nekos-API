@@ -4,6 +4,313 @@ import { Callout, Tab, Tabs } from "nextra-theme-docs";
 
 Base url: `https://nekos.nekidev.com/api`
 
+## `GET /`
+
+Get information about the API.
+
+### Parameters
+
+No parameters.
+
+### Response
+
+```json
+{
+    "data": [
+        "/",
+        "/stats",
+        ...
+    ],
+    "meta": {
+        "version": "v1.4.2",
+        "baseApiRoute": "/api"
+    },
+    "success": true
+}
+```
+
+### Example
+
+<Tabs items={["JavaScript", "Python 3"]}>
+    <Tab>
+        Using the `fetch` API:
+        ```js showLineNumbers
+        const res = await fetch('https://nekos.nekidev.com/api/image')
+        const json = await res.json()
+        console.log(json.data.endpoints[0])
+        ```
+    </Tab>
+    <Tab>
+        Using the `requests` library:
+        ```py showLineNumbers
+        import requests
+        res = requests.get('https://nekos.nekidev.com/api')
+        print(res.json()['data']['endpoints'][0])
+        ```
+    </Tab>
+
+</Tabs>
+
+## `GET /stats`
+
+Get the current API statistics.
+
+### Parameters
+
+No parameters.
+
+### Response
+
+```json
+{
+    "data": {
+        "images": {
+            "count": 2890,
+            "nsfw": {
+                "nsfw": 9,
+                "questionable": 19,
+                "sfw": 2862
+            },
+            "original": {
+                "yes": 0,
+                "no": 44,
+                "unknown": 2846
+            },
+            "resolution": {
+                "sd": 222,
+                "hd": 458,
+                "fhd": 881,
+                "uhd": 332
+            },
+            "orientation": {
+                "portrait": 2616,
+                "landscape": 224,
+                "square": 50
+            }
+        },
+        "categories": {
+            "type": {
+                "settings": 6,
+                "character": 20,
+                "format": 2
+            },
+            "nsfw": {
+                "nsfw": 1,
+                "sfw": 27
+            },
+            "count": 28
+        },
+        "artists": {
+            "count": 1
+        },
+        "characters": {
+            "count": 3,
+            "sources": 3
+        }
+    },
+    "success": true
+}
+```
+
+### Example
+
+<Tabs items={["JavaScript", "Python 3"]}>
+    <Tab>
+        Using the `fetch` API:
+        ```js showLineNumbers
+        const res = await fetch('https://nekos.nekidev.com/api/stats')
+        const json = await res.json()
+        console.log(json.data.images.count)
+        ```
+    </Tab>
+    <Tab>
+        Using the `requests` library:
+        ```py showLineNumbers
+        import requests
+        res = requests.get('https://nekos.nekidev.com/api')
+        print(res.json()['data']['images']['count'])
+        ```
+    </Tab>
+
+</Tabs>
+
+## `GET /token`
+
+Get information about the current access token.
+
+<Callout type="info">
+    This endpoint requires an access token. You can read more about why we have
+    protected endpoints [here](/docs/faq).
+</Callout>
+
+### Parameters
+
+| Name            | Type           | Description      | Required | Authorization |
+| :-------------- | :------------- | :--------------- | :------- | :------------ |
+| `Authorization` | token (header) | The access token | Yes      | Yes           |
+
+### Response
+
+```json
+{
+    "data": {
+        "owner": "xxxxxx (Discord ID: xxxxxxxxxxxxxxxxxx)",
+        "purpose": "xxxxxxxxxxxx",
+        "scopes": ["image:list", "image:custom-expiry:86400"],
+        "issuedBy": "xxxxxx (Discord ID: xxxxxxxxxxxxxxxxxx)",
+        "createdAt": "2023-01-01T00:00:00.000Z",
+        "expires": "2023-01-01T00:00:00.000Z"
+    },
+    "success": true
+}
+```
+
+### Example
+
+<Tabs items={["JavaScript", "Python 3"]}>
+    <Tab>
+        Using the `fetch` API:
+        ```js showLineNumbers
+        const res = await fetch('https://nekos.nekidev.com/api/token', {
+            headers: {
+                Authorization: "Bearer <token>"
+            }
+        })
+        const json = await res.json()
+        console.log(json.data.owner)
+        ```
+    </Tab>
+    <Tab>
+        Using the `requests` library:
+        ```py showLineNumbers
+        import requests
+        res = requests.get(
+            'https://nekos.nekidev.com/api/token', 
+            headers={'Authorization': 'Bearer <token>'}
+        )
+        print(res.json()['data']['owner'])
+        ```
+    </Tab>
+
+</Tabs>
+
+## `GET /image`
+
+Returns a list of all available images.
+
+<Callout type="info">
+    This is the only endpoint (ignoring `/token`) that requires authorization.
+    You can read more about why we do this [here](/docs/faq).
+</Callout>
+
+### Parameters
+
+| Name            | Type           | Description                                                         | Required | Authorization |
+| :-------------- | :------------- | :------------------------------------------------------------------ | :------- | :------------ |
+| `Authorization` | token (header) | The access token                                                    | Yes      | Yes           |
+| `limit`         | number         | The amount of images to get. (max: 25)                              | No       | Yes           |
+| `offset`        | integer        | The number of images to skip.                                       | No       | Yes           |
+| `expiry`        | number         | The amount of time in seconds the link will be valid (until expiry) | No       | Yes           |
+
+### Response
+
+```json
+{
+    "data": [
+        {
+            "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "url": "https://example.com/assets/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.png",
+            "artist": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "source": {
+                "name": "xxxxxxx",
+                "url": "https://example.com/xxxxxxx"
+            },
+            "nsfw": "sfw",
+            "categories": [
+                {
+                    "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                    "name": "xxxxxxx",
+                    "description": "xxxxxxxxxxxxxxxxxx",
+                    "nsfw": false,
+                    "createdAt": "2021-01-01T00:00:00.000Z"
+                }
+            ],
+            "characters": [
+                {
+                    "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                    "name": "xxxxxxx",
+                    "description": "xxxxxxxxxxxxxxxxxx",
+                    "createdAt": "2021-01-01T00:00:00.000Z"
+                }
+            ],
+            "createdAt": "2021-01-01T00:00:00.000Z",
+            "meta": {
+                "eTag": "xxxxxxxxxxxxxxxxxxxxx",
+                "size": 6336807,
+                "mimetype": "image/png",
+                "color": "#ffffff",
+                "expires": "2021-01-01T00:00:00.000Z",
+                "dimens": {
+                    "width": 1024,
+                    "height": 1024,
+                    "aspectRatio": "1:1",
+                    "orientation": "landscape"
+                }
+            }
+        }
+    ],
+    "success": true
+}
+```
+
+### Example
+
+<Tabs items={["JavaScript", "Python 3"]}>
+    <Tab>
+        Using the `fetch` API:
+        ```js showLineNumbers
+        const res = await fetch('https://nekos.nekidev.com/api/image', {
+            headers: {
+                Authorization: "Bearer <token>"
+            }
+        })
+        const json = await res.json()
+        console.log(json.data[0].url)
+        ```
+
+        Using the `nekosapi` library:
+        ```js showLineNumbers
+        const { NekosAPI } = require('nekosapi')
+        const api = new NekosAPI("<token>")
+        api.getImages().then((images) => {
+            for (const image of images) {
+                console.log(image.url)
+            }
+        })
+        ```
+    </Tab>
+    <Tab>
+        Using the `requests` library:
+        ```py showLineNumbers
+        import requests
+        res = requests.get(
+            'https://nekos.nekidev.com/api/image',
+            headers={'Authorization': 'Bearer <token>'}
+        )
+        print(res.json()['data'][0]['url'])
+        ```
+
+        Using the `anime-api` library:
+        ```py showLineNumbers
+        from anime_api.apis import NekosAPI
+        api = NekosAPI("<token>")
+        images = api.get_images(categories=['catgirl'])
+        print(images[0].url)
+        ```
+    </Tab>
+
+</Tabs>
+
 ## `GET /image/random`
 
 Returns a random image from the specified category.
@@ -57,6 +364,7 @@ Returns a random image from the specified category.
                 'dimens': {
                     'width': 1024,
                     'height': 1024,
+                    'aspectRatio': "1:1",
                     'orientation': 'landscape',
                 },
             }
