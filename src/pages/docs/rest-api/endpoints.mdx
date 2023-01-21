@@ -75,7 +75,7 @@ export let code2 = `
 <APIRequest
     method="GET"
     endpoint="/stats"
-    title="Current Statistics"
+    title="Get current API statistics"
     description="Get the current API statistics."
     responses={[
         {
@@ -98,28 +98,6 @@ export let code2 = `
         },
     ]}
 />
-
-### Example
-
-<Tabs items={["JavaScript", "Python 3"]}>
-    <Tab>
-        Using the `fetch` API:
-        ```js showLineNumbers
-        const res = await fetch('https://nekos.nekidev.com/api/stats')
-        const json = await res.json()
-        console.log(json.data.images.count)
-        ```
-    </Tab>
-    <Tab>
-        Using the `requests` library:
-        ```py showLineNumbers
-        import requests
-        res = requests.get('https://nekos.nekidev.com/api')
-        print(res.json()['data']['images']['count'])
-        ```
-    </Tab>
-
-</Tabs>
 
 ## `GET /token`
 
@@ -145,7 +123,7 @@ export let code3 = `
 <APIRequest
     method="GET"
     endpoint="/token"
-    title="Token Information"
+    title="Get token information"
     description="Get information about the current access token."
     parameters={[
         {
@@ -170,41 +148,22 @@ export let code3 = `
             },
         },
         {
+            code: 401,
+            name: "Unauthorized",
+            description: "You have not provided a token.",
+        },
+        {
+            code: 401,
+            name: "Invalid token",
+            description: "The token provided is not a valid token.",
+        },
+        {
             code: 429,
             name: "Too many requests",
             description: "You have made too many requests.",
         },
     ]}
 />
-
-### Example
-
-<Tabs items={["JavaScript", "Python 3"]}>
-    <Tab>
-        Using the `fetch` API:
-        ```js showLineNumbers
-        const res = await fetch('https://nekos.nekidev.com/api/token', {
-            headers: {
-                Authorization: "Bearer <token>"
-            }
-        })
-        const json = await res.json()
-        console.log(json.data.owner)
-        ```
-    </Tab>
-    <Tab>
-        Using the `requests` library:
-        ```py showLineNumbers
-        import requests
-        res = requests.get(
-            'https://nekos.nekidev.com/api/token', 
-            headers={'Authorization': 'Bearer <token>'}
-        )
-        print(res.json()['data']['owner'])
-        ```
-    </Tab>
-
-</Tabs>
 
 ## `GET /image`
 
@@ -265,7 +224,7 @@ export let code4 = `
 <APIRequest
     method="GET"
     endpoint="/image"
-    title="All images"
+    title="Get all images"
     description="Returns a list of all available images."
     parameters={[
         {
@@ -357,54 +316,6 @@ export let code4 = `
     ]}
 />
 
-### Example
-
-<Tabs items={["JavaScript", "Python 3"]}>
-    <Tab>
-        Using the `fetch` API:
-        ```js showLineNumbers
-        const res = await fetch('https://nekos.nekidev.com/api/image', {
-            headers: {
-                Authorization: "Bearer <token>"
-            }
-        })
-        const json = await res.json()
-        console.log(json.data[0].url)
-        ```
-
-        Using the `nekosapi` library:
-        ```js showLineNumbers
-        const { NekosAPI } = require('nekosapi')
-        const api = new NekosAPI("<token>")
-        api.getImages().then((images) => {
-            for (const image of images) {
-                console.log(image.url)
-            }
-        })
-        ```
-    </Tab>
-    <Tab>
-        Using the `requests` library:
-        ```py showLineNumbers
-        import requests
-        res = requests.get(
-            'https://nekos.nekidev.com/api/image',
-            headers={'Authorization': 'Bearer <token>'}
-        )
-        print(res.json()['data'][0]['url'])
-        ```
-
-        Using the `anime-api` library:
-        ```py showLineNumbers
-        from anime_api.apis import NekosAPI
-        api = NekosAPI("<token>")
-        images = api.get_images(categories=['catgirl'])
-        print(images[0].url)
-        ```
-    </Tab>
-
-</Tabs>
-
 ## `GET /image/random`
 
 export let code5 = `
@@ -459,7 +370,7 @@ export let code5 = `
 <APIRequest
     method="GET"
     endpoint="/image/random"
-    title="Random images"
+    title="Get random images"
     description="Returns one or more random images from the specified category."
     parameters={[
         {
@@ -505,6 +416,29 @@ export let code5 = `
                 "The specified limit is not a number between 1 and 25.",
         },
         {
+            code: 400,
+            name: "Invalid expiry",
+            description:
+                "The provided custom expiry time is not a number greater than 30.",
+        },
+        {
+            code: 401,
+            name: "Invalid token",
+            description: "The token provided is not a valid token.",
+        },
+        {
+            code: 403,
+            name: "Missing permission",
+            description:
+                "The access token provided has not got permission to set a custom image expiry time.",
+        },
+        {
+            code: 403,
+            name: "Missing permission",
+            description:
+                "The custom expiry time is greater than what allowed by the token.",
+        },
+        {
             code: 429,
             name: "Too many requests",
             description: "You have made too many requests.",
@@ -515,60 +449,6 @@ export let code5 = `
         javascript: "/docs/libraries/javascript#get-a-random-image",
     }}
 />
-
-### Example
-
-<Tabs items={["JavaScript", "Python 3"]}>
-    <Tab>
-        Using the `fetch` API:
-        ```js showLineNumbers
-        const res = await fetch('https://nekos.nekidev.com/api/image/random?categories=catgirl')
-        const json = await res.json()
-        console.log(json.data[0].url)
-        ```
-
-        Using the `nekosapi` library:
-        ```js showLineNumbers
-        const { NekosAPI } = require('nekosapi')
-        const api = new NekosAPI()
-
-        // Get single image
-        api.getRandomImage((categories = ["catgirl"])).then((image) => {
-            console.log(image.url)
-        })
-
-        // Get multiple images
-        api.getRandomImages((categories = ["catgirl"]), (limit = 10)).then((images) => {
-            for (const image of images) {
-                console.log(image.url)
-            }
-        })
-        ```
-    </Tab>
-    <Tab>
-        Using the `requests` library:
-        ```py showLineNumbers
-        import requests
-        res = requests.get('https://nekos.nekidev.com/api/image/random?categories=catgirl')
-        print(res.json()['data'][0]['url'])
-        ```
-
-        Using the `anime-api` library:
-        ```py showLineNumbers
-        from anime_api.apis import NekosAPI
-        api = NekosAPI()
-
-        # Get single image
-        image = api.get_random_image(categories=['catgirl'])
-        print(image.url)
-
-        # Get multiple images
-        images = api.get_random_images(categories=['catgirl'])
-        print(images[0].url)
-        ```
-    </Tab>
-
-</Tabs>
 
 ## `GET /image/{id}`
 
@@ -658,6 +538,23 @@ export let code6 = `
             description: "The provided ID is not a valid UUID.",
         },
         {
+            code: 401,
+            name: "Invalid token",
+            description: "The token provided is invalid.",
+        },
+        {
+            code: 403,
+            name: "Missing permission",
+            description:
+                "The access token provided has not got permission to set a custom image expiry time.",
+        },
+        {
+            code: 403,
+            name: "Missing permission",
+            description:
+                "The custom expiry time is greater than what allowed by the token.",
+        },
+        {
             code: 404,
             name: "Not found",
             description: "Could not find image with the provided ID.",
@@ -673,28 +570,6 @@ export let code6 = `
         javascript: "/docs/libraries/javascript#get-an-image-by-its-id",
     }}
 />
-
-### Example
-
-<Tabs items={["JavaScript", "Python 3"]}>
-    <Tab>
-        Using the `fetch` API:
-        ```js showLineNumbers
-        const res = await fetch('https://nekos.nekidev.com/api/image/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
-        const json = await res.json()
-        console.log(json.data.url)
-        ```
-    </Tab>
-    <Tab>
-        Using the `requests` library:
-        ```py showLineNumbers
-        import requests
-        res = requests.get('https://nekos.nekidev.com/api/image/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
-        print(res.json()['data']['url'])
-        ```
-    </Tab>
-
-</Tabs>
 
 ## `GET /artist`
 
@@ -749,39 +624,36 @@ export let code7 = `
             },
         },
         {
+            code: 400,
+            name: "Invalid limit",
+            description: "The limit provided is not a number between 1 and 25.",
+        },
+        {
+            code: 400,
+            name: "Invalid offset",
+            description: "The offset provided is not a number greater than 0.",
+        },
+        {
+            code: 400,
+            name: "Invalid search query",
+            description: "The search query provided is longer than 50 characters.",
+        },
+        {
+            code: 401,
+            name: "Invalid token",
+            description: "The token provided is invalid.",
+        },
+        {
             code: 429,
             name: "Too many requests",
             description: "You have made too many requests.",
         },
     ]}
     apiWrapperDocs={{
-        python: "/docs/libraries/python#search-for-an-artist",
-        javascript: "/docs/libraries/javascript#get-all-artists",
+        python: "/docs/libraries/python#search-for-an-artist"
     }}
 
 />
-
-### Example
-
-<Tabs items={["JavaScript", "Python 3"]}>
-    <Tab>
-        Using the `fetch` API:
-        ```js showLineNumbers
-        const res = await fetch('https://nekos.nekidev.com/api/artist?limit=10&offset=0')
-        const json = await res.json()
-        console.log(json.data[0].name)
-        ``` 
-    </Tab>
-    <Tab>
-        Using the `requests` library:
-        ```py showLineNumbers
-        import requests
-        res = requests.get('https://nekos.nekidev.com/api/artist', params={'limit': 10, 'offset': 0})
-        print(res.json()['data'][0]['name'])
-        ```
-    </Tab>
-
-</Tabs>
 
 ## `GET /artist/{id}`
 
@@ -825,6 +697,21 @@ export let code8 = `
             },
         },
         {
+            code: 400,
+            name: "Invalid ID",
+            description: "The provided ID is not a valid UUID.",
+        },
+        {
+            code: 401,
+            name: "Invalid token",
+            description: "The token provided is invalid.",
+        },
+        {
+            code: 404,
+            name: "Not found",
+            description: "Could not find an artist with the provided ID.",
+        },
+        {
             code: 429,
             name: "Too many requests",
             description: "You have made too many requests.",
@@ -837,278 +724,307 @@ export let code8 = `
 
 />
 
-### Example
-
-<Tabs items={["JavaScript", "Python 3"]}>
-    <Tab>
-        Using the `fetch` API:
-        ```js showLineNumbers
-        const res = await fetch('https://nekos.nekidev.com/api/artist/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
-        const json = await res.json()
-        console.log(json.data.name)
-        ```
-
-        Using the `nekosapi` library:
-        ```js showLineNumbers
-        const { NekosAPI } = require('nekosapi')
-        const api = new NekosAPI()
-        api.getArtistByID((id = "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")).then((artist) => {
-            console.log(artist.name)
-        })
-        ```
-    </Tab>
-    <Tab>
-        Using the `requests` library:
-        ```py showLineNumbers
-        import requests
-        res = requests.get('https://nekos.nekidev.com/api/artist/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
-        print(res.json()['data']['name'])
-        ```
-
-        Using the `anime-api` library:
-        ```py showLineNumbers
-        from anime_api.apis import NekosAPI
-        api = NekosAPI()
-        artist = api.get_artist_by_id(artist_id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
-        print(artist.name)
-        ```
-    </Tab>
-
-</Tabs>
-
 ## `GET /artist/{id}/images`
 
-Get all images by an artist.
-
-### Parameters
-
-| Name     | Type    | Description                                                         | Required | Authorization |
-| :------- | :------ | :------------------------------------------------------------------ | :------- | :------------ |
-| `id`     | string  | The ID of the artist to get images from.                            | Yes      | No            |
-| `limit`  | integer | The maximum number of images to get.                                | No       | No            |
-| `offset` | integer | The number of images to skip.                                       | No       | No            |
-| `expiry` | number  | The amount of time in seconds the link will be valid (until expiry) | No       | Yes           |
-
-### Response
-
-```js
+export let code9 = `
 {
-    'data': [
+    "data": [
         {
-            'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
-            'url': 'https://example.com/assets/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.png',
-            'artist': "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-            'source': {
-                'name': 'xxxxxxx',
-                'url': 'https://example.com/xxxxxxx'
+            "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "url": "https://example.com/assets/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.png",
+            "artist": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "source": {
+                "name": "xxxxxxx",
+                "url": "https://example.com/xxxxxxx"
             },
-            'nsfw': 'sfw',
-            'categories': [
+            "nsfw": "sfw",
+            "categories": [
                 {
-                    'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
-                    'name': 'xxxxxxx',
-                    'description': 'xxxxxxxxxxxxxxxxxx',
-                    'nsfw': false,
-                    'createdAt': '2021-01-01T00:00:00.000Z',
+                    "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                    "name": "xxxxxxx",
+                    "description": "xxxxxxxxxxxxxxxxxx",
+                    "nsfw": false,
+                    "createdAt": "2021-01-01T00:00:00.000Z"
                 }
             ],
             "characters": [
                 {
-                    'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
-                    'name': 'xxxxxxx',
-                    'description': 'xxxxxxxxxxxxxxxxxx',
-                    'createdAt': '2021-01-01T00:00:00.000Z',
+                    "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                    "name": "xxxxxxx",
+                    "description": "xxxxxxxxxxxxxxxxxx",
+                    "createdAt": "2021-01-01T00:00:00.000Z"
                 }
             ],
-            'createdAt': '2021-01-01T00:00:00.000Z',
-            'meta': {
-                'eTag': 'xxxxxxxxxxxxxxxxxxxxx',
-                'size': 6336807,
-                'mimetype': 'image/png',
-                'color': '#ffffff',
-                'expires': '2021-01-01T00:00:00.000Z',
-                'dimens': {
-                    'width': 1024,
-                    'height': 1024,
-                    'orientation': 'landscape',
-                },
+            "createdAt": "2021-01-01T00:00:00.000Z",
+            "meta": {
+                "eTag": "xxxxxxxxxxxxxxxxxxxxx",
+                "size": 6336807,
+                "mimetype": "image/png",
+                "color": "#ffffff",
+                "expires": "2021-01-01T00:00:00.000Z",
+                "dimens": {
+                    "width": 1024,
+                    "height": 1024,
+                    "orientation": "landscape"
+                }
             }
         }
     ],
-    'success': true,
+    "success": true
 }
-```
+`.trim();
 
-### Example
+<APIRequest
+    method="GET"
+    endpoint="/artist/{id}/images"
+    title="Get an artist's images"
+    description="Get all images by an artist."
+    parameters={[
+        {
+            name: 'id',
+            type: 'uuid',
+            description: "The artist's ID.",
+            required: true
+        },
+        {
+            name: 'limit',
+            type: 'number',
+            description: 'The maximum amount of images to get.'
+        },
+        {
+            name: 'offset',
+            type: 'number',
+            description: 'The number of images to skip.'
+        },
+        {
+            name: 'expiry',
+            type: 'number',
+            description: 'The amount of time in seconds the link will be valid (until expiry) (requires auth)'
+        }
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was successful.",
+            example: {
+                code: code9,
+                language: "JSON",
+                headers: [
+                    "application/json",
+                    `${code9.split("\n").length - 1} lines`,
+                ],
+            },
+        },
+        {
+            code: 400,
+            name: "Invalid ID",
+            description: "The provided ID is not a valid UUID.",
+        },
+        {
+            code: 400,
+            name: "Invalid limit",
+            description: "The limit provided is not a number between 1 and 25.",
+        },
+        {
+            code: 400,
+            name: "Invalid offset",
+            description: "The offset provided is not a number greater than 0.",
+        },
+        {
+            code: 400,
+            name: "Invalid expiry",
+            description:
+                "The provided custom expiry time is not a number greater than 30.",
+        },
+        {
+            code: 401,
+            name: "Invalid token",
+            description: "The token provided is invalid.",
+        },
+        {
+            code: 403,
+            name: "Missing permission",
+            description:
+                "The access token provided has not got permission to set a custom image expiry time.",
+        },
+        {
+            code: 403,
+            name: "Missing permission",
+            description:
+                "The custom expiry time is greater than what allowed by the token.",
+        },
+        {
+            code: 404,
+            name: "Not found",
+            description: "Could not find an artist with the provided ID.",
+        },
+        {
+            code: 429,
+            name: "Too many requests",
+            description: "You have made too many requests.",
+        },
+    ]}
+    apiWrapperDocs={{
+        python: "/docs/libraries/python#get-all-artists-images",
+        javascript: "/docs/libraries/javascript#get-all-artists-images",
+    }}
 
-<Tabs items={["JavaScript", "Python 3"]}>
-    <Tab>
-        Using the `fetch` API:
-        ```js
-        const res = await fetch('https://nekos.nekidev.com/api/artist/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images')
-        const json = await res.json()
-        console.log(json.data[0].url)
-        ```
-
-        Using the `nekosapi` library:
-        ```js showLineNumbers
-        const { NekosAPI } = require('nekosapi')
-        const api = new NekosAPI()
-        api.getImagesByArtistID((id = "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")).then((artist) => {
-            console.log(artist.name)
-        })
-        ```
-    </Tab>
-    <Tab>
-        Using the `requests` library:
-        ```py
-        import requests
-        res = requests.get('https://nekos.nekidev.com/api/artist/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images')
-        print(res.json()['data'][0]['url'])
-        ```
-
-        Using the `anime-api` library:
-        ```py
-        from anime_api.apis import NekosAPI
-        api = NekosAPI()
-        images = api.get_images_by_artist_id(artist_id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
-        print(images[0].url)
-        ```
-    </Tab>
-
-</Tabs>
+/>
 
 ## `GET /character`
 
-Get all available characters.
-
-### Parameters
-
-| Name     | Type    | Description                          | Required | Authorization |
-| :------- | :------ | :----------------------------------- | :------- | :------------ |
-| `limit`  | integer | The maximum number of images to get. | No       | No            |
-| `offset` | integer | The number of images to skip.        | No       | No            |
-| `search` | string  | A PostgreSQL FTS formatted query     | No       | No            |
-
-### Response
-
-```js
+export let code10 = `
 {
-    'data': [
+    "data": [
         {
-            'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
-            'name': 'xxxxxxx',
-            'description': 'xxxxxxxxxxxxxxxxxx',
-            'createdAt': '2021-01-01T00:00:00.000Z',
-            'images': 12
-        },
-        ...
+            "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "name": "xxxxxxx",
+            "description": "xxxxxxxxxxxxxxxxxx",
+            "createdAt": "2021-01-01T00:00:00.000Z",
+            "images": 12
+        }
     ],
-    'success': true,
+    "success": true
 }
-```
+`.trim();
 
-### Example
+<APIRequest
+    method="GET"
+    endpoint="/character"
+    title="Search for a character"
+    description="Search for a character or get all available characters."
+    parameters={[
+        {
+            name: 'limit',
+            type: 'number',
+            description: 'The maximum amount of characters to get.'
+        },
+        {
+            name: 'offset',
+            type: 'number',
+            description: 'The amount of characters to skip.'
+        },
+        {
+            name: 'search',
+            type: 'string',
+            description: 'A search query (formatted as specified in the reference page).'
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was successful.",
+            example: {
+                code: code10,
+                language: "JSON",
+                headers: [
+                    "application/json",
+                    `${code10.split("\n").length - 1} lines`,
+                ],
+            },
+        },
+        {
+            code: 400,
+            name: "Invalid limit",
+            description: "The limit provided is not a number between 1 and 25.",
+        },
+        {
+            code: 400,
+            name: "Invalid offset",
+            description: "The offset provided is not a number greater than 0.",
+        },
+        {
+            code: 400,
+            name: "Invalid search query",
+            description: "The search query provided is longer than 50 characters.",
+        },
+        {
+            code: 401,
+            name: "Invalid token",
+            description: "The token provided is invalid.",
+        },
+        {
+            code: 429,
+            name: "Too many requests",
+            description: "You have made too many requests.",
+        },
+    ]}
+    apiWrapperDocs={{
+        python: "/docs/libraries/python#search-for-a-character",
+    }}
 
-<Tabs items={["JavaScript", "Python 3"]}>
-    <Tab>
-        Using the `fetch` API:
-        ```js
-        const res = await fetch('https://nekos.nekidev.com/api/character')
-        const json = await res.json()
-        console.log(json.data[0].name)
-        ``` 
-    </Tab>
-    <Tab>
-        Using the `requests` library:
-        ```py
-        import requests
-        res = requests.get('https://nekos.nekidev.com/api/character')
-        print(res.json()['data'][0]['name'])
-        ```
-    </Tab>
-
-</Tabs>
+/>
 
 ## `GET /character/{id}`
 
-Get a character by their ID.
-
-### Parameters
-
-| Name | Type   | Description                     | Required | Authorization |
-| :--- | :----- | :------------------------------ | :------- | :------------ |
-| `id` | string | The ID of the character to get. | Yes      | No            |
-
-### Response
-
-```js
+export let code11 = `
 {
-    'data': {
-        'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
-        'name': 'xxxxxxx',
-        'description': 'xxxxxxxxxxxxxxxxxx',
-        'createdAt': '2021-01-01T00:00:00.000Z',
-        'images': 12
+    "data": {
+        "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+        "name": "xxxxxxx",
+        "description": "xxxxxxxxxxxxxxxxxx",
+        "createdAt": "2021-01-01T00:00:00.000Z",
+        "images": 12
     },
-    'success': true,
+    "success": true
 }
-```
+`.trim();
 
-### Example
+<APIRequest
+    method="GET"
+    endpoint="/character/{id}"
+    title="Get a character"
+    description="Get a character by its ID."
+    parameters={[
+        {
+            name: 'id',
+            type: 'uuid',
+            description: 'The ID of the character to get.',
+            required: true
+        }
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was successful.",
+            example: {
+                code: code11,
+                language: "JSON",
+                headers: [
+                    "application/json",
+                    `${code11.split("\n").length - 1} lines`,
+                ],
+            },
+        },
+        {
+            code: 400,
+            name: "Invalid ID",
+            description: "The provided ID is not a valid UUID.",
+        },
+        {
+            code: 404,
+            name: "Not found",
+            description: "Could not find a character with the provided ID.",
+        },
+        {
+            code: 429,
+            name: "Too many requests",
+            description: "You have made too many requests.",
+        },
+    ]}
+    apiWrapperDocs={{
+        python: "/docs/libraries/python#get-a-character-by-its-id",
+        javascript: "/docs/libraries/javascript#get-a-character-by-its-id",
+    }}
 
-<Tabs items={["JavaScript", "Python 3"]}>
-    <Tab>
-        Using the `fetch` API:
-        ```js showLineNumbers
-        const res = await fetch('https://nekos.nekidev.com/api/character/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
-        const json = await res.json()
-        console.log(json.data.name)
-        ```
-
-        Using the `nekosapi` library:
-        ```js showLineNumbers
-        const { NekosAPI } = require('nekosapi')
-        const api = new NekosAPI()
-        api.getCharacterByID((id = "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")).then((character) => {
-            console.log(character.name)
-        })
-        ```
-    </Tab>
-    <Tab>
-        Using the `requests` library:
-        ```py showLineNumbers
-        import requests
-        res = requests.get('https://nekos.nekidev.com/api/character/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
-        print(res.json()['data']['name'])
-        ```
-
-        Using the `anime-api` library:
-        ```py showLineNumbers
-        from anime_api.apis import NekosAPI
-        api = NekosAPI()
-        character = api.get_character_by_id(character_id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
-        print(character.name)
-        ```
-    </Tab>
-
-</Tabs>
+/>
 
 ## `GET /category`
 
-Get a category by their ID.
-
-### Parameters
-
-| Name     | Type    | Description                              | Required | Authorization |
-| :------- | :------ | :--------------------------------------- | :------- | :------------ |
-| `limit`  | integer | The maximum number of categories to get. | No       | No            |
-| `offset` | integer | The number of categories to skip.        | No       | No            |
-| `search` | string  | A PostgreSQL FTS formatted query         | No       | No            |
-
-### Response
-
-```js
+export let code12 = `
 {
     'data': [
         {
@@ -1122,110 +1038,146 @@ Get a category by their ID.
     ],
     'success': true,
 }
-```
+`.trim();
 
-### Example
+<APIRequest
+    method="GET"
+    endpoint="/category"
+    title="Search for a category"
+    description="Search for a category or get all available categories."
+    parameters={[
+        {
+            name: 'limit',
+            type: 'number',
+            description: 'The maximum amount of categories to get.'
+        },
+        {
+            name: 'offset',
+            type: 'number',
+            description: 'The amount of categories to skip.'
+        },
+        {
+            name: 'search',
+            type: 'string',
+            description: 'A search query (formatted as specified in the reference page).'
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was successful.",
+            example: {
+                code: code12,
+                language: "JSON",
+                headers: [
+                    "application/json",
+                    `${code12.split("\n").length - 1} lines`,
+                ],
+            },
+        },
+        {
+            code: 400,
+            name: "Invalid limit",
+            description: "The limit provided is not a number between 1 and 25.",
+        },
+        {
+            code: 400,
+            name: "Invalid offset",
+            description: "The offset provided is not a number greater than 0.",
+        },
+        {
+            code: 400,
+            name: "Invalid search query",
+            description: "The search query provided is longer than 50 characters.",
+        },
+        {
+            code: 401,
+            name: "Invalid token",
+            description: "The token provided is invalid.",
+        },
+        {
+            code: 429,
+            name: "Too many requests",
+            description: "You have made too many requests.",
+        },
+    ]}
+    apiWrapperDocs={{
+        python: "/docs/libraries/python#search-for-a-category",
+        javascript: "/docs/libraries/javascript#get-all-categories",
+    }}
 
-<Tabs items={["JavaScript", "Python 3"]}>
-    <Tab>
-        Using the `fetch` API:
-        ```js
-        const res = await fetch('https://nekos.nekidev.com/api/category?limit=10&offset=0')
-        const json = await res.json()
-        console.log(json.data[0].name)
-        ```
-
-        Using the `nekosapi` library:
-        ```js showLineNumbers
-        const { NekosAPI } = require('nekosapi')
-        const api = new NekosAPI()
-        api.getCategories((limit = 10), (offset = 0)).then((categories) => {
-            for (const category of categories) {
-                console.log(category.name)
-            }
-        })
-        ```
-    </Tab>
-    <Tab>
-        Using the `requests` library:
-        ```py
-        import requests
-        res = requests.get('https://nekos.nekidev.com/api/category?limit=10&offset=0')
-        print(res.json()['data'][0]['name'])
-        ```
-
-        Using the `anime-api` library:
-        ```py
-        from anime_api.apis import NekosAPI
-        api = NekosAPI()
-        categories = api.get_categories(limit=10, offset=0)
-        print(categories[0].name)
-        ```
-    </Tab>
-
-</Tabs>
+/>
 
 ## `GET /category/{id}`
 
-Get a category by their ID.
+Get a category by its ID.
 
-### Parameters
-
-| Name | Type   | Description                    | Required | Required |
-| :--- | :----- | :----------------------------- | :------- | :------- |
-| `id` | string | The ID of the category to get. | Yes      | No       |
-
-### Response
-
-```js
+export let code13 = `
 {
-    'data': {
-        'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
-        'name': 'xxxxxxx',
-        'description': 'xxxxxxxxxxxxxxxxxx',
-        'nsfw': false,
-        'createdAt': '2021-01-01T00:00:00.000Z',
-        'images': 12
+    "data": {
+        "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+        "name": "xxxxxxx",
+        "description": "xxxxxxxxxxxxxxxxxx",
+        "nsfw": false,
+        "createdAt": "2021-01-01T00:00:00.000Z",
+        "images": 12
     },
-    'success': true,
+    "success": true
 }
-```
+`.trim();
 
-### Example
+<APIRequest
+    method="GET"
+    endpoint="/category/{id}"
+    title="Get a category"
+    description="Get a category by its ID."
+    parameters={[
+        {
+            name: 'id',
+            type: 'uuid',
+            description: 'The ID of the category to get.',
+            required: true
+        }
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was successful.",
+            example: {
+                code: code13,
+                language: "JSON",
+                headers: [
+                    "application/json",
+                    `${code13.split("\n").length - 1} lines`,
+                ],
+            },
+        },
+        {
+            code: 400,
+            name: "Invalid ID",
+            description: "The provided ID is not a valid UUID.",
+        },
+        {
+            code: 401,
+            name: "Invalid token",
+            description: "The token provided is invalid.",
+        },
+        {
+            code: 404,
+            name: "Not found",
+            description: "Could not find a category with the provided ID.",
+        },
+        {
+            code: 429,
+            name: "Too many requests",
+            description: "You have made too many requests.",
+        },
+    ]}
+    apiWrapperDocs={{
+        python: "/docs/libraries/python#get-a-category-by-its-id",
+        javascript: "/docs/libraries/javascript#get-a-category-by-its-id",
+    }}
 
-<Tabs items={["JavaScript", "Python 3"]}>
-    <Tab>
-        Using the `fetch` API:
-        ```js
-        const res = await fetch('https://nekos.nekidev.com/api/category/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
-        const json = await res.json()
-        console.log(json.data.name)
-        ```
-
-        Using the `nekosapi` library:
-        ```js showLineNumbers
-        const { NekosAPI } = require('nekosapi')
-        const api = new NekosAPI()
-        api.getCategoryByID((id = "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")).then((category) => {
-            console.log(category.name)
-        })
-        ```
-    </Tab>
-    <Tab>
-        Using the `requests` library:
-        ```py
-        import requests
-        res = requests.get('https://nekos.nekidev.com/api/category/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
-        print(res.json()['data']['name'])
-        ```
-
-        Using the `anime-api` library:
-        ```py
-        from anime_api.apis import NekosAPI
-        api = NekosAPI()
-        category = api.get_category_by_id(category_id='xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
-        print(category.name)
-        ```
-    </Tab>
-
-</Tabs>
+/>

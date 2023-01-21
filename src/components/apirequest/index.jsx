@@ -25,7 +25,7 @@ export function APIRequest({
                 setCollapsed(false);
             }
         }}>
-            <button className='absolute top-3 right-3 p-1 rounded hover:bg-neutral-200 dark:hover:bg-neutral-800 opacity-0 group-hover/request:opacity-100 transition-all' onClick={() => {
+            <button className='absolute top-3 right-3 p-1 rounded hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-all' onClick={() => {
                 setCollapsed(true);
             }}>
                 <ChevronUpDownIcon className="h-6 w-6 transition" />
@@ -46,11 +46,13 @@ export function APIRequest({
                     <div className='mt-1 flex flex-col gap-px bg-neutral-100 dark:bg-neutral-800 text-sm overflow-x-auto'>
                         {parameters.length > 0 ? parameters.map((value, index) => {
                             return (
-                                <div className='text-neutral-600 dark:text-neutral-400 grid grid-cols-[1fr_1fr_1.5fr_1fr] bg-neutral-50 dark:bg-neutral-900 py-1 items-center' key={index}>
-                                    <div className='font-mono rounded bg-neutral-200 ml-0 dark:-ml-1 dark:bg-black/50 w-fit p-1 -m-1 block leading-none'>{value.name}</div>
+                                <div className='text-neutral-600 dark:text-neutral-400 grid grid-cols-[1fr_1fr_2fr] bg-neutral-50 dark:bg-neutral-900 py-1 items-center' key={index}>
+                                    <div className='font-mono rounded bg-neutral-200 ml-0 dark:bg-black/50 w-fit p-1 -m-1 block leading-none'>
+                                        {value.name}
+                                        {value.required && <span className='text-red-500 inline-block ml-1'>*</span>}
+                                    </div>
                                     <div>{value.type}</div>
                                     <div>{value.description}</div>
-                                    <div className='text-right'>{value.required ? 'Required' : 'Not required'}</div>
                                 </div>
                             )
                         }) : (
