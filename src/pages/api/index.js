@@ -28,6 +28,7 @@ export default async function handler(req, res) {
         ],
         meta: {
             version: "v1.4.2",
+            baseApiRoute: "/api"
         },
         success: true,
     });
