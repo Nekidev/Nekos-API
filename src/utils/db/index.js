@@ -267,7 +267,7 @@ export async function getManyImagesJson(images, prismaClient, { expiry = 3600 } 
             artist,
             imageCategories,
             imageCharacters,
-            (expiresIn = expiry)
+            expiry
         ));
     }
 
