@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { getManyImagesJson } from "../../../../utils/db";
 import { middleware } from "../../../../utils/api";
+import { checkExpiryPermissions } from "../../../../utils/api/authorization";
 
 export default async function handler(req, res) {
     const scopes = await middleware(req, res);
@@ -10,7 +11,7 @@ export default async function handler(req, res) {
         return;
     }
 
-    const { artistId, limit = "10", offset = "0" } = req.query;
+    const { artistId, limit = "10", offset = "0", expiry = "3600" } = req.query;
 
     if (
         !/^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi.test(
@@ -22,6 +23,9 @@ export default async function handler(req, res) {
             message: "Invalid value for `artistId` parameter. Expected a UUID.",
             success: false,
         });
+        return;
+    } else if (!checkExpiryPermissions(res, expiry, scopes)) {
+        // The function already sent a response.
         return;
     } else if (
         !/^[0-9]+$/gi.test(limit) ||
@@ -65,7 +69,9 @@ export default async function handler(req, res) {
     }
 
     res.status(200).json({
-        data: await getManyImagesJson(images, prisma),
+        data: await getManyImagesJson(images, prisma, {
+            expiry: parseInt(expiry)
+        }),
         success: true,
     });
 

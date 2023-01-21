@@ -3,7 +3,7 @@ import supabase from "../../utils/supabase/client";
 import probe from "probe-image-size";
 import parseImage from "./parsers";
 
-export async function getImageJson(image, prismaClient) {
+export async function getImageJson(image, prismaClient, { expiry = 3600 } = { expiry: 3600 }) {
     // Get the file object from the database
     var file = await prismaClient.objects.findUnique({
         where: {
@@ -14,7 +14,7 @@ export async function getImageJson(image, prismaClient) {
     // Get the signed URL for the file
     const { data, error } = await supabase.storage
         .from("nekos-api")
-        .createSignedUrl(file.name, 60 * 60);
+        .createSignedUrl(file.name, expiry);
 
     // Get the artist for the image
     var artist = image.artist ? await prismaClient.artists.findUnique({
@@ -73,7 +73,7 @@ export async function getImageJson(image, prismaClient) {
     )
 }
 
-export async function getManyImagesJson(images, prismaClient) {
+export async function getManyImagesJson(images, prismaClient, { expiry = 3600 } = { expiry: 3600 }) {
     var result = [];
 
     // Array with all the file ids so we can get the signed urls in a single call.
@@ -106,7 +106,7 @@ export async function getManyImagesJson(images, prismaClient) {
     // Get the signed urls for the files
     const { data, error } = await supabase.storage
         .from("nekos-api")
-        .createSignedUrls(fileNames, 60 * 60);
+        .createSignedUrls(fileNames, expiry);
     
     if (error) {
         throw error;
@@ -267,6 +267,7 @@ export async function getManyImagesJson(images, prismaClient) {
             artist,
             imageCategories,
             imageCharacters,
+            (expiresIn = expiry)
         ));
     }
 

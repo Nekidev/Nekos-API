@@ -1,12 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 import { middleware } from "../../utils/api";
 import { getManyImagesJson } from "../../utils/db";
+import { checkExpiryPermissions } from "../../utils/api/authorization";
 
 export default async function handler(req, res) {
     const scopes = await middleware(req, res, {
         authorization: {
-            required: true
-        }
+            required: true,
+        },
     });
 
     if (scopes === false) {
@@ -14,18 +15,21 @@ export default async function handler(req, res) {
         return;
     }
 
-    if (!scopes.includes('image:list')) {
+    if (!scopes.includes("image:list")) {
         res.status(403).json({
             code: 403,
             message: "You don't have permission to access this resource.",
-            success: false
-        })
+            success: false,
+        });
         return;
     }
 
-    const { limit = "10", offset = "0" } = req.query;
+    const { limit = "10", offset = "0", expiry = "3600" } = req.query;
 
-    if (
+    if (!checkExpiryPermissions(res, expiry, scopes)) {
+        // The function already sent a response.
+        return;
+    } else if (
         !/^[0-9]+$/.test(limit) ||
         parseInt(limit) < 1 ||
         parseInt(limit) > 50
@@ -40,9 +44,10 @@ export default async function handler(req, res) {
     } else if (!/^[0-9]+$/.test(offset) || parseInt(offset) < 0) {
         res.status(400).json({
             code: 400,
-            message: "Invalid value for `offset` parameter. Expected a number greater than 0.",
-            success: false
-        })
+            message:
+                "Invalid value for `offset` parameter. Expected a number greater than 0.",
+            success: false,
+        });
         return;
     }
 
@@ -50,13 +55,15 @@ export default async function handler(req, res) {
 
     const images = await prisma.images.findMany({
         take: parseInt(limit),
-        skip: parseInt(offset)
-    })
+        skip: parseInt(offset),
+    });
 
     res.status(200).json({
-        data: await getManyImagesJson(images, prisma),
-        success: true
-    })
+        data: await getManyImagesJson(images, prisma, {
+            expiry: parseInt(expiry),
+        }),
+        success: true,
+    });
 
     prisma.$disconnect();
 }
