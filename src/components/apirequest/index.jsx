@@ -46,12 +46,12 @@ export function APIRequest({
                     <div className='mt-1 flex flex-col gap-px bg-neutral-100 dark:bg-neutral-800 text-sm overflow-x-auto'>
                         {parameters.length > 0 ? parameters.map((value, index) => {
                             return (
-                                <div className='text-neutral-600 dark:text-neutral-400 grid grid-cols-[1fr_1fr_2fr] bg-neutral-50 dark:bg-neutral-900 py-1 items-center' key={index}>
-                                    <div className='font-mono rounded bg-neutral-200 ml-0 dark:bg-black/50 w-fit p-1 -m-1 block leading-none'>
+                                <div className='text-neutral-600 dark:text-neutral-400 grid grid-cols-[1fr_1fr_minmax(0,2fr)] bg-neutral-50 dark:bg-neutral-900 py-1 items-center gap-4 min-w-[34rem]' key={index}>
+                                    <div className='font-mono rounded bg-neutral-200 dark:bg-black/50 w-fit p-1 -my-1 block leading-none whitespace-nowrap'>
                                         {value.name}
                                         {value.required && <span className='text-red-500 inline-block ml-1'>*</span>}
                                     </div>
-                                    <div>{value.type}</div>
+                                    <div className='whitespace-nowrap'>{value.type}</div>
                                     <div>{value.description}</div>
                                 </div>
                             )
