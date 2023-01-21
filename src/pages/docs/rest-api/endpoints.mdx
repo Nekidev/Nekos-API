@@ -10,10 +10,11 @@ Returns a random image from the specified category.
 
 ### Parameters
 
-| Name         | Type             | Description                                    | Required |
-| :----------- | :--------------- | :--------------------------------------------- | :------- |
-| `categories` | array of strings | The category names that the image should have. | No       |
-| `limit`      | number           | The amount of images to get. (max: 25)         | No       |
+| Name         | Type             | Description                                                         | Required | Authorization |
+| :----------- | :--------------- | :------------------------------------------------------------------ | :------- | :------------ |
+| `categories` | array of strings | The category names that the image should have.                      | No       | No            |
+| `limit`      | number           | The amount of images to get. (max: 25)                              | No       | No            |
+| `expiry`     | number           | The amount of time in seconds the link will be valid (until expiry) | No       | Yes           |
 
 ### Response
 
@@ -125,9 +126,10 @@ Get an image by its ID.
 
 ### Parameters
 
-| Name | Type   | Description                 | Required |
-| :--- | :----- | :-------------------------- | :------- |
-| `id` | string | The ID of the image to get. | Yes      |
+| Name     | Type   | Description                                                         | Required | Authorization |
+| :------- | :----- | :------------------------------------------------------------------ | :------- | :------------ |
+| `id`     | string | The ID of the image to get.                                         | Yes      | No            |
+| `expiry` | number | The amount of time in seconds the link will be valid (until expiry) | No       | Yes           |
 
 ### Response
 
@@ -223,11 +225,11 @@ Get all artists.
 
 ### Parameters
 
-| Name     | Type    | Description                          | Required |
-| :------- | :------ | :----------------------------------- | :------- |
-| `limit`  | integer | The maximum number of images to get. | No       |
-| `offset` | integer | The number of images to skip.        | No       |
-| `search` | string  | A PostgreSQL FTS formatted query     | No       |
+| Name     | Type    | Description                          | Required | Authorization |
+| :------- | :------ | :----------------------------------- | :------- | :------------ |
+| `limit`  | integer | The maximum number of images to get. | No       | No            |
+| `offset` | integer | The number of images to skip.        | No       | No            |
+| `search` | string  | A PostgreSQL FTS formatted query     | No       | No            |
 
 ### Response
 
@@ -282,9 +284,9 @@ Get an artist by their ID.
 
 ### Parameters
 
-| Name | Type   | Description                  | Required |
-| :--- | :----- | :--------------------------- | :------- |
-| `id` | string | The ID of the artist to get. | Yes      |
+| Name | Type   | Description                  | Required | Authorization |
+| :--- | :----- | :--------------------------- | :------- | :------------ |
+| `id` | string | The ID of the artist to get. | Yes      | No            |
 
 ### Response
 
@@ -345,11 +347,12 @@ Get all images by an artist.
 
 ### Parameters
 
-| Name     | Type    | Description                              | Required |
-| :------- | :------ | :--------------------------------------- | :------- |
-| `id`     | string  | The ID of the artist to get images from. | Yes      |
-| `limit`  | integer | The maximum number of images to get.     | No       |
-| `offset` | integer | The number of images to skip.            | No       |
+| Name     | Type    | Description                                                         | Required | Authorization |
+| :------- | :------ | :------------------------------------------------------------------ | :------- | :------------ |
+| `id`     | string  | The ID of the artist to get images from.                            | Yes      | No            |
+| `limit`  | integer | The maximum number of images to get.                                | No       | No            |
+| `offset` | integer | The number of images to skip.                                       | No       | No            |
+| `expiry` | number  | The amount of time in seconds the link will be valid (until expiry) | No       | Yes           |
 
 ### Response
 
@@ -446,11 +449,11 @@ Get all available characters.
 
 ### Parameters
 
-| Name     | Type    | Description                          | Required |
-| :------- | :------ | :----------------------------------- | :------- |
-| `limit`  | integer | The maximum number of images to get. | No       |
-| `offset` | integer | The number of images to skip.        | No       |
-| `search` | string  | A PostgreSQL FTS formatted query     | No       |
+| Name     | Type    | Description                          | Required | Authorization |
+| :------- | :------ | :----------------------------------- | :------- | :------------ |
+| `limit`  | integer | The maximum number of images to get. | No       | No            |
+| `offset` | integer | The number of images to skip.        | No       | No            |
+| `search` | string  | A PostgreSQL FTS formatted query     | No       | No            |
 
 ### Response
 
@@ -498,9 +501,9 @@ Get a character by their ID.
 
 ### Parameters
 
-| Name | Type   | Description                     | Required |
-| :--- | :----- | :------------------------------ | :------- |
-| `id` | string | The ID of the character to get. | Yes      |
+| Name | Type   | Description                     | Required | Authorization |
+| :--- | :----- | :------------------------------ | :------- | :------------ |
+| `id` | string | The ID of the character to get. | Yes      | No            |
 
 ### Response
 
@@ -562,11 +565,11 @@ Get a category by their ID.
 
 ### Parameters
 
-| Name     | Type    | Description                              | Required |
-| :------- | :------ | :--------------------------------------- | :------- |
-| `limit`  | integer | The maximum number of categories to get. | No       |
-| `offset` | integer | The number of categories to skip.        | No       |
-| `search` | string  | A PostgreSQL FTS formatted query         | No       |
+| Name     | Type    | Description                              | Required | Authorization |
+| :------- | :------ | :--------------------------------------- | :------- | :------------ |
+| `limit`  | integer | The maximum number of categories to get. | No       | No            |
+| `offset` | integer | The number of categories to skip.        | No       | No            |
+| `search` | string  | A PostgreSQL FTS formatted query         | No       | No            |
 
 ### Response
 
@@ -633,9 +636,9 @@ Get a category by their ID.
 
 ### Parameters
 
-| Name | Type   | Description                    | Required |
-| :--- | :----- | :----------------------------- | :------- |
-| `id` | string | The ID of the category to get. | Yes      |
+| Name | Type   | Description                    | Required | Required |
+| :--- | :----- | :----------------------------- | :------- | :------- |
+| `id` | string | The ID of the category to get. | Yes      | No       |
 
 ### Response
 

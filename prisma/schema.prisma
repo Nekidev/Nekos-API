@@ -345,6 +345,7 @@ model Tokens {
   scopes     String[]  @default([]) @db.VarChar
   owner      String?   @db.VarChar
   expires    DateTime? @db.Timestamptz(6)
+  issued_by  String    @default("") @db.VarChar
 
   @@schema("public")
 }

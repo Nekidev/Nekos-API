@@ -8,25 +8,27 @@ export default async function handler(req, res) {
         return;
     }
 
-    res.status(200).json({ 
+    res.status(200).json({
         data: [
-            '/stats',
-            '/image',
-            '/image/:id',
-            '/image/random',
-            '/set',
-            '/set/:id',
-            '/character',
-            '/character/:id',
-            '/category',
-            '/category/:id',
-            '/artist',
-            '/artist/:id',
-            '/artist/:id/images',
+            "/",
+            "/stats",
+            "/token",
+            "/image",
+            "/image/:id",
+            "/image/random",
+            "/set",
+            "/set/:id",
+            "/character",
+            "/character/:id",
+            "/category",
+            "/category/:id",
+            "/artist",
+            "/artist/:id",
+            "/artist/:id/images",
         ],
         meta: {
-            version: 'v1.4.1',
+            version: "v1.4.2",
         },
-        success: true
-    })
+        success: true,
+    });
 }
