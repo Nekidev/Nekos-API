@@ -25,7 +25,7 @@ export default async function handler(req, res) {
             '/artist/:id/images',
         ],
         meta: {
-            version: 'v1.4',
+            version: 'v1.4.1',
         },
         success: true
     })
