@@ -89,8 +89,8 @@ export function checkExpiryPermissions(res, expiry, scopes) {
             expiry = parseInt(expiry)
 
             if (max_expiry_time !== null && expiry > max_expiry_time) {
-                res.status(400).json({
-                    code: 400,
+                res.status(403).json({
+                    code: 403,
                     message: `You are not permitted to set an expiry time greater than ${max_expiry_time} seconds.`,
                     success: false
                 })
