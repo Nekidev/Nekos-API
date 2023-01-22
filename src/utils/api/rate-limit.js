@@ -47,7 +47,7 @@ export default async function checkRateLimit(
             nx: true,
         });
         if (res) {
-            let retry_after = await redis.ttl(key)
+            let retry_after = await redis.ttl(timeout_key)
             res.setHeader("Retry-After", retry_after);
             res.setHeader("X-RateLimit-Reset", retry_after);
             res.status(429).json({
