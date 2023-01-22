@@ -2,43 +2,49 @@ import supabase from "../../utils/supabase/client";
 
 import probe from "probe-image-size";
 import parseImage from "./parsers";
+import { prisma } from "@prisma/client";
 
-export async function getImageJson(image, prismaClient, { expiry = 3600 } = { expiry: 3600 }) {
-    // Get the file object from the database
-    var file = await prismaClient.objects.findUnique({
-        where: {
-            id: image.file,
-        },
-    });
+export async function getImageJson(
+    image,
+    prismaClient,
+    { expiry = 3600 } = { expiry: 3600 }
+) {
+    // Get the file object and image categories from the database
+    var [file, categories, characters] = await prismaClient.$transaction([
+        prismaClient.objects.findUnique({
+            where: {
+                id: image.file,
+            },
+        }),
+        prismaClient.categories.findMany({
+            where: {
+                id: {
+                    in: image.categories,
+                },
+            },
+        }),
+        prismaClient.characters.findMany({
+            where: {
+                id: {
+                    in: image.characters,
+                },
+            },
+        })
+    ]);
 
     // Get the signed URL for the file
-    const { data, error } = await supabase.storage
+    const { data } = await supabase.storage
         .from("nekos-api")
         .createSignedUrl(file.name, expiry);
 
     // Get the artist for the image
-    var artist = image.artist ? await prismaClient.artists.findUnique({
-        where: {
-            id: image.artist,
-        },
-    }) : null;
-
-    // Get the categories for the image
-    var categories = await prismaClient.categories.findMany({
-        where: {
-            id: {
-                in: image.categories,
-            },
-        },
-    });
-
-    const characters = await prismaClient.characters.findMany({
-        where: {
-            id: {
-                in: image.characters,
-            },
-        },
-    });
+    var artist = image.artist
+        ? await prismaClient.artists.findUnique({
+              where: {
+                  id: image.artist,
+              },
+          })
+        : null;
 
     if (image.height in [0, null] || image.width in [0, null]) {
         // If the image height or width is 0 or null, then the image dimensions need to be updated
@@ -70,10 +76,15 @@ export async function getImageJson(image, prismaClient, { expiry = 3600 } = { ex
         artist,
         categories,
         characters,
-    )
+        expiry
+    );
 }
 
-export async function getManyImagesJson(images, prismaClient, { expiry = 3600 } = { expiry: 3600 }) {
+export async function getManyImagesJson(
+    images,
+    prismaClient,
+    { expiry = 3600 } = { expiry: 3600 }
+) {
     var result = [];
 
     // Array with all the file ids so we can get the signed urls in a single call.
@@ -92,8 +103,8 @@ export async function getManyImagesJson(images, prismaClient, { expiry = 3600 } 
         },
     });
 
-    // Two different variables are used to store the file names and ids because the 
-    // order of the files returned by the database is not guaranteed to be the same as 
+    // Two different variables are used to store the file names and ids because the
+    // order of the files returned by the database is not guaranteed to be the same as
     // the order of the file ids in the `fileIds` array.
     var fileNames = [];
     var filesById = {};
@@ -107,7 +118,7 @@ export async function getManyImagesJson(images, prismaClient, { expiry = 3600 } 
     const { data, error } = await supabase.storage
         .from("nekos-api")
         .createSignedUrls(fileNames, expiry);
-    
+
     if (error) {
         throw error;
     }
@@ -117,8 +128,8 @@ export async function getManyImagesJson(images, prismaClient, { expiry = 3600 } 
 
     data.map((file) => {
         let row = files.find((row) => {
-            return row.name = file.path;
-        })
+            return (row.name = file.path);
+        });
         signedUrls[row.name] = file.signedUrl;
     });
 
@@ -158,7 +169,7 @@ export async function getManyImagesJson(images, prismaClient, { expiry = 3600 } 
                 categoryIds.push(categoryId);
             }
         });
-    })
+    });
 
     // Get all the categories
     var categories = await prismaClient.categories.findMany({
@@ -185,7 +196,7 @@ export async function getManyImagesJson(images, prismaClient, { expiry = 3600 } 
                 characterIds.push(characterId);
             }
         });
-    })
+    });
 
     // Get all the characters
     var characters = await prismaClient.characters.findMany({
@@ -236,13 +247,16 @@ export async function getManyImagesJson(images, prismaClient, { expiry = 3600 } 
         // Get the file from the map
         const file = filesById[image.file];
 
-        if (image.height in [0, null, undefined] || image.width in [0, null, undefined]) {
+        if (
+            image.height in [0, null, undefined] ||
+            image.width in [0, null, undefined]
+        ) {
             // If the image dimensions are not set, get them from the image file.
             const { height, width } = await probe(signedUrls[file.name]);
-    
+
             image.height = height;
             image.width = width;
-    
+
             // Not awaited because it is not necessary to wait for it to finish
             prismaClient.images
                 .update({
@@ -260,15 +274,17 @@ export async function getManyImagesJson(images, prismaClient, { expiry = 3600 } 
         }
 
         // Add the image to the result array
-        result.push(await parseImage(
-            image,
-            file,
-            signedUrls[file.name],
-            artist,
-            imageCategories,
-            imageCharacters,
-            expiry
-        ));
+        result.push(
+            await parseImage(
+                image,
+                file,
+                signedUrls[file.name],
+                artist,
+                imageCategories,
+                imageCharacters,
+                expiry
+            )
+        );
     }
 
     return result;
