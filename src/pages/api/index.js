@@ -27,7 +27,7 @@ export default async function handler(req, res) {
             "/artist/:id/images",
         ],
         meta: {
-            version: "v1.5.4",
+            version: "v1.6.0",
             baseApiRoute: "/api"
         },
         success: true,
