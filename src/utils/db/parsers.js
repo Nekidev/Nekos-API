@@ -66,6 +66,7 @@ export async function parseCharacter(character, prismaClient = null) {
         name: character.name,
         description: character.description,
         source: character.source,
+        ages: character.ages,
         createdAt: character.created_at,
     }
 }
