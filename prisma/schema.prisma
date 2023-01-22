@@ -334,6 +334,11 @@ model Characters {
   name        String    @db.VarChar
   description String?   @db.VarChar
   source      String?   @db.VarChar
+  gender      String?   @db.VarChar
+  age         Int[]     @db.SmallInt
+  birth_date  String?   @db.VarChar
+  nationality String?   @db.VarChar
+  occupations String[]  @db.VarChar
 
   @@schema("public")
 }
