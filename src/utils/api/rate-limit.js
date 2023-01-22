@@ -17,8 +17,10 @@ export default async function checkRateLimit(
     const key = `ratelimit:${ip}`; // Key to store the current amount of requests of an IP during `ttl` seconds in redis
     const timeout_key = `${key}:timeout`; // Key to store the amount of times an IP was rate limited in `timeout_ttl` seconds
 
-    const current = (await redis.get(key)) || 0;
-    const timeout = (await redis.get(timeout_key)) || 0;
+    var current = await redis.get(key);
+    if (current === null) current = 0;
+    var timeout = await redis.get(timeout_key);
+    if (timeout === null) timeout = 0;
 
     await redis.set(key, current + 1, {
         ex: ttl,
@@ -34,7 +36,7 @@ export default async function checkRateLimit(
         });
 
         res.setHeader("X-RateLimit-Limit", limit);
-        res.setHeader("X-RateLimit-Remaining", limit - (current + 1));
+        res.setHeader("X-RateLimit-Remaining", limit - (current + 1) > 0 ? limit - (current + 1) : 0);
         res.setHeader("X-RateLimit-Reset", await redis.ttl(key))
     }
 
