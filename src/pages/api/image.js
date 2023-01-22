@@ -53,15 +53,26 @@ export default async function handler(req, res) {
 
     const prisma = new PrismaClient();
 
-    const images = await prisma.images.findMany({
-        take: parseInt(limit),
-        skip: parseInt(offset),
-    });
+    const [images, imagesCount] = await prisma.$transaction([
+        prisma.images.findMany({
+            take: parseInt(limit),
+            skip: parseInt(offset),
+        }),
+        prisma.images.count()
+    ])
 
     res.status(200).json({
         data: await getManyImagesJson(images, prisma, {
             expiry: parseInt(expiry),
         }),
+        meta: {
+            pagination: {
+                limit: parseInt(limit),
+                offset: parseInt(offset),
+                count: images.length,
+                total: imagesCount
+            }
+        },
         success: true,
     });
 

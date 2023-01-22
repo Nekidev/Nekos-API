@@ -26,11 +26,18 @@ export default async function handler(req, res) {
 
     const prisma = new PrismaClient();
 
-    const artist = await prisma.artists.findUnique({
-        where: {
-            id: artistId,
-        },
-    });
+    const [artist, imagesCount] = await prisma.$transaction([
+        prisma.artists.findUnique({
+            where: {
+                id: artistId,
+            },
+        }),
+        prisma.images.count({
+            where: {
+                artist: artistId
+            }
+        })
+    ]);
 
     if (!artist) {
         res.status(404).json({
@@ -41,7 +48,7 @@ export default async function handler(req, res) {
     }
 
     res.status(200).json({
-        data: await parseArtist(artist, prisma),
+        data: parseArtist(artist, imagesCount),
         success: true,
     });
 

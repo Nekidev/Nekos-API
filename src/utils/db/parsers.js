@@ -17,7 +17,12 @@ export default async function parseImage(
     characters,
     expiresIn = 60 * 60
 ) {
-    const imageOrientation = image.width > image.height ? "landscape" : image.width < image.height ? "portrait" : "square";
+    const imageOrientation =
+        image.width > image.height
+            ? "landscape"
+            : image.width < image.height
+            ? "portrait"
+            : "square";
 
     return {
         id: image.id,
@@ -42,25 +47,13 @@ export default async function parseImage(
                 height: image.height,
                 width: image.width,
                 aspectRatio: image.aspect_ratio,
-                orientation: imageOrientation
+                orientation: imageOrientation,
             },
-        }
-    }
+        },
+    };
 }
 
-export async function parseCharacter(character, prismaClient = null) {
-    var imageCount = undefined;
-
-    if (prismaClient) {
-        imageCount = await prismaClient.images.count({
-            where: {
-                characters: {
-                    hasSome: [character.id],
-                },
-            },
-        });
-    }
-
+export function parseCharacter(character, imagesCount = undefined) {
     return {
         id: character.id,
         name: character.name,
@@ -72,65 +65,47 @@ export async function parseCharacter(character, prismaClient = null) {
         nationality: character.nationality,
         occupations: character.occupations,
         createdAt: character.created_at,
-        images: imageCount
-    }
+        images: imagesCount,
+    };
 }
 
-export async function parseCategory(category, prismaClient = null) {
-    var imageCount = undefined;
-
-    if (prismaClient) {
-        imageCount = await prismaClient.images.count({
-            where: {
-                categories: {
-                    hasSome: [category.id],
-                },
-            },
-        });
-    }
-
+export function parseCategory(category, imagesCount = undefined) {
     return {
         id: category.id,
         name: category.name,
         description: category.description,
         nsfw: category.nsfw,
         type: category.type,
-        images: imageCount,
+        images: imagesCount,
         createdAt: category.created_at,
-    }
+    };
 }
 
-export async function parseArtist(artist, prismaClient = null) {
-    var imageCount = undefined;
-
-    if (prismaClient) {
-        imageCount = await prismaClient.images.count({
-            where: {
-                artist: artist.id,
-            },
-        });
-    }
-
-    return artist ? {
-        id: artist.id,
-        name: artist.name,
-        url: artist.url,
-        images: imageCount,
-    } : null
+export function parseArtist(artist, imagesCount = undefined) {
+    return artist
+        ? {
+              id: artist.id,
+              name: artist.name,
+              url: artist.url,
+              images: imagesCount,
+          }
+        : null;
 }
 
-export async function parseArtists(artists) {
-    return await _parseMany(artists, parseArtist)
+export function parseArtists(artists) {
+    return artists.map((value, index) => {
+        return parseArtist(value);
+    });
 }
 
 export async function parseSet(set) {
     return {
         id: set.id,
         images: set.images,
-        createdAt: set.created_at
-    }
+        createdAt: set.created_at,
+    };
 }
 
 export async function parseSets(sets) {
-    return await _parseMany(sets, parseSet)
+    return await _parseMany(sets, parseSet);
 }

@@ -43,20 +43,31 @@ export default async function handler(req, res) {
 
     const prisma = new PrismaClient();
 
-    const characters = await prisma.$queryRaw`SELECT * FROM "Characters" ${
-        search.length > 0
-            ? Prisma.sql`WHERE LOWER(name) SIMILAR TO LOWER(${search}) OR LOWER(description) SIMILAR TO LOWER(${search}) OR LOWER(source) SIMILAR TO LOWER(${search})`
-            : Prisma.empty
-    } LIMIT ${parseInt(limit)} OFFSET ${parseInt(offset)}`;
+    const [characters, charactersCount] = await prisma.$transaction([
+        prisma.$queryRaw`SELECT * FROM "Characters" ${
+            search.length > 0
+                ? Prisma.sql`WHERE LOWER(name) SIMILAR TO LOWER(${search}) OR LOWER(description) SIMILAR TO LOWER(${search}) OR LOWER(source) SIMILAR TO LOWER(${search})`
+                : Prisma.empty
+        } LIMIT ${parseInt(limit)} OFFSET ${parseInt(offset)}`,
+        prisma.characters.count()
+    ]);
 
     let data = [];
 
     for (const row of characters) {
-        data.push(await parseCharacter(row));
+        data.push(parseCharacter(row));
     }
 
     res.status(200).json({
         data,
+        meta: {
+            pagination: {
+                limit: parseInt(limit),
+                offset: parseInt(offset),
+                count: data.length,
+                total: charactersCount
+            }
+        },
         success: true,
     });
 

@@ -43,21 +43,31 @@ export default async function handler(req, res) {
 
     const prisma = new PrismaClient();
 
-    const categories =
-        await prisma.$queryRaw`SELECT * FROM "Categories" ${
-            search.length > 0 ? Prisma.sql`WHERE LOWER(name) SIMILAR TO LOWER(${search}) OR LOWER(description) SIMILAR TO LOWER(${search})` : Prisma.empty
-        } LIMIT ${parseInt(
-            limit
-        )} OFFSET ${parseInt(offset)}`;
+    const [categories, categoriesCount] = await prisma.$transaction([
+        prisma.$queryRaw`SELECT * FROM "Categories" ${
+            search.length > 0
+                ? Prisma.sql`WHERE LOWER(name) SIMILAR TO LOWER(${search}) OR LOWER(description) SIMILAR TO LOWER(${search})`
+                : Prisma.empty
+        } LIMIT ${parseInt(limit)} OFFSET ${parseInt(offset)}`,
+        prisma.categories.count(),
+    ]);
 
     let data = [];
 
     for (const row of categories) {
-        data.push(await parseCategory(row));
+        data.push(parseCategory(row));
     }
 
     res.status(200).json({
         data,
+        meta: {
+            pagination: {
+                limit: parseInt(limit),
+                offset: parseInt(offset),
+                count: data.length,
+                total: categoriesCount,
+            }
+        },
         success: true,
     });
 

@@ -22,11 +22,20 @@ export default async function handler(req, res) {
 
     const prisma = new PrismaClient();
 
-    const category = await prisma.categories.findUnique({
-        where: {
-            id: categoryId
-        }
-    });
+    const [category, imagesCount] = await prisma.$transaction([
+        prisma.categories.findUnique({
+            where: {
+                id: categoryId
+            }
+        }),
+        prisma.images.count({
+            where: {
+                categories: {
+                    hasSome: [categoryId],
+                },
+            },
+        }) 
+    ]);
 
     if (!category) {
         res.status(404).json({
@@ -37,7 +46,7 @@ export default async function handler(req, res) {
     }
 
     res.status(200).json({
-        'data': await parseCategory(category, prisma),
+        'data': parseCategory(category, imagesCount),
         'success': true
     });
 

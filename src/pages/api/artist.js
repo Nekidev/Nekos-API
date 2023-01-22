@@ -43,19 +43,29 @@ export default async function handler(req, res) {
 
     const prisma = new PrismaClient();
 
-    const artists =
-        await prisma.$queryRaw`SELECT * FROM "Artists" ${
-            search.length > 0 ? Prisma.sql`WHERE LOWER(name) SIMILAR TO LOWER(${search})` : Prisma.empty
-        } LIMIT ${parseInt(
-            limit
-        )} OFFSET ${parseInt(offset)}`;
+    const [artists, artistsCount] = await prisma.$transaction([
+        prisma.$queryRaw`SELECT * FROM "Artists" ${
+            search.length > 0
+                ? Prisma.sql`WHERE LOWER(name) SIMILAR TO LOWER(${search})`
+                : Prisma.empty
+        } LIMIT ${parseInt(limit)} OFFSET ${parseInt(offset)}`,
+        prisma.artists.count(),
+    ]);
 
-    const artists_json = await parseArtists(artists);
+    const artists_json = parseArtists(artists);
 
     prisma.$disconnect();
 
     res.status(200).json({
         data: artists_json,
+        meta: {
+            pagination: {
+                limit: parseInt(limit),
+                offset: parseInt(offset),
+                count: artists_json.length,
+                total: artistsCount
+            }
+        },
         success: true,
     });
 }

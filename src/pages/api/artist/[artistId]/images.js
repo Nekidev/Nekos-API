@@ -50,13 +50,20 @@ export default async function handler(req, res) {
 
     const prisma = new PrismaClient();
 
-    const images = await prisma.images.findMany({
-        where: {
-            artist: artistId,
-        },
-        take: parseInt(limit),
-        skip: parseInt(offset),
-    });
+    const [images, imagesCount] = await prisma.$transaction([
+        prisma.images.findMany({
+            where: {
+                artist: artistId,
+            },
+            take: parseInt(limit),
+            skip: parseInt(offset),
+        }),
+        prisma.images.count({
+            where: {
+                artist: artistId
+            }
+        })
+    ]);
 
     if (!images || images.length === 0) {
         res.status(404).json({
@@ -64,16 +71,26 @@ export default async function handler(req, res) {
             message: "Could not find artist with ID: " + artistId,
             success: false,
         });
-        prisma.$disconnect();
-        return
+        await prisma.$disconnect();
+        return;
     }
 
+    const images_json = await getManyImagesJson(images, prisma, {
+        expiry: parseInt(expiry),
+    })
+    
     res.status(200).json({
-        data: await getManyImagesJson(images, prisma, {
-            expiry: parseInt(expiry)
-        }),
+        data: images_json,
+        meta: {
+            pagination: {
+                limit: parseInt(limit),
+                offset: parseInt(offset),
+                count: images_json.length,
+                total: imagesCount
+            }
+        },
         success: true,
     });
 
-    prisma.$disconnect();
+    await prisma.$disconnect();
 }
