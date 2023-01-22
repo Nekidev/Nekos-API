@@ -12,10 +12,10 @@ const scripts = [
 
 const commands = scripts.map((script, i) => "node " + script);
 
-var process = exec(commands.join(' && '));
-process.stdout.on("data", (data) => {
+var p = exec(commands.join(' && '));
+p.stdout.on("data", (data) => {
     process.stdout.write(data);
 });
-process.addListener("close", () => {
+p.addListener("close", () => {
     console.log("All programs run successfully.")
 });
