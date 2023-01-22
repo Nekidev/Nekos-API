@@ -19,7 +19,7 @@ export async function middleware(
         return false;
     }
 
-    if (scopes.map((scope) => scope.toLowerCase()).includes("api:no-ratelimit")) {
+    if (scopes.map((scope) => scope.toLowerCase()).includes("api:ratelimit:disabled")) {
         return scopes;
     } else {
         if (!(await checkRateLimit(req, res))) {
