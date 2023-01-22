@@ -24,8 +24,10 @@ export default async function checkRateLimit(
 
     await redis.set(key, current + 1, {
         ex: ttl,
-        nx: true,
+        keepTtl: true
     });
+
+    console.log("CURRENT - LIMIT:", current, limit);
 
     if (res) {
         await NextCors(req, res, {
@@ -44,7 +46,7 @@ export default async function checkRateLimit(
         // The IP has made more than `timeout_limit` requests in less than `timeout_ttl` seconds
         await redis.set(timeout_key, timeout + 1, {
             ex: timeout_ttl,
-            nx: true,
+            keepTtl: true
         });
         if (res) {
             let retry_after = await redis.ttl(timeout_key)
@@ -66,7 +68,7 @@ export default async function checkRateLimit(
         // The IP has made more requests than `limit` in less than `ttl` seconds
         await redis.set(timeout_key, timeout + 1, {
             ex: ttl,
-            nx: true,
+            keepTtl: true
         });
         if (res) {
             let retry_after = await redis.ttl(key)
