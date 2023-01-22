@@ -15,7 +15,7 @@ export default async function checkRateLimit(
 ) {
     const ip = requestIp.getClientIp(req); // The client's IP
     const key = `ratelimit:${ip}`; // Key to store the current amount of requests of an IP during `ttl` seconds in redis
-    const timeout_key = `${key}-timeout`; // Key to store the amount of times an IP was rate limited in `timeout_ttl` seconds
+    const timeout_key = `${key}:timeout`; // Key to store the amount of times an IP was rate limited in `timeout_ttl` seconds
 
     const current = (await redis.get(key)) || 0;
     const timeout = (await redis.get(timeout_key)) || 0;
@@ -33,8 +33,9 @@ export default async function checkRateLimit(
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         });
 
-        res.setHeader("X-RateLimit-Limit", ttl);
-        res.setHeader("X-RateLimit-Remaining", 0);
+        res.setHeader("X-RateLimit-Limit", limit);
+        res.setHeader("X-RateLimit-Remaining", limit - (current + 1));
+        res.setHeader("X-RateLimit-Reset", await redis.ttl(key))
     }
 
     if (timeout >= timeout_limit) {
