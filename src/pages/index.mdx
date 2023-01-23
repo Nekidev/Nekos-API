@@ -172,7 +172,7 @@ export default function Home() {
                 <p className={styles.infoSubtitle}>
                     Thousands of projects worldwide use Nekos API to fetch anime images
                 </p>
-                <canvas 
+                <canvas
                     ref={globeCanvasRef}
                     height="100%"
                     width="100%"
@@ -193,9 +193,22 @@ export default function Home() {
                     <p className={styles.infoSubtitle}>
                         If you like the API, consider donating to help us keep it running.
                     </p>
-                    <Link className={styles.patreonLink} href="https://patreon.com/nekidev">
-                        <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" />
-                    </Link>
+                    <div className="mt-8 flex flex-row items-center gap-4 flex-wrap">
+                        <Link href="https://ko-fi.com/nekidev">
+                            <img
+                                src="https://storage.ko-fi.com/cdn/kofi5.png?v=3"
+                                alt="Buy Me a Coffee at ko-fi.com"
+                                style={{ height: '36px' }}
+                            />
+                        </Link>
+                        <Link href="https://patreon.com/nekidev">
+                            <img
+                                src="https://c5.patreon.com/external/logo/become_a_patron_button.png"
+                                alt="Donate at Patreon.com"
+                                style={{ height: '36px', borderRadius: "10000px" }}
+                            />
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>
