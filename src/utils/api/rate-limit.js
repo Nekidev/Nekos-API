@@ -27,8 +27,6 @@ export default async function checkRateLimit(
         keepTtl: true
     });
 
-    console.log("CURRENT - LIMIT:", current, limit);
-
     if (res) {
         await NextCors(req, res, {
             // Options

@@ -1,7 +1,66 @@
+import Link from 'next/link';
+import { PlusIcon } from "@heroicons/react/24/outline";
+
 # Partners
 
-<div className="text-center w-full text-lg dark:text-neutral-400 text-neutral-600">Communities, projects, and other people we work with</div>
+<div className="text-center w-full text-lg dark:text-neutral-400 text-neutral-600">
+    Communities, projects, and other people we work with
+</div>
 
-<div className="border-2 rounded-xl dark:border-neutral-800 border-neutral-200 border-dashed p-4 mt-8 text-center text-neutral-600 dark:text-neutral-400">
-    No partners yet. Want to become a partner? Join our Discord server!
+export function PartnerCard({
+    icon,
+    banner,
+    name,
+    description,
+    link,
+    linkColor,
+    textColor
+}) {
+    return (
+        <div className="w-full rounded-lg overflow-hidden bg-white dark:bg-neutral-900 relative border dark:border-0 border-neutral-200 drop-shadow-md">
+            <div className="bg-neutral-700 h-32">
+                <img src={banner} className="h-32 w-full object-cover" />
+            </div>
+            <div className="relative p-4">
+                <div className="bg-neutral-100 dark:bg-neutral-900 -mt-12 rounded-2xl border-[6px] border-neutral-200 dark:border-black overflow-hidden w-fit">
+                    <img src={icon} className="h-12 w-12 object-cover" />
+                </div>
+                <div className="my-2">
+                    <div className="font-medium text-xl leading-none text-neutral-900 dark:text-neutral-100">
+                        {name}
+                    </div>
+                    <div className="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+                        {description}
+                    </div>
+                </div>
+                <Link href={link}>
+                    <button
+                        className={`rounded text-center w-full p-2 text-sm mt-2 hover:opacity-80 transition`}
+                        style={{
+                            backgroundColor: linkColor,
+                            color: textColor
+                        }}
+                    >
+                        Visit their website
+                    </button>
+                </Link>
+            </div>
+        </div>
+    );
+}
+
+<div className="grid grid-cols-2 gap-8 mt-16 relative w-full">
+    <PartnerCard
+        icon="/imgs/partners/otakugifs/logo.png"
+        banner="/imgs/partners/otakugifs/banner.png"
+        name="OtakuGIFs"
+        description="OtakuGIFs delivers over 940 high quality anime GIFs, WebPs & AVIFs as 67 reactions with a simple API."
+        link="https://otakugifs.xyz/"
+        linkColor="#0c59e0"
+        textColor="white"
+    />
+    <div className="h-full w-full flex flex-col items-center justify-center border-[4px] border-dashed border-neutral-200 dark:border-neutral-800 rounded-xl">
+        <PlusIcon className="h-8 w-8 stroke-neutral-600 dark:stroke-neutral-400" />
+        <div className="text-neutral-600 dark:text-neutral-400">Your project here</div>
+    </div>
 </div>
