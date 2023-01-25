@@ -194,18 +194,37 @@ export default function Home() {
                         If you like the API, consider donating to help us keep it running.
                     </p>
                     <div className="mt-8 flex flex-row items-center gap-4 flex-wrap">
-                        <Link href="https://ko-fi.com/nekidev">
+                        <Link
+                            href="https://ko-fi.com/nekidev"
+                            className="hover:opacity-80 transition"
+                            target="_blank"
+                        >
                             <img
                                 src="https://storage.ko-fi.com/cdn/kofi5.png?v=3"
                                 alt="Buy Me a Coffee at ko-fi.com"
-                                style={{ height: '36px' }}
+                                style={{ height: "36px" }}
                             />
                         </Link>
-                        <Link href="https://patreon.com/nekidev">
+                        <Link
+                            href="https://patreon.com/nekidev"
+                            className="hover:opacity-80 transition"
+                            target="_blank"
+                        >
                             <img
                                 src="https://c5.patreon.com/external/logo/become_a_patron_button.png"
                                 alt="Donate at Patreon.com"
-                                style={{ height: '36px', borderRadius: "10000px" }}
+                                style={{ height: "36px", borderRadius: "18px" }}
+                            />
+                        </Link>
+                        <Link
+                            href="https://www.buymeacoffee.com/nekidev"
+                            className="hover:opacity-80 transition"
+                            target="_blank"
+                        >
+                            <img
+                                src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+                                alt="Buy Me A Coffee"
+                                style={{ height: "36px", borderRadius: "18px" }}
                             />
                         </Link>
                     </div>
