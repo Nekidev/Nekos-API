@@ -36,6 +36,7 @@ export default {
             <meta property="og:url" content={`https://nekosapi.com${asPath}`} />
             <meta property="og:title" content={frontMatter.title || 'Nekos API Documentation'} />
             <meta property="og:description" content={frontMatter.description || 'The open-source free public anime images Restful/GraphQL API.'} />
+            <meta property="description" content={frontMatter.description || 'The open-source free public anime images Restful/GraphQL API.'} />
         </>
     },
     primaryHue: {
