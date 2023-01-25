@@ -4,6 +4,7 @@ import '../styles/globals.css'
 
 import Router from "next/router";
 import NProgress from "nprogress"
+import { Analytics } from '@vercel/analytics/react';
 
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
@@ -13,6 +14,9 @@ NProgress.configure({ showSpinner: false });
 
 export default function NekosAPI({ Component, pageProps }) {
     return (
-        <Component {...pageProps} />
+        <>
+            <Component {...pageProps} />
+            <Analytics />
+        </>
     )
 }

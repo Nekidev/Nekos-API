@@ -9,6 +9,7 @@ specifiers:
   '@prisma/client': ^4.9.0
   '@supabase/supabase-js': ^2.1.1
   '@upstash/redis': ^1.18.1
+  '@vercel/analytics': ^0.1.8
   autoprefixer: ^10.4.13
   cobe: ^0.6.3
   color-thief-node: ^1.0.4
@@ -48,6 +49,7 @@ dependencies:
   '@prisma/client': 4.9.0_prisma@4.9.0
   '@supabase/supabase-js': 2.1.1
   '@upstash/redis': 1.18.1
+  '@vercel/analytics': 0.1.8_react@18.2.0
   cobe: 0.6.3
   dotenv: 16.0.3
   express-rate-limit: 6.7.0
@@ -1032,6 +1034,14 @@ packages:
       isomorphic-fetch: 3.0.0
     transitivePeerDependencies:
       - encoding
+    dev: false
+
+  /@vercel/analytics/0.1.8_react@18.2.0:
+    resolution: {integrity: sha512-PQrOI8BJ9qUiVJuQfnKiJd15eDjDJH9TBKsNeMrtelT4NAk7d9mBVz1CoZkvoFnHQ0OW7Xnqmr1F2nScfAnznQ==}
+    peerDependencies:
+      react: ^16.8||^17||^18
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /@whatwg-node/events/0.0.2:
