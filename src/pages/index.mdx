@@ -118,15 +118,15 @@ export default function Home() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-neutral-300 dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-700 rounded-xl overflow-hidden font-mono w-full lg:w-auto mt-8">
                     <div className="bg-white dark:bg-neutral-900 px-12 py-4 flex flex-col items-center justify-center text-center">
                         <div className="text-lg">Images</div>
-                        <h4 className="text-3xl font-bold">+3500</h4>
+                        <div className="text-3xl font-bold">+3500</div>
                     </div>
                     <div className="bg-white dark:bg-neutral-900 px-12 py-4 flex flex-col items-center justify-center text-center">
                         <div className="text-lg">Categories</div>
-                        <h4 className="text-3xl font-bold">40</h4>
+                        <div className="text-3xl font-bold">40</div>
                     </div>
                     <div className="bg-white dark:bg-neutral-900 px-12 py-4 flex flex-col items-center justify-center text-center md:col-span-2 lg:col-span-1">
                         <div className="text-lg">Avg. response time</div>
-                        <h4 className="text-3xl font-bold">&lt; 1 sec</h4>
+                        <div className="text-3xl font-bold">&lt; 1 sec</div>
                     </div>
                 </div>
             </div>
@@ -138,7 +138,7 @@ export default function Home() {
                     </p>
                     <div className='flex flex-row items-center gap-4 mt-8'>
                         <Link href="/docs/libraries/python" className='rounded border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-neutral-400 dark:hover:border-neutral-700 dark:hover:bg-neutral-800 text-sm font-medium flex flex-row items-center leading-none p-2 gap-2 transition'>
-                            <img src="/imgs/logos/python.png" className="h-4 w-4 object-fit" />
+                            <img src="/imgs/logos/python.png" className="h-4 w-4 object-fit" alt="Python icon" />
                             Python
                             <ArrowUpRightIcon className='h-4 w-4 stroke-black dark:stroke-white' />
                         </Link>
@@ -185,7 +185,7 @@ export default function Home() {
                         Join our community on Discord to get help, talk about the API, and more.
                     </p>
                     <Link className={styles.discordBanner} href="https://discord.gg/b9Fv3kEfXc">
-                        <img src="https://discordapp.com/api/guilds/1023471762723328010/widget.png?style=banner2" />
+                        <img src="https://discordapp.com/api/guilds/1023471762723328010/widget.png?style=banner2" alt="Join our Discord Server" />
                     </Link>
                 </div>
                 <div>
