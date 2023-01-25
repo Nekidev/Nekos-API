@@ -33,7 +33,7 @@ export default {
         const { asPath } = useRouter()
         const { frontMatter } = useConfig()
         return <>
-            <meta property="og:url" content={`https://nekos.nekidev.com${asPath}`} />
+            <meta property="og:url" content={`https://nekosapi.com${asPath}`} />
             <meta property="og:title" content={frontMatter.title || 'Nekos API Documentation'} />
             <meta property="og:description" content={frontMatter.description || 'The open-source free public anime images Restful/GraphQL API.'} />
         </>
