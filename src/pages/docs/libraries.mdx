@@ -1,6 +1,7 @@
 import { Card, Cards } from '../../components/card'
 import PythonIcon from '../../components/icons/Python'
 import JSIcon from '../../components/icons/JS'
+import { DenoLightIcon, DenoDarkIcon } from '../../components/icons/Deno'
 
 # Libraries
 
@@ -9,4 +10,10 @@ These libraries are officialy supported wrappers. They are intended to make easi
 <Cards>
     <Card title="Python" href="/docs/libraries/python" icon={<PythonIcon className="h-6 w-6" />} />
     <Card title="JavaScript" href="/docs/libraries/javascript" icon={<JSIcon className="h-6 w-6" />} />
+    <Card title="Deno" href="/docs/libraries/deno" icon={(
+        <>
+            <DenoLightIcon className="h-6 w-6 block dark:hidden" />
+            <DenoDarkIcon className="h-6 w-6 hidden dark:block"/>
+        </>
+    )} />
 </Cards>

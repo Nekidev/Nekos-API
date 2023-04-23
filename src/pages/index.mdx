@@ -9,6 +9,7 @@ import { FaceSmileIcon, CurrencyDollarIcon, PhotoIcon, BoltIcon } from '@heroico
 import CodePre from '../components/codepre/CodePre';
 
 import JSIcon from '../components/icons/JS';
+import { DenoDarkIcon, DenoLightIcon } from '../components/icons/Deno';
 import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
 
 import createGlobe from "cobe";
@@ -150,10 +151,16 @@ export default function Home() {
                             JavaScript
                             <ArrowUpRightIcon className='h-4 w-4 stroke-black dark:stroke-white' />
                         </Link>
+                        <Link href="/docs/libraries/deno" className='rounded border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-neutral-400 dark:hover:border-neutral-700 dark:hover:bg-neutral-800 text-sm font-medium flex flex-row items-center leading-none p-2 gap-2 transition'>
+                            <DenoDarkIcon className="h-4 w-4 hidden dark:block" />
+                            <DenoLightIcon className="h-4 w-4 block dark:hidden" />
+                            Deno
+                            <ArrowUpRightIcon className='h-4 w-4 stroke-black dark:stroke-white' />
+                        </Link>
                     </div>
                 </div>
                 <div style={{ marginTop: "-1rem" }}>
-                    <Tabs items={['Python', 'JavaScript']}>
+                    <Tabs items={['Python', 'JavaScript', 'Deno']}>
                         <Tab>
                             <CodePre language="python">
                                 {`from anime_api.apis import NekosAPI\n\nnekos = NekosAPI()\n\nnekos.get_random_image()`}
@@ -162,6 +169,11 @@ export default function Home() {
                         <Tab>
                             <CodePre language="javascript">
                                 {`const { NekosAPI } = require('nekosapi');\n\nconst nekos = new NekosAPI();\n\nnekos.getRandomImage().then(image => console.log(image));`}
+                            </CodePre>
+                        </Tab>
+                        <Tab>
+                            <CodePre language="javascript">
+                                {`import { Nekos } from 'https://deno.land/x/nekosapi@v1.0.2/mod.ts';\n\nconst nekos = new Nekos();\n\nnekos.randomImage().then(image => console.log(image));`}
                             </CodePre>
                         </Tab>
                     </Tabs>

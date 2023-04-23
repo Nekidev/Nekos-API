@@ -1,4 +1,5 @@
 {
     "python": "Python",
-    "javascript": "JavaScript"
+    "javascript": "JavaScript",
+    "deno": "Deno"
 }

@@ -1,0 +1,213 @@
+import { Tab, Tabs, Callout } from "nextra-theme-docs";
+
+# Deno
+
+<Callout>
+    This page is incomplete. To read the complete documentation visit the librarie's homepage.
+</Callout>
+
+The [`nekosapi`](https://deno.land/x/nekosapi) Deno TypeScript library is an officially supported API warapper for Nekos API, kindly made by [SLIME](https://github.com/purpleblueslime).
+
+Source code: [deno.land/x](https://deno.land/x/nekosapi?source)
+
+## Importing
+
+You can import the library from [deno.land/x](https://deno.land/x).
+
+```js showLineNumbers {2}
+// Replace `v1.0.3` with the current library version.
+import { Nekos } from 'https://deno.land/x/nekosapi@v1.0.3/mod.ts'
+```
+
+Since there are many domains you can use to access the API, the library allows you to select one using `NekosUrl`.
+
+```js showLineNumbers {2}
+// Replace `v1.0.3` with the current library version.
+import { Nekos, NekosUrl } from 'https://deno.land/x/nekosapi@v1.0.3/mod.ts'
+```
+
+## Usage
+
+First of all, you'll need to initialize the `Nekos(){:javascript}` wrapper class.
+
+```js showLineNumbers {4}
+import { Nekos, NekosUrl } from 'https://deno.land/x/nekosapi@v1.0.3/mod.ts'
+
+// Both parameters are optional. Defaults to `Nekos(NekosUrl.vercel)`.
+const nekos = new Nekos(NekosUrl.nekosapi, '<your-token-here>')
+```
+
+`NekosUrl` has 3 properties:
+
+- `vercel`: https://nekos-api.vercel.app/api
+- `nekidev`: https://nekos.nekidev.com/api
+- `nekosapi`: https://v1.nekosapi.com/api
+
+They are all redirected to `https://v1.nekosapi.com/api`, so to avoid an extra request you should use `nekosapi`.
+
+### Get the token's details
+
+<Callout type="info">
+    This method requires a token.
+</Callout>
+
+If you own an access token, you can see it's information using the `me(){:javascript}` method.
+
+<Tabs items={["Sync", "Asnyc"]}>
+    <Tab>
+        ```js showLineNumbers {5-7}
+        import { Nekos, NekosUrl } from 'https://deno.land/x/nekosapi@v1.0.3/mod.ts';
+
+        const nekos = new Nekos(NekosUrl.nekosapi, '<your-token-here>')
+
+        nekos.me().then((token) => {
+            // Do whatever you want here
+        })
+        ```
+    </Tab>
+    <Tab>
+        ```js showLineNumbers {5}
+        import { Nekos, NekosUrl } from 'https://deno.land/x/nekosapi@v1.0.3/mod.ts'
+
+        const nekos = new Nekos(NekosUrl.nekosapi, '<your-token-here>')
+
+        const token = await nekos.me()
+        ```
+    </Tab>
+</Tabs>
+
+
+### Get a random image
+
+To get a random image, you can use either `randomImage(){:javascript}` or `randomImages(){:javascript}`.
+
+<Tabs items={["Sync", "Asnyc"]}>
+    <Tab>
+        ```js filename="Get a random image" showLineNumbers {7-13}
+        import { Nekos } from 'https://deno.land/x/nekosapi@v1.0.3/mod.ts';
+
+        const nekos = new Nekos()
+
+        // The `categories` parameter is optional. Each item is the name of a
+        // category that the image must have.
+        const categories = [
+            "Catgirl",
+            "Kemonomimi"
+        ]
+        nekos.randomImage(categories).then((image) => {
+            // Do whatever you want here
+        })
+        ```
+
+        ```js filename="Get many random images" showLineNumbers {7-15}
+        import { Nekos } from 'https://deno.land/x/nekosapi@v1.0.3/mod.ts';
+
+        const nekos = new Nekos()
+
+        // The `categories` parameter is optional. Each item is the name of a
+        // category that all the images must have.
+        const categories = [
+            "Catgirl",
+            "Kemonomimi"
+        ]
+
+        // You can change the 25 to whatever amount of images you need
+        nekos.randomImages(25, categories).then((images) => {
+            // Do whatever you want here
+        })
+        ```
+    </Tab>
+    <Tab>
+        ```js filename="Get a random image" showLineNumbers {7-11}
+        import { Nekos } from 'https://deno.land/x/nekosapi@v1.0.3/mod.ts'
+
+        const nekos = new Nekos()
+
+        // The `categories` parameter is optional. Each item is the name of a
+        // category that the image must have.
+        const categories = [
+            "Catgirl",
+            "Kemonomimi"
+        ]
+        const image = await nekos.randomImage(categories)
+        ```
+
+
+        ```js filename="Get many random images" showLineNumbers {7-13}
+        import { Nekos } from 'https://deno.land/x/nekosapi@v1.0.3/mod.ts'
+
+        const nekos = new Nekos()
+
+        // The `categories` parameter is optional. Each item is the name of a
+        // category that the image must have.
+        const categories = [
+            "Catgirl",
+            "Kemonomimi"
+        ]
+
+        // You can change the 25 to whatever amount of images you need
+        const images = await nekos.randomImages(25, categories)
+        ```
+    </Tab>
+</Tabs>
+
+
+### Get all images
+
+<Callout type="info">
+    This method requires a token with the `image:list` scope.
+</Callout>
+
+To list all images in the API you'll need to use the `images(){:javascript}` method.
+
+<Tabs items={["Sync", "Asnyc"]}>
+    <Tab>
+        ```js showLineNumbers {5-8}
+        import { Nekos, NekosUrl } from 'https://deno.land/x/nekosapi@v1.0.3/mod.ts';
+
+        const nekos = new Nekos(NekosUrl.nekosapi, '<your-token-here>')
+
+        // The first parameter is the limit, the second one is the offset
+        nekos.images(25, 0).then((images) => {
+            // Do whatever you want here
+        })
+        ```
+    </Tab>
+    <Tab>
+        ```js showLineNumbers {5-6}
+        import { Nekos, NekosUrl } from 'https://deno.land/x/nekosapi@v1.0.3/mod.ts'
+
+        const nekos = new Nekos(NekosUrl.nekosapi, '<your-token-here>')
+
+        // The first parameter is the limit, the second one is the offset
+        const images = await nekos.images(25, 0)
+        ```
+    </Tab>
+</Tabs>
+
+### Get an image by it's ID
+
+To get an image's details for it's ID, you can use the `image(){:javascript}`. 
+
+<Tabs items={["Sync", "Asnyc"]}>
+    <Tab>
+        ```js showLineNumbers {5-7}
+        import { Nekos } from 'https://deno.land/x/nekosapi@v1.0.3/mod.ts';
+
+        const nekos = new Nekos()
+
+        nekos.image('<the-image-uuid>').then((image) => {
+            // Do whatever you want here
+        })
+        ```
+    </Tab>
+    <Tab>
+        ```js showLineNumbers {5}
+        import { Nekos } from 'https://deno.land/x/nekosapi@v1.0.3/mod.ts'
+
+        const nekos = new Nekos()
+
+        const image = await nekos.image('<the-image-uuid>')
+        ```
+    </Tab>
+</Tabs>
